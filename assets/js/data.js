@@ -23,7 +23,7 @@ const SITE = {
   // ── 좌측 상단 로고 ──
   // 한신대 로고 파일을 assets/images/ 에 넣고 경로를 적으세요.
   // 파일이 없거나 경로가 틀리면 아래 mark 의 글자 마크가 대신 표시됩니다.
-  logo: "assets/images/한신대 홈페이지.png",
+  logo: "assets/images/hanshin-logo.png",
   logoInvert: false,          // 로고가 어두운 색이면 true (흰색으로 바꿔서 표시)
   mark: "ES",                // 로고 파일이 없을 때 쓰는 글자 마크
 
@@ -35,7 +35,7 @@ const SITE = {
 
   // 홈 상단 대표 사진 (비워 두면 배너 자리가 아예 생기지 않습니다)
   // 나중에 행사 사진이 생기면 경로만 적으면 알아서 나타납니다
-  heroImage: "assets/images/홈 사진.png",                                           // 예: "assets/images/hero.jpg"
+  heroImage: "assets/images/hero.png",                                           // 예: "assets/images/hero.jpg"
   heroCaption: "2026 총장배 이스포츠 대회 운영 현장",        // 사진 아래 설명
   heroDim: 0.9,
   updated: "2026-08-29"                                    // 마지막 업데이트 날짜
