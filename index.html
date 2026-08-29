@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>이스포츠 연구실 · 한신대학교</title>
+<meta name="description" content="한신대학교 이스포츠 연구실입니다." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="home">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<!-- 상단바는 data.js 의 NAV 를 읽어 app.js 가 자동으로 넣습니다 -->
+<header class="topbar" id="siteHeader"></header>
+
+<main id="main">
+
+  <!-- 감성 문구 : 내용은 data.js 의 INTRO.headline / INTRO.sub -->
+  <section class="home-hero" id="homeHero"></section>
+
+  <!-- 대표 사진 : data.js 의 SITE.heroImage 를 채우면 나타납니다 -->
+  <div id="heroPhoto"></div>
+
+  <!-- 소개글 : data.js 의 INTRO.paragraphs -->
+  <section class="sec-intro" id="homeIntro"></section>
+
+  <!-- 연구 갈래 3칸 : data.js 의 AREAS -->
+  <section class="areas" id="homeAreas"></section>
+
+  <!-- 공지사항 : data.js 의 NOTICES -->
+  <section class="sec sec--alt">
+    <div class="wrap">
+      <div class="notice-head">
+        <p class="eyebrow">NOTICE</p>
+        <h2 class="sec-title">공지사항</h2>
+      </div>
+      <div class="notice-grid" id="noticeList"></div>
+      <button class="btn btn--ghost more-btn" id="noticeMore" type="button" hidden></button>
+    </div>
+  </section>
+
+  <!-- 세미나 : data.js 의 SEMINARS -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="notice-head">
+        <p class="eyebrow">SEMINAR</p>
+        <h2 class="sec-title">세미나 일정</h2>
+      </div>
+      <div class="sem-list" id="seminarList"></div>
+      <p class="sem-note" id="seminarNote"></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- 푸터도 자동으로 채워집니다 -->
+<footer id="siteFooter"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

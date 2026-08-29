@@ -1,0 +1,26 @@
+{
+  // ── Live Server: 저장하면 브라우저가 자동 새로고침됩니다 ──
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.donotShowInfoMsg": true,
+
+  // ── 편집 편의 ──
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 800,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+
+  // ── 한글 파일 깨짐 방지 ──
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+
+  // ── 탐색기에서 숨길 것 ──
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  }
+}

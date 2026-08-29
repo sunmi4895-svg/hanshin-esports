@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>학술 활동 · 이스포츠 연구실</title>
+<meta name="description" content="학회 발표, 학술지 등재, 학술대회 수상 기록입니다." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="research">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<!-- 상단바는 data.js 의 NAV 를 읽어 app.js 가 자동으로 넣습니다 -->
+<header class="topbar" id="siteHeader"></header>
+
+<main id="main">
+
+  <section class="pagehead" id="pageHead"></section>
+  <section class="sec">
+    <div class="wrap">
+      <aside class="board board--wide reveal">
+        <h2>연도별 학술 기록</h2>
+        <p class="cap">최근 6개 연도의 발표·등재·수상 건수입니다.</p>
+        <div id="barChart"></div>
+      </aside>
+
+      <div class="tools">
+        <button class="chip on" data-ptype="all">전체</button>
+        <button class="chip" data-ptype="학회 발표">학회 발표</button>
+        <button class="chip" data-ptype="학술지 등재">학술지 등재</button>
+        <button class="chip" data-ptype="수상">수상</button>
+        <select class="field" id="pubYear" aria-label="연도 선택"></select>
+        <input class="field" id="pubSearch" type="search" placeholder="제목·학술대회 검색" aria-label="학술 활동 검색" />
+        <span class="count" id="pubCount"></span>
+      </div>
+      <div id="pubList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 푸터도 자동으로 채워집니다 -->
+<footer id="siteFooter"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

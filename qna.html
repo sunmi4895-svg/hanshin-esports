@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Q&amp;A · 이스포츠 연구실</title>
+<meta name="description" content="연구실 문의와 자주 묻는 질문입니다." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="qna">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<!-- 상단바는 data.js 의 NAV 를 읽어 app.js 가 자동으로 넣습니다 -->
+<header class="topbar" id="siteHeader"></header>
+
+<main id="main">
+
+  <section class="pagehead" id="pageHead"></section>
+  <section class="sec">
+    <div class="wrap qa-grid">
+      <div id="faqList"></div>
+      <div class="form">
+        <label for="qName">이름</label>
+        <input class="field" id="qName" placeholder="홍길동" />
+        <label for="qFrom">회신받을 이메일</label>
+        <input class="field" id="qFrom" type="email" placeholder="you@example.com" />
+        <label for="qType">문의 유형</label>
+        <select class="field" id="qType">
+          <option>대학원 진학 문의</option>
+          <option>학부생 연구 참여</option>
+          <option>공동 연구·산학 협력</option>
+          <option>취재·인터뷰</option>
+          <option>기타</option>
+        </select>
+        <label for="qBody">문의 내용</label>
+        <textarea class="field" id="qBody" placeholder="궁금하신 내용을 적어 주세요."></textarea>
+        <button class="btn" id="qSend" type="button">메일 앱으로 보내기</button>
+        <p class="note">누르시면 작성한 내용이 담긴 메일 창이 열립니다. 정적 페이지라 서버로 직접 전송되지는 않습니다.
+          웹에서 바로 접수받고 싶으시면 구글 폼 주소를 <code>SITE.formUrl</code> 에 넣어 주세요.</p>
+        <p class="note" style="margin-top:18px; padding-top:16px; border-top:1px solid var(--line)">
+          <strong>찾아오시는 길</strong><br><span id="contactAddr"></span><br><span id="contactMail"></span></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 푸터도 자동으로 채워집니다 -->
+<footer id="siteFooter"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

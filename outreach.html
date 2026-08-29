@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>대외 활동 · 이스포츠 연구실</title>
+<meta name="description" content="뉴스 기사, 교내 활동, 교외 활동 기록입니다." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-page="outreach">
+
+<a class="skip" href="#main">본문 바로가기</a>
+
+<!-- 상단바는 data.js 의 NAV 를 읽어 app.js 가 자동으로 넣습니다 -->
+<header class="topbar" id="siteHeader"></header>
+
+<main id="main">
+
+  <section class="pagehead" id="pageHead"></section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="tools" role="tablist" aria-label="대외 활동 분류">
+        <button class="chip" role="tab" aria-selected="true" data-group="news">뉴스 기사</button>
+        <button class="chip" role="tab" aria-selected="false" data-group="campus">교내</button>
+        <button class="chip" role="tab" aria-selected="false" data-group="external">교외</button>
+        <span class="count" id="actCount"></span>
+      </div>
+      <div class="subtabs" id="subTabs"></div>
+      <div class="cards" id="actList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 푸터도 자동으로 채워집니다 -->
+<footer id="siteFooter"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
