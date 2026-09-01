@@ -48,7 +48,10 @@ const NAV = [
   { label:"역사·연혁",  href:"history.html" },
   { label:"학술 활동",  href:"research.html" },
   { label:"대외 활동",  href:"outreach.html" },
-  { label:"랩 구성원",  href:"members.html" },
+  { label:"랩 구성원",  href:"members.html", children:[      /* 하위 메뉴 */
+      { label:"교수진", href:"members.html#faculty"  },
+      { label:"재학생", href:"members.html#students" }
+  ]},
   { label:"Q&A",       href:"qna.html"     }
 ];
 
@@ -183,7 +186,7 @@ const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 이스포츠" |
 /* --- 5. 랩 구성원 ------------------------------------------------------ */
 /* photo: 사진 파일 경로(예: "images/kim.jpg"). 비워 두면 이름 첫 글자가 표시됩니다. */
 const FACULTY = [
-  { name:"김○○", nameEn:"KIM ○○", role:"지도교수", photo:"",
+  { name:"최은경", nameEn:"KIM ○○", role:"지도교수", photo:"",
     field:"이스포츠 산업, 게임 리터러시, 장애인 스포츠 정책",
     email:"prof@example.ac.kr" }
 ];

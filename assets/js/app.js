@@ -52,12 +52,19 @@ if (typeof SITE === "undefined") {
         '</a>' +
         '<button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="nav">메뉴</button>' +
         '<nav class="nav" id="nav" aria-label="주요 메뉴">' +
-          NAV.map(n => {
-            const on = n.href === here;
-            return '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' + esc(n.label) + '</a>';
-          }).join("") +
+                 NAV.map(n => {
+            const on = n.href.split("#")[0] === here;
+            const link = '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
+                         esc(n.label) + (n.children ? '<span class="nav-caret">&#9662;</span>' : '') + '</a>';
+            if (!n.children) return link;
+            return '<span class="nav-item">' + link +
+              '<span class="nav-sub">' +
+                n.children.map(c => '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>').join("") +
+              '</span></span>';
+                    }).join("") +
         '</nav>' +
       '</div>';
+
 
     /* 로고 파일이 없으면 글자 마크로 조용히 바꿔 줍니다 */
     const logo = $(".brand-logo");
@@ -73,8 +80,8 @@ if (typeof SITE === "undefined") {
       const open = nav.classList.toggle("open");
       btn.setAttribute("aria-expanded", open);
     });
-    nav.addEventListener("click", e => {
-      if (e.target.tagName === "A") { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
+       nav.addEventListener("click", e => {
+      if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
     });
   }
 
@@ -349,23 +356,45 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      구성원
      ====================================================================== */
-  function renderMembers() {
-    $("#facultyList").innerHTML = FACULTY.map(f =>
+    function renderMembers() {
+    /* 교수진 — 여러 명이면 위에서부터 차례로 쌓입니다 */
+    $("#facultyList").innerHTML = FACULTY.length ? FACULTY.map(f =>
       '<article class="prof reveal"><div>' + pic(f.photo, f.name) + '</div><div>' +
         '<span class="prof-role">' + esc(f.role) + '</span>' +
         '<h3 class="prof-name">' + esc(f.name) + '</h3>' +
         '<p class="prof-en">' + esc(f.nameEn) + '</p>' +
         '<p><strong>연구 분야</strong> &middot; ' + esc(f.field) + '</p>' +
         (f.email ? '<p><a href="mailto:' + esc(f.email) + '">' + esc(f.email) + '</a></p>' : '') +
-      '</div></article>').join("");
+      '</div></article>').join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
 
-    $("#studentList").innerHTML = STUDENTS.map(s =>
+    /* 재학생 */
+    $("#studentList").innerHTML = STUDENTS.length ? STUDENTS.map(s =>
       '<article class="st reveal">' + pic(s.photo, s.name) +
         '<h4 class="st-name">' + esc(s.name) + '</h4>' +
         '<p class="st-en">' + esc(s.nameEn) + '</p>' +
         '<p class="st-course">' + esc(s.course) + '</p>' +
         '<p class="st-int">' + esc(s.interest) + '</p>' +
-      '</article>').join("");
+      '</article>').join("") : '<p class="empty">등록된 재학생이 없습니다.</p>';
+
+    /* 탭 전환 */
+    const panels = { faculty: $("#panelFaculty"), students: $("#panelStudents") };
+    const counts = { faculty: FACULTY.length, students: STUDENTS.length };
+
+    function show(key) {
+      $$('[data-mtab]').forEach(b => b.setAttribute("aria-selected", b.dataset.mtab === key));
+      Object.keys(panels).forEach(k => { panels[k].hidden = (k !== key); });
+      $("#memCount").textContent = "총 " + counts[key] + "명";
+      observe();
+    }
+        /* 주소 끝의 #students / #faculty 로 처음 열릴 탭이 정해집니다 */
+    const keyFromHash = () => location.hash.replace("#", "") === "students" ? "students" : "faculty";
+
+    $$('[data-mtab]').forEach(b => b.addEventListener("click", () => {
+      history.replaceState(null, "", "#" + b.dataset.mtab);
+      show(b.dataset.mtab);
+    }));
+    window.addEventListener("hashchange", () => show(keyFromHash()));
+    show(keyFromHash());
   }
 
   /* ======================================================================

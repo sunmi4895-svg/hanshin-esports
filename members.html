@@ -19,12 +19,27 @@
 
 <main id="main">
 
-  <section class="pagehead" id="pageHead"></section>
+    <section class="pagehead" id="pageHead"></section>
   <section class="sec">
     <div class="wrap">
-      <div id="facultyList"></div>
-      <h2 class="sec-title" style="font-size:24px; margin:44px 0 20px;">학생 연구원</h2>
-      <div class="students" id="studentList"></div>
+
+      <!-- 탭 : 교수진 / 재학생 -->
+      <div class="tools" role="tablist" aria-label="구성원 분류">
+        <button class="chip" role="tab" aria-selected="true"  data-mtab="faculty">교수진</button>
+        <button class="chip" role="tab" aria-selected="false" data-mtab="students">재학생</button>
+        <span class="count" id="memCount"></span>
+      </div>
+
+      <!-- 교수진 : data.js 의 FACULTY -->
+      <div id="panelFaculty">
+        <div id="facultyList"></div>
+      </div>
+
+      <!-- 재학생 : data.js 의 STUDENTS -->
+      <div id="panelStudents" hidden>
+        <div class="students" id="studentList"></div>
+      </div>
+
     </div>
   </section>
 
