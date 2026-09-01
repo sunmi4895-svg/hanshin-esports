@@ -21,7 +21,7 @@
 
     <section class="pagehead" id="pageHead"></section>
   <section class="sec">
-    <div class="wrap">
+    < class="wrap">
 
       <!-- 탭 : 교수진 / 재학생 -->
       <div class="tools" role="tablist" aria-label="구성원 분류">
@@ -40,8 +40,16 @@
         <div class="students" id="studentList"></div>
       </div>
 
-    </div>
+        </div>
   </section>
+
+  <!-- 구성원 상세 창 (카드를 누르면 열립니다) -->
+  <div class="modal" id="memberModal" hidden role="dialog" aria-modal="true" aria-labelledby="modalName">
+    <div class="modal-panel" id="modalPanel">
+      <button class="modal-close" id="modalClose" type="button" aria-label="닫기">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
 
 </main>
 

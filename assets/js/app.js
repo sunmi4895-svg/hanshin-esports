@@ -358,8 +358,8 @@ if (typeof SITE === "undefined") {
      ====================================================================== */
     function renderMembers() {
     /* 교수진 — 여러 명이면 위에서부터 차례로 쌓입니다 */
-    $("#facultyList").innerHTML = FACULTY.length ? FACULTY.map(f =>
-      '<article class="prof reveal"><div>' + pic(f.photo, f.name) + '</div><div>' +
+        $("#facultyList").innerHTML = FACULTY.length ? FACULTY.map((f, i) =>
+      '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '"><div>' + pic(f.photo, f.name) + '</div><div>' +
         '<span class="prof-role">' + esc(f.role) + '</span>' +
         '<h3 class="prof-name">' + esc(f.name) + '</h3>' +
         '<p class="prof-en">' + esc(f.nameEn) + '</p>' +
@@ -368,8 +368,8 @@ if (typeof SITE === "undefined") {
       '</div></article>').join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
 
     /* 재학생 */
-    $("#studentList").innerHTML = STUDENTS.length ? STUDENTS.map(s =>
-      '<article class="st reveal">' + pic(s.photo, s.name) +
+        $("#studentList").innerHTML = STUDENTS.length ? STUDENTS.map((s, i) =>
+      '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="students" data-midx="' + i + '">' + pic(s.photo, s.name) +
         '<h4 class="st-name">' + esc(s.name) + '</h4>' +
         '<p class="st-en">' + esc(s.nameEn) + '</p>' +
         '<p class="st-course">' + esc(s.course) + '</p>' +
@@ -393,10 +393,75 @@ if (typeof SITE === "undefined") {
       history.replaceState(null, "", "#" + b.dataset.mtab);
       show(b.dataset.mtab);
     }));
-    window.addEventListener("hashchange", () => show(keyFromHash()));
+      window.addEventListener("hashchange", () => show(keyFromHash()));
     show(keyFromHash());
-  }
 
+    initMemberModal();
+  }
+    /* ---------------------------------------------------------------------
+     구성원 상세 창
+     --------------------------------------------------------------------- */
+  function initMemberModal() {
+    const modal = $("#memberModal");
+    if (!modal) return;
+    const body = $("#modalBody");
+    const data = { faculty: FACULTY, students: STUDENTS };
+    let lastFocus = null;
+
+    function bioRow(line) {
+      const m = /^(\d{4}(?:[.\-]\d{1,2})?)\s+(.+)$/.exec(String(line).trim());
+      return m
+        ? '<li><span class="bio-y">' + esc(m[1]) + '</span><span>' + esc(m[2]) + '</span></li>'
+        : '<li><span class="bio-y"></span><span>' + esc(line) + '</span></li>';
+    }
+
+    function open(key, idx) {
+      const p = data[key] && data[key][idx];
+      if (!p) return;
+      lastFocus = document.activeElement;
+
+      body.innerHTML =
+        '<div class="modal-head">' +
+          '<div class="modal-photo">' + pic(p.photo, p.name) + '</div>' +
+          '<div>' +
+            '<span class="prof-role">' + esc(p.role || p.course || "") + '</span>' +
+            '<h2 class="modal-name" id="modalName">' + esc(p.name) + '</h2>' +
+            '<p class="modal-en">' + esc(p.nameEn) + '</p>' +
+            (p.field || p.interest
+              ? '<p class="modal-field"><strong>' + (p.field ? '연구 분야' : '관심 분야') + '</strong> &middot; ' +
+                esc(p.field || p.interest) + '</p>' : '') +
+            (p.email ? '<p class="modal-field"><a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a></p>' : '') +
+          '</div>' +
+        '</div>' +
+        (p.intro ? '<p class="modal-intro">' + esc(p.intro) + '</p>' : '') +
+        (p.bio && p.bio.length
+          ? '<h3 class="modal-sub">주요 경력</h3><ul class="bio">' + p.bio.map(bioRow).join("") + '</ul>'
+          : '');
+
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      $("#modalClose").focus();
+    }
+
+    function close() {
+      modal.hidden = true;
+      document.body.style.overflow = "";
+      if (lastFocus) lastFocus.focus();
+    }
+
+    document.addEventListener("click", e => {
+      const card = e.target.closest("[data-mkey]");
+      if (card) open(card.dataset.mkey, Number(card.dataset.midx));
+    });
+    document.addEventListener("keydown", e => {
+      const card = e.target.closest && e.target.closest("[data-mkey]");
+      if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); open(card.dataset.mkey, Number(card.dataset.midx)); }
+      if (e.key === "Escape" && !modal.hidden) close();
+    });
+
+    $("#modalClose").addEventListener("click", close);
+    modal.addEventListener("click", e => { if (e.target === modal) close(); });
+  }
   /* ======================================================================
      Q&A
      ====================================================================== */

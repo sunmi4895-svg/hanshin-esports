@@ -186,9 +186,15 @@ const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 이스포츠" |
 /* --- 5. 랩 구성원 ------------------------------------------------------ */
 /* photo: 사진 파일 경로(예: "images/kim.jpg"). 비워 두면 이름 첫 글자가 표시됩니다. */
 const FACULTY = [
-  { name:"최은경", nameEn:"KIM ○○", role:"지도교수", photo:"",
+  { name:"최은경", nameEn:"CHOI EUN-KYUNG", role:"지도교수", photo:"",
     field:"이스포츠 산업, 게임 리터러시, 장애인 스포츠 정책",
-    email:"prof@example.ac.kr" }
+    email:"prof@example.ac.kr",
+    intro:"이스포츠를 학문의 대상으로 다루는 일에 관심을 두고 있습니다.",
+    bio:[
+      "2024 한신대학교 e스포츠융합대학원 교수",
+      "2020 ○○대학교 스포츠산업학과 박사",
+      "2018 한국게임학회 정회원"
+    ] }
 ];
 
 const STUDENTS = [

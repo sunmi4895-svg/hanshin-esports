@@ -609,3 +609,72 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   .nav-sub a{font-size:14px; opacity:.85;}
   .nav-caret{display:none;}
 }
+/* =========================================================
+   구성원 상세 창 (카드를 누르면 뜨는 흰 창)
+   ========================================================= */
+.is-clickable{cursor:pointer;}
+.st.is-clickable{transition:transform .18s, border-color .18s;}
+.st.is-clickable:hover{transform:translateY(-3px); border-color:var(--accent);}
+.prof.is-clickable{transition:border-color .18s;}
+.prof.is-clickable:hover{border-color:var(--accent);}
+
+.modal{
+  position:fixed; inset:0; z-index:100;
+  display:flex; align-items:center; justify-content:center; padding:24px;
+  background:rgba(6,11,20,.72); backdrop-filter:blur(6px);
+}
+.modal[hidden]{display:none;}
+.modal-panel{
+  position:relative; width:min(720px,100%); max-height:86vh; overflow-y:auto;
+  background:rgba(255,255,255,.95); backdrop-filter:blur(20px);
+  color:#141A24; border:1px solid rgba(255,255,255,.5);
+  border-radius:18px; padding:38px 40px 40px;
+  box-shadow:0 30px 70px rgba(0,0,0,.5);
+  animation:modalUp .28s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes modalUp{
+  from{opacity:0; transform:translateY(18px) scale(.98);}
+  to{opacity:1; transform:none;}
+}
+.modal-close{
+  position:absolute; top:16px; right:18px;
+  width:36px; height:36px; border-radius:99px; cursor:pointer;
+  background:none; border:1px solid rgba(20,26,36,.2); color:#141A24;
+  font-size:22px; line-height:1; transition:background .15s;
+}
+.modal-close:hover{background:rgba(20,26,36,.08);}
+
+.modal-head{display:grid; grid-template-columns:150px 1fr; gap:28px; align-items:center;}
+.modal-photo .photo,.modal-photo .photo-ph{border-radius:12px;}
+.modal-name{font-family:var(--f-display); font-size:30px; font-weight:700; margin:6px 0 2px; color:#141A24;}
+.modal-en{font-family:var(--f-mono); font-size:12.5px; letter-spacing:.06em; color:#5A6273; margin:0 0 12px;}
+.modal-field{font-size:14.5px; color:#4A5163; margin:0 0 5px;}
+.modal-field strong{color:#141A24; font-weight:600;}
+.modal-field a{color:#2E4A6B;}
+.modal-intro{
+  font-size:16px; line-height:1.85; color:#2C3342;
+  margin:26px 0 0; padding-top:22px; border-top:1px solid rgba(20,26,36,.12);
+}
+.modal-sub{
+  font-family:var(--f-mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:#7A8296; margin:28px 0 12px; font-weight:500;
+}
+.bio{list-style:none; margin:0; padding:0;}
+.bio li{
+  display:grid; grid-template-columns:74px 1fr; gap:16px;
+  padding:11px 0; border-top:1px solid rgba(20,26,36,.1);
+  font-size:15px; color:#2C3342;
+}
+.bio-y{font-family:var(--f-mono); font-size:13.5px; color:#7A8296;}
+.modal .prof-role{background:#2E4A6B; color:#fff;}
+
+@media (max-width:640px){
+  .modal-panel{padding:30px 22px 28px; max-height:90vh;}
+  .modal-head{grid-template-columns:1fr; gap:18px;}
+  .modal-photo{max-width:140px;}
+  .bio li{grid-template-columns:64px 1fr; gap:12px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .modal-panel{animation:none;}
+  .st.is-clickable:hover{transform:none;}
+}
