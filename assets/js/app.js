@@ -356,9 +356,12 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      구성원
      ====================================================================== */
-    function renderMembers() {
-    /* 교수진 — 여러 명이면 위에서부터 차례로 쌓입니다 */
-        $("#facultyList").innerHTML = FACULTY.length ? FACULTY.map((f, i) =>
+     function renderMembers() {
+    /* 졸업생 항목을 아직 안 만드셨어도 오류가 나지 않도록 */
+    const ALUM = (typeof ALUMNI !== "undefined") ? ALUMNI : [];
+
+    /* 교수진 */
+    $("#facultyList").innerHTML = FACULTY.length ? FACULTY.map((f, i) =>
       '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '"><div>' + pic(f.photo, f.name) + '</div><div>' +
         '<span class="prof-role">' + esc(f.role) + '</span>' +
         '<h3 class="prof-name">' + esc(f.name) + '</h3>' +
@@ -367,33 +370,51 @@ if (typeof SITE === "undefined") {
         (f.email ? '<p><a href="mailto:' + esc(f.email) + '">' + esc(f.email) + '</a></p>' : '') +
       '</div></article>').join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
 
-    /* 재학생 */
-        $("#studentList").innerHTML = STUDENTS.length ? STUDENTS.map((s, i) =>
-      '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="students" data-midx="' + i + '">' + pic(s.photo, s.name) +
-        '<h4 class="st-name">' + esc(s.name) + '</h4>' +
-        '<p class="st-en">' + esc(s.nameEn) + '</p>' +
-        '<p class="st-course">' + esc(s.course) + '</p>' +
-        '<p class="st-int">' + esc(s.interest) + '</p>' +
-      '</article>').join("") : '<p class="empty">등록된 재학생이 없습니다.</p>';
+    /* 대학원생 · 졸업생 — 카드 모양이 같아 한 함수로 만듭니다 */
+    const card = (p, key, i) =>
+      '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="' + key + '" data-midx="' + i + '">' +
+        pic(p.photo, p.name) +
+        '<h4 class="st-name">' + esc(p.name) + '</h4>' +
+        '<p class="st-en">' + esc(p.nameEn) + '</p>' +
+        '<p class="st-course">' + esc(p.course) + '</p>' +
+        '<p class="st-int">' + esc(p.interest || p.now || "") + '</p>' +
+      '</article>';
+
+    $("#studentList").innerHTML = STUDENTS.length
+      ? STUDENTS.map((s, i) => card(s, "students", i)).join("")
+      : '<p class="empty">등록된 대학원생이 없습니다.</p>';
+
+    $("#alumniList").innerHTML = ALUM.length
+      ? ALUM.map((s, i) => card(s, "alumni", i)).join("")
+      : '<p class="empty">등록된 졸업생이 없습니다.</p>';
 
     /* 탭 전환 */
-    const panels = { faculty: $("#panelFaculty"), students: $("#panelStudents") };
-    const counts = { faculty: FACULTY.length, students: STUDENTS.length };
+    const panels = {
+      faculty:  $("#panelFaculty"),
+      students: $("#panelStudents"),
+      alumni:   $("#panelAlumni")
+    };
+    const counts = { faculty: FACULTY.length, students: STUDENTS.length, alumni: ALUM.length };
 
     function show(key) {
+      if (!panels[key]) key = "faculty";
       $$('[data-mtab]').forEach(b => b.setAttribute("aria-selected", b.dataset.mtab === key));
-      Object.keys(panels).forEach(k => { panels[k].hidden = (k !== key); });
+      Object.keys(panels).forEach(k => { if (panels[k]) panels[k].hidden = (k !== key); });
       $("#memCount").textContent = "총 " + counts[key] + "명";
       observe();
     }
-        /* 주소 끝의 #students / #faculty 로 처음 열릴 탭이 정해집니다 */
-    const keyFromHash = () => location.hash.replace("#", "") === "students" ? "students" : "faculty";
+
+    /* 주소 끝의 #students / #alumni / #faculty 로 처음 열릴 탭이 정해집니다 */
+    const keyFromHash = () => {
+      const h = location.hash.replace("#", "");
+      return panels[h] ? h : "faculty";
+    };
 
     $$('[data-mtab]').forEach(b => b.addEventListener("click", () => {
       history.replaceState(null, "", "#" + b.dataset.mtab);
       show(b.dataset.mtab);
     }));
-      window.addEventListener("hashchange", () => show(keyFromHash()));
+    window.addEventListener("hashchange", () => show(keyFromHash()));
     show(keyFromHash());
 
     initMemberModal();
@@ -401,11 +422,15 @@ if (typeof SITE === "undefined") {
     /* ---------------------------------------------------------------------
      구성원 상세 창
      --------------------------------------------------------------------- */
-  function initMemberModal() {
+   function initMemberModal() {
     const modal = $("#memberModal");
     if (!modal) return;
     const body = $("#modalBody");
-    const data = { faculty: FACULTY, students: STUDENTS };
+    const data = {
+      faculty:  FACULTY,
+      students: STUDENTS,
+      alumni:   (typeof ALUMNI !== "undefined") ? ALUMNI : []
+    };
     let lastFocus = null;
 
     function bioRow(line) {
@@ -427,9 +452,10 @@ if (typeof SITE === "undefined") {
             '<span class="prof-role">' + esc(p.role || p.course || "") + '</span>' +
             '<h2 class="modal-name" id="modalName">' + esc(p.name) + '</h2>' +
             '<p class="modal-en">' + esc(p.nameEn) + '</p>' +
-            (p.field || p.interest
-              ? '<p class="modal-field"><strong>' + (p.field ? '연구 분야' : '관심 분야') + '</strong> &middot; ' +
-                esc(p.field || p.interest) + '</p>' : '') +
+                        (p.field || p.interest || p.now
+              ? '<p class="modal-field"><strong>' +
+                (p.field ? '연구 분야' : p.interest ? '관심 분야' : '현재') + '</strong> &middot; ' +
+                esc(p.field || p.interest || p.now) + '</p>' : '') +
             (p.email ? '<p class="modal-field"><a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a></p>' : '') +
           '</div>' +
         '</div>' +

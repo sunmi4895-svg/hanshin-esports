@@ -25,8 +25,9 @@
 
       <!-- 탭 : 교수진 / 재학생 -->
       <div class="tools" role="tablist" aria-label="구성원 분류">
-        <button class="chip" role="tab" aria-selected="true"  data-mtab="faculty">교수진</button>
-        <button class="chip" role="tab" aria-selected="false" data-mtab="students">재학생</button>
+               <button class="chip" role="tab" aria-selected="true"  data-mtab="faculty">교수진</button>
+        <button class="chip" role="tab" aria-selected="false" data-mtab="students">대학원생</button>
+        <button class="chip" role="tab" aria-selected="false" data-mtab="alumni">졸업생</button>
         <span class="count" id="memCount"></span>
       </div>
 
@@ -35,12 +36,16 @@
         <div id="facultyList"></div>
       </div>
 
-      <!-- 재학생 : data.js 의 STUDENTS -->
+           <!-- 대학원생 : data.js 의 STUDENTS -->
       <div id="panelStudents" hidden>
         <div class="students" id="studentList"></div>
       </div>
 
-        </div>
+      <!-- 졸업생 : data.js 의 ALUMNI -->
+      <div id="panelAlumni" hidden>
+        <div class="students" id="alumniList"></div>
+      </div>
+      
   </section>
 
   <!-- 구성원 상세 창 (카드를 누르면 열립니다) -->

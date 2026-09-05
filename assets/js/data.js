@@ -48,9 +48,10 @@ const NAV = [
   { label:"역사·연혁",  href:"history.html" },
   { label:"학술 활동",  href:"research.html" },
   { label:"대외 활동",  href:"outreach.html" },
-  { label:"랩 구성원",  href:"members.html", children:[      /* 하위 메뉴 */
-      { label:"교수진", href:"members.html#faculty"  },
-      { label:"재학생", href:"members.html#students" }
+    { label:"랩 구성원",  href:"members.html", children:[
+      { label:"교수진",   href:"members.html#faculty"  },
+      { label:"대학원생", href:"members.html#students" },
+      { label:"졸업생",   href:"members.html#alumni"   }
   ]},
   { label:"Q&A",       href:"qna.html"     }
 ];
@@ -206,6 +207,22 @@ const STUDENTS = [
     interest:"게임 리터러시 교육 프로그램" },
   { name:"최○○", nameEn:"CHOI ○○", course:"학부 연구생", photo:"",
     interest:"대학 이스포츠 리그 운영" }
+];
+/* --- 졸업생 ------------------------------------------------------------ */
+/* course 에는 "2026 석사 졸업" 처럼 연도와 학위를,
+   now 에는 현재 소속이나 하는 일을 적으시면 됩니다. */
+const ALUMNI = [
+  { name:"정○○", nameEn:"JEONG ○○", course:"2026 석사 졸업", photo:"",
+    now:"○○이스포츠협회 연구원",
+    intro:"대학 이스포츠 리그의 운영 구조를 주제로 학위논문을 썼습니다.",
+    bio:[
+      "2026 한신대학교 e스포츠융합대학원 석사 졸업",
+      "2025 한국게임학회 추계학술대회 발표",
+      "2024 한신대학교 e스포츠융합대학원 입학"
+    ] },
+  { name:"강○○", nameEn:"KANG ○○", course:"2025 석사 졸업", photo:"",
+    now:"○○게임즈 데이터 분석팀",
+    intro:"", bio:[] }
 ];
 
 /* --- 6. Q&A ------------------------------------------------------------ */
