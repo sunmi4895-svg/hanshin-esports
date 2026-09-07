@@ -315,21 +315,38 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      대외 활동
      ====================================================================== */
-  function renderOutreach() {
+    function renderOutreach() {
+    const SNS = (SITE.sns || []).filter(s => s.url);
+
     const GROUPS = {
+      media:    { data: NEWS,     subs: ["전체", "학교", "플레이브릿지"] },
       news:     { data: NEWS,     subs: ["전체", "학교", "플레이브릿지"] },
       campus:   { data: CAMPUS,   subs: ["전체", "ECS", "베리어프리", "총장배", "기타"] },
-      external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 이스포츠", "현장 답사", "MT", "기타"] }
+      external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 이스포츠", "현장 답사", "MT", "기타"] },
+      sns:      { data: [],       subs: [] }
     };
-    let gKey = "news", sKey = "전체";
+    let gKey = "media", sKey = "전체";
 
     function drawSubs() {
-      $("#subTabs").innerHTML = GROUPS[gKey].subs.map(s =>
+      const subs = GROUPS[gKey].subs;
+      $("#subTabs").innerHTML = subs.map(s =>
         '<button class="chip' + (s === sKey ? ' on' : '') + '" data-sub="' + esc(s) + '">' + esc(s) + '</button>').join("");
       $$('[data-sub]').forEach(b => b.addEventListener("click", () => { sKey = b.dataset.sub; drawSubs(); drawActs(); }));
     }
 
     function drawActs() {
+      if (gKey === "sns") {
+        $("#actCount").textContent = "총 " + SNS.length + "곳";
+        $("#actList").innerHTML = SNS.length ? SNS.map(s =>
+          '<article class="card reveal">' +
+            '<div class="card-top"><span class="card-tag">SNS</span></div>' +
+            '<h3>' + esc(s.label) + '</h3>' +
+            '<a class="more" href="' + esc(s.url) + '" target="_blank" rel="noopener">바로 가기 &rarr;</a>' +
+          '</article>').join("") : '<p class="empty">아직 등록된 채널이 없습니다.</p>';
+        observe();
+        return;
+      }
+
       const rows = GROUPS[gKey].data
         .filter(a => sKey === "전체" || a.sub === sKey)
         .sort((a, b) => b.date.localeCompare(a.date));
@@ -345,12 +362,24 @@ if (typeof SITE === "undefined") {
       observe();
     }
 
+    function show(key) {
+      if (!GROUPS[key]) key = "media";
+      $$('[data-group]').forEach(b => b.setAttribute("aria-selected", b.dataset.group === key));
+      gKey = key; sKey = "전체";
+      drawSubs(); drawActs();
+    }
+
+    const keyFromHash = () => {
+      const h = location.hash.replace("#", "");
+      return GROUPS[h] ? h : "media";
+    };
+
     $$('[data-group]').forEach(b => b.addEventListener("click", () => {
-      $$('[data-group]').forEach(x => x.setAttribute("aria-selected", "false"));
-      b.setAttribute("aria-selected", "true");
-      gKey = b.dataset.group; sKey = "전체"; drawSubs(); drawActs();
+      history.replaceState(null, "", "#" + b.dataset.group);
+      show(b.dataset.group);
     }));
-    drawSubs(); drawActs();
+    window.addEventListener("hashchange", () => show(keyFromHash()));
+    show(keyFromHash());
   }
 
   /* ======================================================================

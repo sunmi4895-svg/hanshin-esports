@@ -38,6 +38,11 @@ const SITE = {
   heroImage: "assets/images/hero.png",                                           // 예: "assets/images/hero.jpg"
   heroCaption: "",        // 사진 아래 설명
   heroDim: 0.9,
+  sns: [
+    { label:"인스타그램", url:"" },
+    { label:"유튜브",     url:"" },
+    { label:"페이스북",   url:"" }
+  ],
   updated: "2026-08-29"                                    // 마지막 업데이트 날짜
 };
 
@@ -53,7 +58,12 @@ const NAV = [
       { label:"대학원생",  href:"members.html#students" },
       { label:"졸업생",    href:"members.html#alumni"   }
   ]},
-  { label:"소식",          href:"outreach.html" }
+    { label:"소식",          href:"outreach.html", children:[
+      { label:"미디어", href:"outreach.html#media" },
+      { label:"뉴스",   href:"outreach.html#news"  },
+      { label:"Q&A",    href:"qna.html"            },
+      { label:"SNS",    href:"outreach.html#sns"   }
+  ]}
 ];
 /* --- 1. 첫 화면 문구 --------------------------------------------------- */
 const INTRO = {
