@@ -342,8 +342,8 @@ if (typeof SITE === "undefined") {
     const SNS = (SITE.sns || []).filter(s => s.url);
 
     const GROUPS = {
-      media:    { data: NEWS,     subs: ["전체", "학교", "플레이브릿지"] },
-      news:     { data: NEWS,     subs: ["전체", "학교", "플레이브릿지"] },
+      media:    { data: MEDIA,    subs: ["전체", "영상", "사진", "방송", "기타"] },
+      news:     { data: NEWS,     subs: ["전체", "학교", "플레이브릿지", "기타"] },
       campus:   { data: CAMPUS,   subs: ["전체", "ECS", "베리어프리", "총장배", "기타"] },
       external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 이스포츠", "현장 답사", "MT", "기타"] },
       sns:      { data: [],       subs: [] }
