@@ -263,13 +263,28 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      역사·연혁
      ====================================================================== */
-  function renderHistory() {
+    function renderHistory() {
     $("#historyRail").innerHTML = HISTORY.map((h, i) =>
       '<div class="rail-item reveal' + (i === 0 ? ' is-first' : '') + '">' +
         '<div class="rail-y">' + esc(h.year) + '</div>' +
         '<h3 class="rail-t">' + esc(h.title) + '</h3>' +
         '<p class="rail-d">' + esc(h.desc) + '</p>' +
       '</div>').join("");
+
+    /* 사진 + 설명 블록 */
+    const box = $("#programList");
+    if (!box || typeof PROGRAMS === "undefined") return;
+    box.innerHTML = PROGRAMS.map(p =>
+      '<article class="pgm reveal' + (p.image ? '' : ' pgm--notext') + '">' +
+        (p.image
+          ? '<div class="pgm-photo"><img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy"></div>'
+          : '') +
+        '<div class="pgm-body">' +
+          (p.tag ? '<span class="pgm-tag">' + esc(p.tag) + '</span>' : '') +
+          '<h3 class="pgm-title">' + esc(p.title) + '</h3>' +
+          '<p class="pgm-desc">' + esc(p.desc) + '</p>' +
+        '</div>' +
+      '</article>').join("");
   }
 
   /* ======================================================================
