@@ -181,7 +181,6 @@ if (typeof SITE === "undefined") {
     }
 
     renderNotices();
-    renderSeminars();
   }
 
   function renderNotices() {
@@ -228,27 +227,36 @@ if (typeof SITE === "undefined") {
   }
 
   /* 세미나 — 예정은 가까운 날짜 순으로 위에, 완료는 최신순으로 아래에 */
+    /* E.C.Seminar — 학기별 목록 */
   function renderSeminars() {
-    const box = $("#seminarList");
+    const box = $("#termList");
     if (!box || typeof SEMINARS === "undefined") return;
 
-    const soon = SEMINARS.filter(x => x.status !== "완료").sort((a, b) => a.date.localeCompare(b.date));
-    const done = SEMINARS.filter(x => x.status === "완료").sort((a, b) => b.date.localeCompare(a.date));
-    const rows = [...soon, ...done];
+    box.innerHTML = SEMINARS.map(t => {
+      const soon = t.items.filter(x => x.status !== "완료").sort((a, b) => a.date.localeCompare(b.date));
+      const done = t.items.filter(x => x.status === "완료").sort((a, b) => b.date.localeCompare(a.date));
+      const rows = [...soon, ...done];
 
-    box.innerHTML = rows.length ? rows.map(x => {
-      const isDone = x.status === "완료";
-      return '<div class="sem reveal' + (isDone ? ' sem--done' : '') + '">' +
-        '<span class="sem-round">' + esc(x.round) + '회</span>' +
-        '<span class="sem-date">' + esc(dot(x.date)) + '</span>' +
-        '<span class="sem-topic">' + esc(x.topic) + '</span>' +
-        '<span class="sem-speaker">' + esc(x.speaker) + '</span>' +
-        '<span class="sem-status' + (isDone ? '' : ' sem-status--soon') + '">' + esc(x.status) + '</span>' +
-      '</div>';
-    }).join("") : '<p class="empty">예정된 세미나가 없습니다.</p>';
-
-    const note = $("#seminarNote");
-    if (note && typeof SEMINAR_NOTE !== "undefined") note.textContent = SEMINAR_NOTE;
+      return '<section class="term reveal">' +
+        '<div class="term-head">' +
+          '<h2 class="term-title">' + esc(t.term) + '</h2>' +
+          '<span class="count">' + rows.length + '회</span>' +
+        '</div>' +
+        (t.note ? '<p class="sem-note" style="margin:0 0 14px">' + esc(t.note) + '</p>' : '') +
+        '<div class="sem-list">' +
+          (rows.length ? rows.map(x => {
+            const isDone = x.status === "완료";
+            return '<div class="sem' + (isDone ? ' sem--done' : '') + '">' +
+              '<span class="sem-round">' + esc(x.round) + '회</span>' +
+              '<span class="sem-date">' + esc(dot(x.date)) + '</span>' +
+              '<span class="sem-topic">' + esc(x.topic) + '</span>' +
+              '<span class="sem-speaker">' + esc(x.speaker) + '</span>' +
+              '<span class="sem-status' + (isDone ? '' : ' sem-status--soon') + '">' + esc(x.status) + '</span>' +
+            '</div>';
+          }).join("") : '<p class="empty">기록이 없습니다.</p>') +
+        '</div>' +
+      '</section>';
+    }).join("");
     observe();
   }
 
@@ -561,6 +569,7 @@ if (typeof SITE === "undefined") {
   ({
     home:     renderHome,
     history:  renderHistory,
+    seminar:  renderSeminars,
     research: renderResearch,
     outreach: renderOutreach,
     members:  renderMembers,

@@ -110,20 +110,28 @@ const NOTICES = [
 
 /* --- 세미나 ------------------------------------------------------------ */
 /* status: "예정" 은 위쪽에 날짜 가까운 순, "완료" 는 아래에 최신순으로 정렬됩니다 */
+/* --- E.C.Seminar ------------------------------------------------------- */
+/* 학기 단위로 묶습니다. 최근 학기를 맨 위에 두세요.
+   status: "예정" 또는 "완료" */
 const SEMINARS = [
-  { round:"14",  date:"2026-09-10", topic:"이스포츠 중계 데이터 수집 실습",
-    speaker:"홍길동",   status:"예정" },
-  { round:"13",  date:"2026-09-03", topic:"접근성 컨트롤러 사례 분석",
-    speaker:"이○○",   status:"예정" },
-  { round:"12",  date:"2026-08-27", topic:"관람 동기 척도 논문 리뷰",
-    speaker:"박○○",   status:"완료" },
-  { round:"11",  date:"2026-08-20", topic:"게임 리터러시 교육 설계 발표",
-    speaker:"최○○",   status:"완료" }
+  { term:"2026-2학기", note:"매주 수요일 오후 3시, 연구실",
+    items:[
+      { round:"14", date:"2026-09-10", topic:"이스포츠 중계 데이터 수집 실습", speaker:"홍길동", status:"예정" },
+      { round:"13", date:"2026-09-03", topic:"접근성 컨트롤러 사례 분석",   speaker:"이○○", status:"예정" }
+    ] },
+  { term:"2026-1학기", note:"",
+    items:[
+      { round:"12", date:"2026-05-27", topic:"관람 동기 척도 논문 리뷰",     speaker:"박○○", status:"완료" },
+      { round:"11", date:"2026-05-20", topic:"게임 리터러시 교육 설계 발표", speaker:"최○○", status:"완료" }
+    ] },
+  { term:"2025-2학기", note:"", items:[] },
+  { term:"2025-1학기", note:"", items:[] }
 ];
-const SEMINAR_NOTE = "매주 수요일 오후 3시, 연구실에서 진행합니다. 외부 참관을 원하시면 미리 연락 주세요.";
 
 /* --- 각 페이지 머리말 --------------------------------------------------- */
 const PAGES = {
+    seminar:  { eyebrow:"E.C.SEMINAR", title:"E.C.Seminar",
+              desc:"학기마다 진행한 세미나 기록입니다. 논문 리뷰와 연구 발표를 함께합니다." },
   history:  { eyebrow:"01 / HISTORY",  title:"연구실이 지나온 길",
               desc:"설립부터 현재까지의 주요 변화를 연도순으로 정리했습니다." },
   research: { eyebrow:"02 / RESEARCH", title:"학술 활동",
