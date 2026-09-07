@@ -44,18 +44,17 @@ const SITE = {
 /* --- 상단 메뉴 --------------------------------------------------------- */
 /* 순서를 바꾸거나 항목을 지우면 모든 페이지의 메뉴가 함께 바뀝니다. */
 const NAV = [
-  { label:"홈",        href:"index.html"  },
-  { label:"역사·연혁",  href:"history.html" },
-  { label:"학술 활동",  href:"research.html" },
-  { label:"대외 활동",  href:"outreach.html" },
-    { label:"랩 구성원",  href:"members.html", children:[
-      { label:"교수진",   href:"members.html#faculty"  },
-      { label:"대학원생", href:"members.html#students" },
-      { label:"졸업생",   href:"members.html#alumni"   }
+  { label:"홈",           href:"index.html"  },
+  { label:"연혁",          href:"history.html" },
+  { label:"E.C.Seminar",  href:"seminar.html" },
+  { label:"학술활동",       href:"research.html" },
+  { label:"EC Lab 연구진", href:"members.html", children:[
+      { label:"교수진",    href:"members.html#faculty"  },
+      { label:"대학원생",  href:"members.html#students" },
+      { label:"졸업생",    href:"members.html#alumni"   }
   ]},
-  { label:"Q&A",       href:"qna.html"     }
+  { label:"소식",          href:"outreach.html" }
 ];
-
 /* --- 1. 첫 화면 문구 --------------------------------------------------- */
 const INTRO = {
   /* 큰 글씨. \n 을 넣으면 그 자리에서 줄이 바뀝니다. */
