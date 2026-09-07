@@ -97,7 +97,7 @@ button{font-family:inherit;}
 }
 .topbar-in{
   max-width:var(--maxw); margin:0 auto; padding:0 24px;
-  height:64px; display:flex; align-items:center; gap:24px;
+  height:84px; display:flex; align-items:center; gap:24px;
 }
 .brand{display:flex; align-items:center; gap:11px; text-decoration:none; color:#fff;}
 .brand-mark{
@@ -106,10 +106,10 @@ button{font-family:inherit;}
   font-family:var(--f-mono); font-weight:600; font-size:13px; letter-spacing:.04em;
 }
 /* 학교 로고 이미지 */
-.brand-logo{height:32px; width:auto; flex-shrink:0;}
+.brand-logo{height:44px; width:auto; flex-shrink:0;}
 /* 로고가 검정·남색 계열이라 어두운 바탕에서 안 보일 때 흰색으로 변환 */
 .brand-logo--invert{filter:brightness(0) invert(1);}
-.brand-text b{display:block; font-size:17px; font-weight:600; line-height:1.2;}
+.brand-text b{display:block; font-size:20px; font-weight:600; line-height:1.2;}
 .brand-text em{
   display:block; font-style:normal; font-family:var(--f-mono);
   font-size:11px; letter-spacing:.12em; color:#fff; opacity:.92;
@@ -466,7 +466,7 @@ footer .fine{
   .prof{grid-template-columns:1fr; text-align:left;}
   .prof .photo,.prof .photo-ph{max-width:190px;}
   .nav{
-    position:absolute; top:64px; left:0; right:0; flex-direction:column; gap:0;
+    position:absolute; top:84px; left:0; right:0; flex-direction:column; gap:0;
     background:var(--ink); padding:10px 16px 18px; display:none;
     border-bottom:1px solid rgba(255,255,255,.15);
   }
@@ -478,8 +478,8 @@ footer .fine{
 /* 아주 좁은 화면에서는 영문 기관명을 감춰 상단바가 밀리지 않게 합니다 */
 @media (max-width:430px){
   .brand-text em{display:none;}
-  .brand-text b{font-size:14px;}
-  .brand-logo{height:28px;}
+  .brand-text b{font-size:16px;}
+  .brand-logo{height:34px;}
 }
 
 @media (prefers-reduced-motion:reduce){

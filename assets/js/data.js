@@ -27,7 +27,7 @@ const SITE = {
   logoInvert: false,          // 로고가 어두운 색이면 true (흰색으로 바꿔서 표시)
   mark: "ES",                // 로고 파일이 없을 때 쓰는 글자 마크
 
-  name: "e스포츠융합대학원",
+  name: "한신대학교 e스포츠융합대학원",
   univ: "한신대학교",
   address: "경기도 오산시 한신대길 137, 만우관 3506호",   // ← 실제 주소로 교체
   email: "lab@example.ac.kr",                              // ← 실제 이메일로 교체
