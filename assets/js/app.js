@@ -138,7 +138,7 @@ if (typeof SITE === "undefined") {
 
     $("#homeHero").innerHTML =
       '<div class="wrap">' +
-        '<p class="eyebrow">' + esc(SITE.univ) + ' / ' + esc(SITE.nameEn) + '</p>' +
+        '<p class="eyebrow">' + esc(SITE.univ)+ esc(SITE.nameEn) + '</p>' +
         '<h1 class="home-headline">' + headline + '</h1>' +
         '<p class="home-sub" style="animation-delay:' + subDelay + 's">' + esc(INTRO.sub) + '</p>' +
         '<div class="home-stats">' +
