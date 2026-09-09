@@ -713,3 +713,10 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   min-height:calc(100vh - 84px);
   border-bottom:0;
 }
+/* 로고와 기관명 사이 정리 */
+.brand{gap:22px;}
+.brand-text{
+  padding-left:22px;
+  border-left:1px solid rgba(255,255,255,.25);
+}
+.brand-text b{font-size:19px; font-weight:500;}

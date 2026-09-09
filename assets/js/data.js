@@ -23,7 +23,7 @@ const SITE = {
   // ── 좌측 상단 로고 ──
   // 한신대 로고 파일을 assets/images/ 에 넣고 경로를 적으세요.
   // 파일이 없거나 경로가 틀리면 아래 mark 의 글자 마크가 대신 표시됩니다.
-  logo: "assets/images/hanshin-logo.png",
+  logo: "assets/images/hanshin-logo-2.png",
   logoInvert: false,          // 로고가 어두운 색이면 true (흰색으로 바꿔서 표시)
   mark: "ES",                // 로고 파일이 없을 때 쓰는 글자 마크
 
