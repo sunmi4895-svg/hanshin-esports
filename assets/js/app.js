@@ -124,7 +124,7 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      홈 — 감성 문구 + 소개글 + 공지사항
      ====================================================================== */
-  function renderHome() {
+    function renderHome() {
     document.title = SITE.name + " · " + SITE.univ;
 
     /* 큰 문구를 줄 단위로 나눠 순서대로 등장시킵니다 */
@@ -134,22 +134,14 @@ if (typeof SITE === "undefined") {
       .join("");
     const subDelay = (0.18 + lines.length * 0.13 + 0.1).toFixed(2);
 
-    const opened = HISTORY.length ? HISTORY[HISTORY.length - 1].year : "—";
-
     $("#homeHero").innerHTML =
       '<div class="wrap">' +
-        '<p class="eyebrow">' + esc(SITE.univ)+ esc(SITE.nameEn) + '</p>' +
+        '<p class="eyebrow">' + esc(SITE.univ) + '</p>' +
         '<h1 class="home-headline">' + headline + '</h1>' +
         '<p class="home-sub" style="animation-delay:' + subDelay + 's">' + esc(INTRO.sub) + '</p>' +
-        '<div class="home-stats">' +
-          '<div><b>' + opened + '</b><span>연구실 개설</span></div>' +
-          '<div><b>' + PUBLICATIONS.length + '</b><span>학술 기록</span></div>' +
-          '<div><b>' + (NEWS.length + CAMPUS.length + EXTERNAL.length) + '</b><span>대외 활동</span></div>' +
-          '<div><b>' + (FACULTY.length + STUDENTS.length) + '</b><span>구성원</span></div>' +
-        '</div>' +
       '</div>';
 
-       /* 대표 사진이 있으면 큰 문구 뒤에 깔아 줍니다 */
+    /* 대표 사진이 있으면 큰 문구 뒤에 깔아 줍니다 */
     if (SITE.heroImage) {
       const hero = $("#homeHero");
       hero.classList.add("home-hero--photo");
@@ -160,27 +152,6 @@ if (typeof SITE === "undefined") {
           '<span class="hero-credit">' + esc(SITE.heroCaption) + '</span>');
       }
     }
-
-    $("#homeIntro").innerHTML =
-      '<div class="wrap intro-grid">' +
-        '<p class="intro-label">연구실 소개</p>' +
-        '<div class="intro-body">' +
-          INTRO.paragraphs.map(p => '<p class="reveal">' + esc(p) + '</p>').join("") +
-          '<a class="btn btn--ghost" href="members.html">구성원 보기 &rarr;</a>' +
-        '</div>' +
-      '</div>';
-
-    if (typeof AREAS !== "undefined" && AREAS.length) {
-      $("#homeAreas").innerHTML = AREAS.map((a, i) =>
-        '<article class="area reveal">' +
-          '<span class="area-no">' + String(i + 1).padStart(2, "0") + '</span>' +
-          '<h2 class="area-ko">' + esc(a.ko) + '</h2>' +
-          '<p class="area-en">' + esc(a.en) + '</p>' +
-          '<p class="area-d">' + esc(a.desc) + '</p>' +
-        '</article>').join("");
-    }
-
-    renderNotices();
   }
 
   function renderNotices() {
@@ -264,6 +235,27 @@ if (typeof SITE === "undefined") {
      역사·연혁
      ====================================================================== */
     function renderHistory() {
+        /* 소개글 */
+    if ($("#homeIntro")) {
+      $("#homeIntro").innerHTML =
+        '<div class="wrap intro-grid">' +
+          '<p class="intro-label">대학원 소개</p>' +
+          '<div class="intro-body">' +
+            INTRO.paragraphs.map(p => '<p class="reveal">' + esc(p) + '</p>').join("") +
+          '</div>' +
+        '</div>';
+    }
+
+    /* 연구 갈래 */
+    if ($("#homeAreas") && typeof AREAS !== "undefined" && AREAS.length) {
+      $("#homeAreas").innerHTML = AREAS.map((a, i) =>
+        '<article class="area reveal">' +
+          '<span class="area-no">' + String(i + 1).padStart(2, "0") + '</span>' +
+          '<h2 class="area-ko">' + esc(a.ko) + '</h2>' +
+          '<p class="area-en">' + esc(a.en) + '</p>' +
+          '<p class="area-d">' + esc(a.desc) + '</p>' +
+        '</article>').join("");
+    }  
     $("#historyRail").innerHTML = HISTORY.map((h, i) =>
       '<div class="rail-item reveal' + (i === 0 ? ' is-first' : '') + '">' +
         '<div class="rail-y">' + esc(h.year) + '</div>' +

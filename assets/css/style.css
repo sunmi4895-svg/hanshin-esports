@@ -708,3 +708,8 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   .pgm{grid-template-columns:1fr; gap:20px; padding:30px 0;}
   .pgm-photo img{aspect-ratio:16/9;}
 }
+/* 홈 — 첫 화면을 한 장으로 */
+.home-hero--photo{
+  min-height:calc(100vh - 84px);
+  border-bottom:0;
+}
