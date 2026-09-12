@@ -892,3 +892,28 @@ body[data-page="home"] .home-hero--photo{
 
 /* 홈 화면의 스크롤 바깥 여백 */
 body[data-page="home"]{background:#FFFFFF;}
+
+/* 홈 배경 사진: 5초 간격 크로스페이드 */
+#homeHero{overflow:hidden; isolation:isolate;}
+.hero-slides{position:absolute; inset:0; z-index:0; background:#101A2C; overflow:hidden;}
+.hero-slide{position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center; opacity:0; transition:opacity .9s ease;}
+.hero-slide.is-active{opacity:1;}
+#homeHero.home-hero--photo::before{z-index:1; pointer-events:none;}
+@media(prefers-reduced-motion:reduce){.hero-slide{transition:none; transform:none !important;}}
+
+#homeHero > .wrap,#homeHero .hero-credit{z-index:2;}
+
+#intro,#timeline,#directions{scroll-margin-top:110px;}
+#directionsAddress{font-size:18px; word-break:keep-all;}
+
+/* 찾아오시는길 제목과 주소를 하나의 간결한 안내 블록으로 표시 */
+#directions{padding:28px 0;}
+#directions > .wrap{display:flex; align-items:baseline; flex-wrap:wrap; gap:8px 24px;}
+#directionsTitle{margin:0; font-size:20px; line-height:1.6; flex-shrink:0;}
+#directionsAddress{margin:0; font-size:17px; line-height:1.8;}
+
+/* 소개 메뉴의 긴 하위 항목도 한 칸 안에서 한 줄로 표시 */
+@media(min-width:1181px){
+  #nav > a[href="history.html"]{min-width:132px;}
+  .mega-col a[href="history.html#directions"]{white-space:nowrap; overflow-wrap:normal;}
+}
