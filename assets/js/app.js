@@ -257,19 +257,10 @@ if (typeof SITE === "undefined") {
       .join("");
     const subDelay = (0.18 + lines.length * 0.13 + 0.1).toFixed(2);
 
-    const opened = HISTORY.length ? HISTORY[HISTORY.length - 1].year : "—";
-
     $("#homeHero").innerHTML =
       '<div class="wrap">' +
-        '<p class="eyebrow">' + esc(SITE.univ) + ' / ' + esc(SITE.nameEn) + '</p>' +
         '<h1 class="home-headline">' + headline + '</h1>' +
         '<p class="home-sub" style="animation-delay:' + subDelay + 's">' + esc(INTRO.sub) + '</p>' +
-        '<div class="home-stats">' +
-          '<div><b>' + opened + '</b><span>연구실 개설</span></div>' +
-          '<div><b>' + PUBLICATIONS.length + '</b><span>학술 기록</span></div>' +
-          '<div><b>' + (NEWS.length + CAMPUS.length + EXTERNAL.length) + '</b><span>대외 활동</span></div>' +
-          '<div><b>' + (FACULTY.length + STUDENTS.length) + '</b><span>구성원</span></div>' +
-        '</div>' +
       '</div>';
 
     /* 대표 사진이 있으면 큰 문구 뒤에 깔아 줍니다 */

@@ -83,9 +83,9 @@ const NAV = [
 /* --- 1. 첫 화면 문구 --------------------------------------------------- */
 const INTRO = {
   /* 큰 글씨. \n 을 넣으면 그 자리에서 줄이 바뀝니다. */
-  headline:"e스포츠의 미래,\n한신이 선봉에 서다.",
+  headline:"한신대학교 일반대학원\ne스포츠 융합(협)",
   /* 큰 글씨 바로 아래 한 줄 */
-  sub: "Pioneering the Future of Esports: Hanshin at the Forefront",
+  sub: "Hanshin University Graduate School · Interdisciplinary Program in Esports Convergence",
   /* 소개글. 문단을 늘리려면 "..." 를 쉼표로 이어 붙이세요. */
   paragraphs: [
     "누군가에게 게임은 여가이고, 누군가에게는 직업이며, 또 누군가에게는 끝내 닿지 못한 문입니다. 저희는 그 세 가지 자리에서 벌어지는 일을 함께 들여다봅니다.",
