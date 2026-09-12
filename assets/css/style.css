@@ -44,7 +44,7 @@
    --------------------------------------------------------- */
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; background:#FFFFFF;}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:var(--f-body); font-weight:400; font-size:17px; line-height:1.7;
@@ -449,14 +449,14 @@ details.faq .a{padding:0 20px 19px; color:var(--muted); font-size:14.5px; margin
 /* =========================================================
    9. 푸터
    ========================================================= */
-footer{background:var(--ink); color:#fff; padding:52px 0 40px;}
-footer .cols{display:flex; flex-wrap:wrap; gap:44px; justify-content:space-between;}
+footer{background:var(--ink); color:#fff; padding:28px 0 20px;}
+footer .cols{display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;}
 footer h3{font-family:var(--f-display); color:#fff; font-size:20px; margin:0 0 8px;}
 footer p{margin:0 0 5px; font-size:14px;}
 footer a{color:#fff;}
 footer .fine{
   font-family:var(--f-mono); font-size:11.5px; color:#fff; opacity:.7;
-  margin-top:34px; padding-top:18px; border-top:1px solid rgba(255,255,255,.14);
+  margin-top:18px; padding-top:12px; border-top:1px solid rgba(255,255,255,.14);
 }
 
 /* =========================================================
@@ -544,7 +544,7 @@ footer{background:#080C15;}
 
 /* 밝기 관계가 뒤집히는 자리들 */
 .topbar{background:rgba(10,18,32,.94);}
-footer{background:#0A1220;}
+footer{background:#000000;}
 .sec--alt{background:#18243D;}
 @media (max-width:900px){ .nav{background:#0A1220;} }
 
@@ -838,8 +838,8 @@ body[data-page="home"] .home-hero--photo{
    협력 기관 띠 (흐르는 로고)
    ========================================================= */
 .ticker{background:#FFFFFF; color:#525B6B; padding:24px 0 30px; overflow:hidden; border-top:1px solid #E9EDF2;}
-.tick-heading{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px;}
-.tick-label{margin:0; font-size:13px; font-weight:600; color:#697386; letter-spacing:.04em;}
+.tick-heading{display:flex; align-items:center; justify-content:flex-start; gap:16px; max-width:none; padding-inline:clamp(20px,2.5vw,48px); margin-bottom:22px;}
+.tick-label{margin:0; padding:8px 16px; border:1px solid #535B66; border-radius:0; font-size:17px; font-weight:600; color:#303844; letter-spacing:0;}
 .tick-toggle{
   flex-shrink:0; padding:5px 11px; border:1px solid #D8DEE7; border-radius:6px;
   background:#FFFFFF; color:#525B6B; font-size:12px; cursor:pointer;
@@ -877,5 +877,18 @@ body[data-page="home"] .home-hero--photo{
 
 /* 홈 제목 — 사진을 넓게 보여 주는 왼쪽 상단 배치 */
 #homeHero > .wrap{max-width:none; margin:0; padding-inline:clamp(20px,2.5vw,48px);}
-#homeHero .home-headline{max-width:none; font-size:clamp(28px,4.6vw,64px); line-height:1.25; margin-bottom:20px; word-break:keep-all;}
-#homeHero .home-sub{max-width:58ch; font-size:clamp(15px,1.4vw,19px); line-height:1.6; text-wrap:balance;}
+#homeHero .home-headline{max-width:none; font-size:clamp(25.2px,4.14vw,57.6px); line-height:1.25; margin-bottom:20px; word-break:keep-all;}
+#homeHero .home-sub{max-width:58ch; font-size:clamp(12px,1.12vw,15.2px); line-height:1.6; text-wrap:balance;}
+
+/* 하단 바로가기를 두 열로 정리해 전체 높이를 줄입니다. */
+#siteFooter .cols > div:nth-child(2){display:grid; grid-template-columns:repeat(2,max-content); column-gap:24px; align-content:start;}
+#siteFooter .cols > div:nth-child(2) > p:first-child{grid-column:1 / -1;}
+
+/* 간결한 하단 기관 정보 */
+#siteFooter .footer-identity{max-width:none; padding-inline:clamp(20px,2.5vw,48px);}
+#siteFooter .footer-logo{display:block; width:210px; max-width:100%; height:auto; margin-bottom:16px;}
+#siteFooter .footer-address{margin:0; color:#D8D8D8; font-size:14px; line-height:1.7; word-break:keep-all;}
+@media(max-width:1180px){#siteFooter .footer-logo{width:160px;}}
+
+/* 홈 화면의 스크롤 바깥 여백 */
+body[data-page="home"]{background:#FFFFFF;}
