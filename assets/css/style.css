@@ -752,7 +752,7 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 
 .mega-in{
   position:relative; max-width:var(--maxw); margin:0 auto; padding:0 24px;
-  height:250px;
+  height:300px;
 }
 .mega-col{
   position:absolute; top:0; bottom:0;
@@ -763,15 +763,16 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 .mega-col:last-child{border-right:1px solid rgba(0,0,0,.07);}
 .mega-col.is-hot{background:#F3F1FA;}
 .mega-col a{
-  display:block; padding:11px 4px; text-decoration:none;
-  color:#2A2533; font-size:15px; white-space:nowrap;
+  display:block; padding:13px 4px; text-decoration:none;
+  color:#202633; font-size:18px; font-weight:600; line-height:1.5;
+  white-space:normal; word-break:keep-all; overflow-wrap:anywhere;
   transition:color .15s;
 }
 .mega-col a:hover{color:#5B3FBF;}
 
 /* 마우스를 올린 메뉴에 밑줄 */
 .nav a.is-hot{background:transparent; box-shadow:inset 0 -3px 0 var(--accent);}
-.topbar.is-open .nav a{opacity:.7;}
+.topbar.is-open .nav a{opacity:.9;}
 .topbar.is-open .nav a.is-hot,
 .topbar.is-open .nav a.on{opacity:1;}
 
@@ -783,27 +784,55 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   .nav-sub{display:block; padding:0 0 4px 18px;}
   .nav-sub a{display:block; font-size:14px; opacity:.85;}
 }
-/* 기관명을 한 줄로 유지 */
-.brand-text b{white-space:nowrap; font-size:17px;}
-.nav a{padding:9px 8px; font-size:18px; font-weight:600; letter-spacing:-.015em;}
-/* 글꼴을 키워도 중간 폭과 모바일에서 상단바가 겹치지 않도록 */
-@media (min-width:901px) and (max-width:1100px){
-  .topbar-in{gap:12px;}
-  .brand{gap:12px;}
-  .brand-logo{height:34px;}
-  .brand-text{padding-left:12px;}
-  .brand-text b{font-size:14px;}
-  .nav a{font-size:16px; padding:9px 6px;}
+/* 로고는 왼쪽, 메뉴 묶음은 화면의 정중앙에 배치합니다. */
+.topbar-in{
+  max-width:none; margin:0; padding:0 clamp(20px,2.5vw,48px);
+  display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center; gap:16px; height:84px;
 }
-@media (max-width:900px){
-  .topbar-in{padding:0 16px; gap:12px;}
-  .brand{flex:1; min-width:0; gap:12px;}
-  .brand-logo{height:30px;}
-  .brand-text{min-width:0; padding-left:12px;}
-  .brand-text b{white-space:normal; font-size:14px; line-height:1.4;}
-  .navtoggle{flex-shrink:0; font-size:15px; font-weight:600;}
-  .nav a{font-size:17px;}
-  .nav-sub a{font-size:15px; font-weight:500;}
+.brand{grid-column:1; grid-row:1; justify-self:start; min-width:0; gap:0;}
+.brand-logo{width:210px; height:auto; max-width:none;}
+.nav{
+  grid-column:2; grid-row:1; justify-self:center; margin:0;
+  display:grid; grid-auto-flow:column; grid-auto-columns:minmax(108px,max-content);
+  gap:4px; width:max-content;
+}
+.nav > a{padding:12px 10px; font-size:20px; font-weight:700; line-height:1.4; letter-spacing:-.015em;}
+.navtoggle{grid-column:3; grid-row:1; justify-self:end; margin:0;}
+.mega-in{max-width:none; padding:0;}
+
+/* 홈에서는 동일한 사진 위에 로고와 메뉴를 겹쳐 보여줍니다. */
+body[data-page="home"] .topbar{
+  position:absolute; top:0; left:0; right:0;
+  background:transparent; backdrop-filter:none;
+  border-bottom:1px solid rgba(255,255,255,.16);
+}
+body[data-page="home"] .brand-logo{filter:drop-shadow(0 2px 8px rgba(0,0,0,.25));}
+body[data-page="home"] .brand-logo--invert{filter:brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.25));}
+body[data-page="home"] .nav > a{text-shadow:0 2px 10px rgba(0,0,0,.4);}
+body[data-page="home"] .home-hero--photo{
+  min-height:100vh; min-height:100svh;
+  padding-top:clamp(140px,18vh,190px); padding-bottom:clamp(56px,8vh,90px);
+}
+@media (min-width:1181px) and (max-width:1280px){
+  .brand-logo{width:180px;}
+}
+@media (max-width:1180px){
+  .topbar-in{display:flex; justify-content:space-between; padding:0 20px; gap:16px;}
+  .brand{flex:0 0 auto;}
+  .brand-logo{width:160px; height:auto;}
+  .navtoggle{display:block; flex-shrink:0; font-size:16px; font-weight:600;}
+  .mega{display:none !important;}
+  .nav{
+    position:absolute; top:100%; left:0; right:0; width:auto; margin:0; justify-self:stretch;
+    display:none; flex-direction:column; gap:0; padding:14px 24px 20px;
+    max-height:calc(100dvh - 84px); overflow-y:auto;
+    background:rgba(10,18,32,.98); border-bottom:1px solid rgba(255,255,255,.15);
+  }
+  .nav.open{display:flex;}
+  .nav > a{text-align:left; font-size:19px; padding:12px 8px;}
+  .nav-sub{display:block; padding:0 0 10px 18px;}
+  .nav-sub a{display:block; text-align:left; font-size:17px; font-weight:600; padding:9px 8px; opacity:1;}
 }
 /* =========================================================
    협력 기관 띠 (흐르는 로고)

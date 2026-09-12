@@ -44,12 +44,11 @@ if (typeof SITE === "undefined") {
 
     el.innerHTML =
       '<div class="topbar-in">' +
-        '<a class="brand" href="index.html">' +
+        '<a class="brand" href="index.html" aria-label="' + esc(SITE.univ) + ' 홈">' +
           (SITE.logo
             ? '<img class="brand-logo' + (SITE.logoInvert ? ' brand-logo--invert' : '') +
               '" src="' + esc(SITE.logo) + '" alt="' + esc(SITE.univ) + ' 로고">'
             : '<span class="brand-mark">' + esc(SITE.mark) + '</span>') +
-          '<span class="brand-text"><b>' + esc(SITE.name) + '</b><em>' + esc(SITE.nameEn) + '</em></span>' +
         '</a>' +
         '<button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="nav">메뉴</button>' +
         '<nav class="nav" id="nav" aria-label="주요 메뉴">' +
@@ -100,7 +99,6 @@ if (typeof SITE === "undefined") {
   function initMega() {
     const bar = $("#siteHeader"), mega = $("#mega"), inner = $("#megaIn");
     if (!bar || !mega || !inner) return;
-    if (window.innerWidth <= 900) return;   /* 휴대폰은 기존 햄버거 메뉴를 씁니다 */
 
     const links = $$("#nav > a");
     const cols  = $$(".mega-col", inner);
@@ -128,6 +126,7 @@ if (typeof SITE === "undefined") {
 
     let timer;
     function open() {
+      if (window.innerWidth <= 1180) return;
       clearTimeout(timer);
       mega.hidden = false;
       place();
@@ -148,7 +147,17 @@ if (typeof SITE === "undefined") {
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") { mega.hidden = true; bar.classList.remove("is-open"); hot(-1); }
     });
-    window.addEventListener("resize", () => { if (!mega.hidden) place(); });
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 1180) {
+        mega.hidden = true;
+        bar.classList.remove("is-open");
+        hot(-1);
+      } else {
+        $("#nav").classList.remove("open");
+        $("#navToggle").setAttribute("aria-expanded", "false");
+        if (!mega.hidden) place();
+      }
+    });
   }
 
   /* 같은 폭의 두 묶음을 이어 붙여 끊김 없이 흐르는 홈 후원기관 띠 */
