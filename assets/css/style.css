@@ -800,32 +800,40 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 /* =========================================================
    협력 기관 띠 (흐르는 로고)
    ========================================================= */
-.ticker{background:#FFFFFF; padding:22px 0 26px; overflow:hidden;}
-.tick-label{
-  max-width:var(--maxw); margin:0 auto 14px; padding:0 24px;
-  font-family:var(--f-mono); font-size:11px; letter-spacing:.16em;
-  text-transform:uppercase; color:#8A8496;
+.ticker{background:#FFFFFF; color:#525B6B; padding:24px 0 30px; overflow:hidden; border-top:1px solid #E9EDF2;}
+.tick-heading{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px;}
+.tick-label{margin:0; font-size:13px; font-weight:600; color:#697386; letter-spacing:.04em;}
+.tick-toggle{
+  flex-shrink:0; padding:5px 11px; border:1px solid #D8DEE7; border-radius:6px;
+  background:#FFFFFF; color:#525B6B; font-size:12px; cursor:pointer;
 }
-.tick-view{overflow:hidden;}
-.tick-track{
-  display:flex; align-items:center; gap:56px; width:max-content;
-  animation:tick 38s linear infinite;
+.tick-toggle:hover{background:#F2F5F9;}
+.tick-view{
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent);
 }
-@keyframes tick{ to { transform:translateX(-50%); } }
-.tick-view:hover .tick-track{animation-play-state:paused;}
-
+.tick-track{display:flex; width:max-content; animation:tick 48s linear infinite;}
+.tick-group{display:flex; flex:0 0 auto; align-items:center; justify-content:space-around; min-width:100vw; gap:64px; padding:0 32px;}
+@keyframes tick{to{transform:translateX(-50%);}}
+.tick-view:hover .tick-track,.tick-view:focus-within .tick-track,.ticker.is-paused .tick-track{animation-play-state:paused;}
 .tick-item{
-  display:flex; align-items:center; justify-content:center;
-  min-width:150px; height:44px; text-decoration:none;
-  opacity:.55; transition:opacity .2s;
+  display:flex; flex-shrink:0; align-items:center; justify-content:center;
+  min-width:180px; height:54px; text-decoration:none; color:#525B6B;
+  opacity:.8; transition:opacity .2s;
 }
 .tick-item:hover{opacity:1;}
-.tick-item img{max-height:40px; width:auto; object-fit:contain;}
-.tick-item span{
-  font-size:16px; font-weight:500; color:#2A2533; white-space:nowrap;
+.tick-item img{max-height:44px; max-width:180px; width:auto; object-fit:contain;}
+.tick-item span{font-size:26px; font-weight:700; letter-spacing:-.035em; white-space:nowrap;}
+@media (max-width:640px){
+  .ticker{padding:20px 0 26px;}
+  .tick-group{gap:40px; padding:0 20px;}
+  .tick-item{min-width:160px;}
+  .tick-item span{font-size:23px;}
 }
-
 @media (prefers-reduced-motion:reduce){
-  .tick-track{animation:none;}
-  .tick-view{overflow-x:auto;}
+  .tick-track{animation:none; width:100%;}
+  .tick-duplicate,[data-tick-copy],.tick-toggle{display:none;}
+  .tick-group{min-width:0; width:100%; flex-wrap:wrap; justify-content:center; gap:24px;}
+  .tick-view{-webkit-mask-image:none; mask-image:none;}
 }

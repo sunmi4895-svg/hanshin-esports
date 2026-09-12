@@ -151,34 +151,41 @@ if (typeof SITE === "undefined") {
     window.addEventListener("resize", () => { if (!mega.hidden) place(); });
   }
 
-  /* 협력 기관 띠 — 목록이 짧아도 빈틈이 생기지 않게 여러 번 이어 붙입니다 */
+  /* 같은 폭의 두 묶음을 이어 붙여 끊김 없이 흐르는 홈 후원기관 띠 */
   function partnerStrip() {
     if (typeof PARTNERS === "undefined" || !PARTNERS.length) return "";
-
     let list = PARTNERS.slice();
-    while (list.length < 10) list = list.concat(PARTNERS);
+    while (list.length < 6) list = list.concat(PARTNERS);
 
-    const item = p => {
-      const inside = p.logo
-        ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '" loading="lazy">'
-        : '<span>' + esc(p.name) + '</span>';
-      return p.url
-        ? '<a class="tick-item" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + inside + '</a>'
-        : '<span class="tick-item">' + inside + '</span>';
-    };
+    function row(copy) {
+      return list.map((p, i) => {
+        const repeated = copy || i >= PARTNERS.length;
+        const attrs = repeated ? ' data-tick-copy aria-hidden="true"' : '';
+        const inside = p.logo
+          ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '" loading="lazy">'
+          : '<span>' + esc(p.name) + '</span>';
+        return p.url
+          ? '<a class="tick-item"' + attrs + (repeated ? ' tabindex="-1"' : '') +
+            ' href="' + esc(p.url) + '" target="_blank" rel="noopener">' + inside + '</a>'
+          : '<span class="tick-item"' + attrs + '>' + inside + '</span>';
+      }).join("");
+    }
 
-    const row = list.map(item).join("");
-    return '<div class="ticker">' +
-      (typeof PARTNERS_LABEL !== "undefined" && PARTNERS_LABEL
-        ? '<p class="tick-label">' + esc(PARTNERS_LABEL) + '</p>' : '') +
-      '<div class="tick-view"><div class="tick-track">' + row + row + '</div></div>' +
-    '</div>';
+    const label = typeof PARTNERS_LABEL !== "undefined" && PARTNERS_LABEL ? PARTNERS_LABEL : "후원기관";
+    return '<section class="ticker" id="homePartners" aria-labelledby="partnerHeading">' +
+      '<div class="wrap tick-heading"><h2 class="tick-label" id="partnerHeading">' + esc(label) + '</h2>' +
+        '<button class="tick-toggle" id="partnerToggle" type="button" aria-label="후원기관 자동 이동 일시정지">일시정지</button></div>' +
+      '<div class="tick-view"><div class="tick-track">' +
+        '<div class="tick-group">' + row(false) + '</div>' +
+        '<div class="tick-group tick-duplicate" aria-hidden="true">' + row(true) + '</div>' +
+      '</div></div>' +
+    '</section>';
   }
 
   function renderFooter() {
     const el = $("#siteFooter");
     if (!el) return;
-    el.innerHTML = (page === "home" ? partnerStrip() : "") +
+    el.innerHTML =
       '<div class="wrap cols">' +
         '<div><h3>' + esc(SITE.name) + '</h3><p>' + esc(SITE.nameEn) + ', ' + esc(SITE.univ) + '</p></div>' +
         '<div><p><strong>바로 가기</strong></p>' +
@@ -190,6 +197,23 @@ if (typeof SITE === "undefined") {
       '</div>' +
       '<div class="wrap"><p class="fine">&copy; ' + new Date().getFullYear() + ' ' + esc(SITE.name) +
       ' &middot; 최종 업데이트 ' + esc(SITE.updated) + '</p></div>';
+
+    if (page === "home" && !$("#homePartners")) {
+      el.insertAdjacentHTML("beforebegin", partnerStrip());
+      const strip = $("#homePartners"), toggle = $("#partnerToggle");
+      if (strip && toggle) {
+        toggle.addEventListener("click", () => {
+          const paused = strip.classList.toggle("is-paused");
+          toggle.textContent = paused ? "재생" : "일시정지";
+          toggle.setAttribute("aria-label", paused ? "후원기관 자동 이동 재생" : "후원기관 자동 이동 일시정지");
+        });
+        $$(".tick-item img", strip).forEach(img => img.addEventListener("error", () => {
+          const text = document.createElement("span");
+          text.textContent = img.alt;
+          img.replaceWith(text);
+        }));
+      }
+    }
   }
 
   /* 하위 페이지 공통 머리말 */
@@ -251,7 +275,8 @@ if (typeof SITE === "undefined") {
       }
     }
 
-    $("#homeIntro").innerHTML =
+    const intro = $("#homeIntro");
+    if (intro) intro.innerHTML =
       '<div class="wrap intro-grid">' +
         '<p class="intro-label">연구실 소개</p>' +
         '<div class="intro-body">' +
@@ -260,8 +285,9 @@ if (typeof SITE === "undefined") {
         '</div>' +
       '</div>';
 
-    if (typeof AREAS !== "undefined" && AREAS.length) {
-      $("#homeAreas").innerHTML = AREAS.map((a, i) =>
+    const areas = $("#homeAreas");
+    if (areas && typeof AREAS !== "undefined" && AREAS.length) {
+      areas.innerHTML = AREAS.map((a, i) =>
         '<article class="area reveal">' +
           '<span class="area-no">' + String(i + 1).padStart(2, "0") + '</span>' +
           '<h2 class="area-ko">' + esc(a.ko) + '</h2>' +

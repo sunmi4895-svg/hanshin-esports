@@ -476,13 +476,11 @@ const ALUMNI = [
 /* --- 6. Q&A ------------------------------------------------------------ */
 /* --- 협력 기관 (페이지 맨 아래 흐르는 띠) -------------------------------- */
 /* logo 를 비워 두면 이름이 글자로 나옵니다. url 이 있으면 눌러서 이동합니다. */
-const PARTNERS_LABEL = "함께하는 기관";
+const PARTNERS_LABEL = "함께하는 후원기관";
+// 후원기관이 추가되면 아래 목록에 { name:"기관명", logo:"사진 경로", url:"홈페이지 주소" }를 추가하세요.
+// logo와 url은 준비되었을 때 입력하면 됩니다. 빈 값이면 기관명만 표시합니다.
 const PARTNERS = [
-  { name:"한신대학교",        logo:"assets/images/partner-hanshin.png", url:"https://www.hs.ac.kr" },
-  { name:"플레이브릿지",       logo:"", url:"" },
-  { name:"한국게임학회",       logo:"", url:"" },
-  { name:"한국e스포츠협회",     logo:"", url:"" },
-  { name:"쓰쿠바대학",         logo:"", url:"" }
+  { name:"플레이브릿지", logo:"", url:"" }
 ];
 const FAQ = [
   { q:"대학원 진학을 준비 중입니다. 무엇을 보시나요?",
