@@ -592,11 +592,23 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 }
 .home-hero--photo::before{                 /* 사진을 덮는 어두운 막 */
   content:""; position:absolute; inset:0;
-  background:linear-gradient(to top, rgba(10,18,32,.97), rgba(10,18,32,.42));
+  /* 문구 쪽은 짙게, 사진의 오른쪽은 밝게 남기는 반투명 그라데이션 */
+  background:
+    linear-gradient(90deg, rgba(4,9,18,.78) 0%, rgba(4,9,18,.55) 55%, rgba(4,9,18,.38) 100%),
+    linear-gradient(0deg, rgba(4,9,18,.65) 0%, rgba(4,9,18,.10) 65%);
   opacity:var(--dim,.9);
 }
 .home-hero--photo > .wrap{position:relative; z-index:1; width:100%;}
-.home-hero--photo .home-sub{color:var(--ink); opacity:.86;}
+.home-hero--photo .home-headline{
+  color:#FFFFFF; text-shadow:0 3px 24px rgba(0,0,0,.35);
+}
+.home-hero--photo .eyebrow{color:#DFE8F5;}
+.home-hero--photo .home-sub{
+  color:#F1F5FC; text-shadow:0 2px 12px rgba(0,0,0,.45);
+}
+.home-hero--photo .home-stats{border-top-color:rgba(255,255,255,.26);}
+.home-hero--photo .home-stats b{color:#FFFFFF;}
+.home-hero--photo .home-stats span{color:#D4DDED;}
 .hero-credit{
   position:absolute; right:26px; bottom:16px; z-index:1;
   font-family:var(--f-mono); font-size:11px; letter-spacing:.06em;
