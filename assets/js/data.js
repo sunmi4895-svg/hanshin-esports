@@ -50,15 +50,30 @@ const SITE = {
 /* 순서를 바꾸거나 항목을 지우면 모든 페이지의 메뉴가 함께 바뀝니다. */
 const NAV = [
   { label:"홈",           href:"index.html"  },
-  { label:"연혁",          href:"history.html" },
-  { label:"E.C.Seminar",  href:"seminar.html" },
-  { label:"학술활동",       href:"research.html" },
+
+  { label:"연혁",          href:"history.html", children:[
+      { label:"대학원 소개", href:"history.html#intro"   },
+      { label:"연혁",       href:"history.html#timeline" }
+  ]},
+
+  { label:"E.C.Seminar",  href:"seminar.html", children:[
+      { label:"세미나 일정", href:"seminar.html" }
+  ]},
+
+  { label:"학술활동",       href:"research.html", children:[
+      { label:"전체",       href:"research.html"          },
+      { label:"학회 발표",   href:"research.html#conference" },
+      { label:"학술지 등재", href:"research.html#journal"    },
+      { label:"수상",       href:"research.html#award"      }
+  ]},
+
   { label:"EC Lab 연구진", href:"members.html", children:[
       { label:"교수진",    href:"members.html#faculty"  },
       { label:"대학원생",  href:"members.html#students" },
       { label:"졸업생",    href:"members.html#alumni"   }
   ]},
-    { label:"소식",          href:"outreach.html", children:[
+
+  { label:"소식",          href:"outreach.html", children:[
       { label:"미디어", href:"outreach.html#media" },
       { label:"뉴스",   href:"outreach.html#news"  },
       { label:"Q&A",    href:"qna.html"            },
@@ -244,6 +259,194 @@ const FACULTY = [
 ];
 
 const STUDENTS = [
+  // 상세 이력은 이 구성원의 카드 안에서만 표시됩니다.
+  {
+    "name": "김동현",
+    "nameEn": "",
+    "course": "박사과정",
+    "photo": "assets/images/kim-donghyun.png",
+    "intro": "한신대학교 대학원 이스포츠융합전공",
+    "profileSections": [
+      {
+        "title": "학력",
+        "items": [
+          {
+            "date": "2025. 02. –",
+            "text": "한신대학교 대학원 이스포츠융합전공 박사과정"
+          },
+          {
+            "date": "2022. 08. – 2025. 02.",
+            "text": "한신대학교 대학원 이스포츠융합전공 공학석사"
+          },
+          {
+            "date": "2016. 02. – 2020. 08.",
+            "text": "금오공과대학교 컴퓨터공학과 공학사"
+          }
+        ]
+      },
+      {
+        "title": "교내 학술활동",
+        "items": [
+          {
+            "date": "2026. 04. 06.",
+            "text": "‘경쟁형 게임의 ‘대리 게임’ 현상에 관한 탐색적 연구, Esports Convergence seminar"
+          },
+          {
+            "date": "2025. 09. 22.",
+            "text": "‘한국의 e스포츠 대회 및 종목 현황 사례 분석’, 한신대학교, Esports Convergence seminar"
+          },
+          {
+            "date": "2025. 04. 02.",
+            "text": "'저는 여자가 아닙니다.' 온라인 게임 내 여성 차별과 성별 위장 현상 연구 : 경쟁형 게임을 중심으로,  한신대학교, Esports Convergence seminar"
+          },
+          {
+            "date": "2024. 10. 30.",
+            "text": "‘e스포츠 선수의 기술과 신체석 그리고 심리’, 한신대학교, Esports Convergence seminar"
+          },
+          {
+            "date": "2024. 04. 17.",
+            "text": "‘장애인 e스포츠 참여의 의미와 한계 연구’, 한신대학교, Esports Convergence seminar"
+          },
+          {
+            "date": "2023. 11. 27.",
+            "text": "‘한국 e스포츠 성장과 쇠퇴, 그리고 전망, 한신대학교’, Esports Convergence seminar"
+          }
+        ]
+      },
+      {
+        "title": "대외 학술활동 및 연구 참여",
+        "items": [
+          {
+            "date": "2026. 09. –",
+            "text": "「2026년 장애인이스포츠 대회 개선 연구」, 연구보조원, 대한장애인체육회"
+          },
+          {
+            "date": "2026. 05. 30.",
+            "text": "“경쟁형 게임 내 대리게임 현상에 대한 비판적 고찰” 발표, 2026 한국게임학회 춘계학술발표대회(시흥, 한국공학대학교)"
+          },
+          {
+            "date": "2026. 02. 21.",
+            "text": "“온라인 게임 재화 현금 거래 현상에 관한 탐색적 연구” 발표, 디그라한국학회 제2회 정기학술대회(서울, 연세대학교)"
+          },
+          {
+            "date": "2025. 11. 29.",
+            "text": "“온라인 게임 재화 현금 거래(RMT) 현상에 관한 탐색적 연구: 게임인가, 노동인가?“ 발표, 2025 한국게임학회 추계학술발표대회(서울, 중앙대학교)"
+          },
+          {
+            "date": "2025. 07. – 2025. 12.",
+            "text": "「국제 e스포츠 종목 분류 체계 연구 및 ISO 표준 개발」 연구보조원, 콘텐츠진흥원"
+          },
+          {
+            "date": "2025. 05. 24.",
+            "text": "“비디오 게임 내 정치적 올바름에 관한 연구” 발표, 2025 한국게임학회 춘계학술발표대회(의왕, 계원예술대학교)"
+          },
+          {
+            "date": "2024. 11. 30.",
+            "text": "“The Impact of Physical Education Students’ Motivation to Participate in Esports on Their Perception of the Value of Esports” 발표, 2024 제1회 Esports International Conference: The Future of Immersive Media and Esports Generation(서울, Four Points Hotel&중앙대학교)"
+          },
+          {
+            "date": "2024. 11. 30.",
+            "text": "“A Study on the Effects of Positive Self-Review for Esports Athletes with Developmental Disabilities”, 연구참여, 2024 제1회 Esports International Conference: The Future of Immersive Media and Esports Generation(서울, Four Points Hotel & 중앙대학교)"
+          },
+          {
+            "date": "2024. 06. 25.",
+            "text": "“발달장애인 e스포츠 선수를 위한 긍정적 셀프리뷰 적용 효과 연구“ 발표, 2024 한국스포츠심리학회 연차학술대회(강원, 쏠비치 양양)"
+          },
+          {
+            "date": "2024. 06. 01.",
+            "text": "“시각장애인을 위한 모바일게임 UI 디자인 탐구“ 발표, 2024 한국게임학회 춘계학술발표대회(서울, 중앙대학교)"
+          },
+          {
+            "date": "2024. 04. – 2024. 12.",
+            "text": "「시각장애인 게임 접근성 개선방안 연구」 연구보조원, 한국콘텐츠진흥원"
+          },
+          {
+            "date": "2023. 11. 25.",
+            "text": "「지역축제 참여자의 게임 체험 참여 동기와 인식 조사 연구」 발표, 2023 한국게임학회 추계학술발표대회(서울, 서울여자대학교 50주년기념관)"
+          },
+          {
+            "date": "2023. 06. 03.",
+            "text": "「장애인의 게임 플레이와 자기효능감 탐구」 발표, 2023 한국게임학회 춘계학술발표대회(대전, KAIST 창의학습관)"
+          },
+          {
+            "date": "2022. 04. – 2022. 12.",
+            "text": "「장애인 게임 접근성 제고 방안 기초연구」 연구보조원, 한국콘텐츠진흥원"
+          }
+        ]
+      },
+      {
+        "title": "논문",
+        "items": [
+          {
+            "date": "2026. 08.",
+            "text": "“쿠팡의 CSR 활동이 기업 이미지, 행동 의도에 미치는 영향 –장애인 e스포츠 팀 창단을 중심으로-.”, 한국특수체육학회지, 34(2), 45-58, 2026 (ISSN 2733-9831 (Online))"
+          },
+          {
+            "date": "2025. 08.",
+            "text": "“비디오 게임에 담긴 ‘정치적 올바름’에 대한 이용자의 댓글 분석.” 한국게임학회 논문지, 25(4), 95-104, 2025, 10.7583/JKGS.2025.25.4.95"
+          },
+          {
+            "date": "2025. 02.",
+            "text": "\"스포츠 전공 대학생의 e스포츠 참여 동기가 e스포츠 가치 인식에 미치는 영향.\" 국내석사학위논문 한신대학교 대학원, 김동현. 경기도"
+          },
+          {
+            "date": "2023. 08.",
+            "text": "\"장애인의 게임 플레이 숙련도가 사회적 자기효능감과 진로 결정 자기효능감에 미치는 영향.\" 한국게임학회 논문지, 23(4), 117-128, 2023, 10.7583/JKGS.2023.23.4.117"
+          }
+        ]
+      },
+      {
+        "title": "수상",
+        "items": [
+          {
+            "date": "2023. 06. 02. – 2023. 06. 03.",
+            "text": "“장애인의 게임 플레이와 자기 효능감 탐구” 발표, 2023 춘계학술발표대회 한국게임학회(대전, KAIST 창의학습관),  우수발표상"
+          },
+          {
+            "date": "2023. 11. 24. – 2023. 11. 25.",
+            "text": "“지역 축제 참여자들의 게임 체험 참여 동기와 인식 조사 연구”, 2023 추계학술발표대회 한국게임학회(서울, 서울여자대학교 50주년기념관), 우수발표상"
+          },
+          {
+            "date": "2024. 05. 31. – 2024. 06. 01.",
+            "text": "“시각장애인을 위한 모바일 게임 UI 디자인 탐구”, 2024 춘계학술발표대회 한국게임학회(서울, 중앙대학교), 우수발표상"
+          }
+        ]
+      },
+      {
+        "title": "경력",
+        "items": [
+          {
+            "date": "2026. 08. –",
+            "text": "대한장애인 e스포츠연맹 운영위원장"
+          },
+          {
+            "date": "2026. 07. 22.",
+            "text": "이천교육지원청 e스포츠 직무 실습 강의"
+          },
+          {
+            "date": "2025. 02. –",
+            "text": "한국관광대학교 e스포츠과 겸임교수, e스포츠 개론 강의, 종목 실습 강의, e스포츠 선수단 코치"
+          },
+          {
+            "date": "2023. 12. 29. – 2024. 01. 18.",
+            "text": "게임 접근성 테스터 훈련 강의, 한국장애인고용공단"
+          },
+          {
+            "date": "2023. 10. 21.",
+            "text": "2023 e스포츠 시대, 새로운 진로교육 강의, 강원특별자치도교육청진로교육원"
+          },
+          {
+            "date": "2023. 02. – 2024. 12.",
+            "text": "경기도 장애인 e스포츠 선수단 코치 및 협력 교사"
+          },
+          {
+            "date": "2021. 02. – 2023. 02.",
+            "text": "대한장애인e스포츠연맹 사무국 팀장 대회 운영 및 행정 업무"
+          }
+        ]
+      }
+    ]
+  },
   { name:"홍길동", nameEn:"HONG GIL-DONG", course:"석사 과정", photo:"",
     interest:"장애인 이스포츠 접근성, 대회 운영 설계" },
   { name:"이○○", nameEn:"LEE ○○", course:"석사 과정", photo:"",
@@ -271,6 +474,16 @@ const ALUMNI = [
 ];
 
 /* --- 6. Q&A ------------------------------------------------------------ */
+/* --- 협력 기관 (페이지 맨 아래 흐르는 띠) -------------------------------- */
+/* logo 를 비워 두면 이름이 글자로 나옵니다. url 이 있으면 눌러서 이동합니다. */
+const PARTNERS_LABEL = "함께하는 기관";
+const PARTNERS = [
+  { name:"한신대학교",        logo:"assets/images/partner-hanshin.png", url:"https://www.hs.ac.kr" },
+  { name:"플레이브릿지",       logo:"", url:"" },
+  { name:"한국게임학회",       logo:"", url:"" },
+  { name:"한국e스포츠협회",     logo:"", url:"" },
+  { name:"쓰쿠바대학",         logo:"", url:"" }
+];
 const FAQ = [
   { q:"대학원 진학을 준비 중입니다. 무엇을 보시나요?",
     a:"연구 주제에 대한 구체적인 관심과 꾸준히 기록을 남겨 온 경험을 봅니다. 관심 주제를 두세 문장으로 정리해 메일로 보내 주시면 상담 일정을 잡아 드립니다." },

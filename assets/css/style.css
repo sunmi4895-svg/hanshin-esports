@@ -1,6 +1,7 @@
 /* =========================================================
    0. 디자인 토큰 — 색/서체/간격을 여기서만 바꾸면 전체가 바뀝니다
    ========================================================= */
+   @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
    @font-face{
   font-family:'Paperlogy';
   src:url('../fonts/Paperlogy-4Regular.woff2') format('woff2');
@@ -24,9 +25,9 @@
   --hot:#9A4A30;          /* 최신·수상 표시 */
   --radius:14px;
   --maxw:1180px;
---f-display:'Paperlogy','Malgun Gothic',sans-serif;
---f-body:'Paperlogy','Malgun Gothic',sans-serif;
---f-mono:'Paperlogy',ui-monospace,monospace;
+--f-display:'Pretendard',sans-serif;
+--f-body:'Pretendard',sans-serif;
+--f-mono:'Pretendard',ui-monospace,monospace;
 }
 
 /* ---------------------------------------------------------
@@ -411,6 +412,29 @@ a.nt:hover .nt-title{color:var(--accent);}
 .st-course{font-size:12.5px; color:var(--accent); font-family:var(--f-mono); margin:0 0 8px;}
 .st-int{font-size:13.5px; color:var(--muted); margin:0;}
 
+/* 대학원생 카드 — 이름과 학위가 사진 아래에서 또렷하게 보이도록 */
+#studentList .st{padding:20px;}
+#studentList .photo,#studentList .photo-ph{margin-bottom:20px;}
+#studentList .st-name{
+  font-size:32px; font-weight:800; line-height:1.25;
+  letter-spacing:-.025em; color:#F5F8FF; overflow-wrap:anywhere;
+}
+#studentList .st-en{
+  font-size:14px; line-height:1.5; color:#B6C5DE;
+  margin:6px 0 0; overflow-wrap:anywhere;
+}
+#studentList .st-course{
+  display:inline-block; max-width:100%; margin:12px 0 0;
+  padding:7px 13px; border-radius:8px;
+  background:#C6DCFF; color:#112B52;
+  font-family:var(--f-body); font-size:16px; font-weight:700; line-height:1.4;
+  overflow-wrap:anywhere;
+}
+#studentList .st-int{
+  margin:14px 0 0; font-size:15px; line-height:1.7; color:#C3D0E4;
+}
+
+
 /* =========================================================
    8. Q&A
    ========================================================= */
@@ -582,34 +606,6 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   font-variant-numeric:tabular-nums;
 }
 /* =========================================================
-   상단 메뉴 하위 항목 (드롭다운)
-   ========================================================= */
-.nav-item{position:relative; display:flex; align-items:center;}
-.nav-caret{font-size:9px; margin-left:5px; opacity:.8;}
-.nav-sub{
-  position:absolute; top:100%; left:0; min-width:148px; z-index:60;
-  margin-top:12px; padding:6px;
-  background:#131E33; border:1px solid rgba(255,255,255,.16);
-  border-radius:10px; box-shadow:0 14px 30px rgba(0,0,0,.45);
-  display:none;
-}
-.nav-sub::before{
-  content:""; position:absolute; left:0; right:0; top:-14px; height:14px;
-}
-.nav-item:hover > .nav-sub,
-.nav-item:focus-within > .nav-sub{display:block;}
-.nav-sub a{display:block; white-space:nowrap; font-size:14.5px;}
-
-@media (max-width:900px){
-  .nav-item{display:block; width:100%;}
-  .nav-sub{
-    position:static; display:block; margin:0; padding:0 0 4px 18px;
-    background:none; border:0; box-shadow:none;
-  }
-  .nav-sub a{font-size:14px; opacity:.85;}
-  .nav-caret{display:none;}
-}
-/* =========================================================
    구성원 상세 창 (카드를 누르면 뜨는 흰 창)
    ========================================================= */
 .is-clickable{cursor:pointer;}
@@ -668,11 +664,23 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 .bio-y{font-family:var(--f-mono); font-size:13.5px; color:#7A8296;}
 .modal .prof-role{background:#2E4A6B; color:#fff;}
 
+.profile-section{margin-top:30px;}
+.profile-section h3{margin:0 0 12px; font-size:17px; color:#141A24;}
+.profile-history{list-style:none; margin:0; padding:0;}
+.profile-history li{
+  display:grid; grid-template-columns:128px minmax(0,1fr); gap:18px;
+  padding:13px 0; border-top:1px solid rgba(20,26,36,.1);
+  font-size:14px; line-height:1.8;
+}
+.profile-date{color:#667085; font-size:12.5px;}
+.profile-detail{white-space:pre-line; overflow-wrap:anywhere;}
+
 @media (max-width:640px){
   .modal-panel{padding:30px 22px 28px; max-height:90vh;}
   .modal-head{grid-template-columns:1fr; gap:18px;}
   .modal-photo{max-width:140px;}
   .bio li{grid-template-columns:64px 1fr; gap:12px;}
+  .profile-history li{grid-template-columns:minmax(0,1fr); gap:4px;}
 }
 @media (prefers-reduced-motion:reduce){
   .modal-panel{animation:none;}
@@ -710,7 +718,7 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 }
 /* 홈 — 첫 화면을 한 장으로 */
 .home-hero--photo{
-  min-height:calc(100vh - 84px);
+  min-height:calc(100vh - 180px);
   border-bottom:0;
 }
 /* 로고와 기관명 사이 정리 */
@@ -720,3 +728,92 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   border-left:1px solid rgba(255,255,255,.25);
 }
 .brand-text b{font-size:19px; font-weight:500;}
+/* =========================================================
+   전체 폭 메뉴판 (KeSPA 방식)
+   ========================================================= */
+.topbar{position:sticky; z-index:50;}
+.nav-sub{display:none;}
+
+/* 메뉴를 균등한 폭으로 — 아래 열과 정확히 맞물립니다 */
+.nav{
+  margin-left:auto;
+  display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:0;
+}
+.nav a{text-align:center; border-radius:0;}
+
+.mega{
+  position:absolute; left:0; right:0; top:100%;
+  background:#FFFFFF;
+  box-shadow:0 20px 44px rgba(0,0,0,.4);
+  animation:megaDown .18s ease;
+}
+.mega[hidden]{display:none;}
+@keyframes megaDown{from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:none;}}
+
+.mega-in{
+  position:relative; max-width:var(--maxw); margin:0 auto; padding:0 24px;
+  height:250px;
+}
+.mega-col{
+  position:absolute; top:0; bottom:0;
+  padding:24px 4px; text-align:center;
+  border-left:1px solid rgba(0,0,0,.07);
+  transition:background .16s;
+}
+.mega-col:last-child{border-right:1px solid rgba(0,0,0,.07);}
+.mega-col.is-hot{background:#F3F1FA;}
+.mega-col a{
+  display:block; padding:11px 4px; text-decoration:none;
+  color:#2A2533; font-size:15px; white-space:nowrap;
+  transition:color .15s;
+}
+.mega-col a:hover{color:#5B3FBF;}
+
+/* 마우스를 올린 메뉴에 밑줄 */
+.nav a.is-hot{background:transparent; box-shadow:inset 0 -3px 0 var(--accent);}
+.topbar.is-open .nav a{opacity:.7;}
+.topbar.is-open .nav a.is-hot,
+.topbar.is-open .nav a.on{opacity:1;}
+
+@media (max-width:900px){
+  .mega{display:none !important;}
+  .nav{display:flex; flex-direction:column;}
+  .nav a{text-align:left;}
+  .nav-sub{display:block; padding:0 0 4px 18px;}
+  .nav-sub a{display:block; font-size:14px; opacity:.85;}
+}
+/* 기관명을 한 줄로 유지 */
+.brand-text b{white-space:nowrap; font-size:17px;}
+.nav a{padding:9px 8px; font-size:15px;}
+/* =========================================================
+   협력 기관 띠 (흐르는 로고)
+   ========================================================= */
+.ticker{background:#FFFFFF; padding:22px 0 26px; overflow:hidden;}
+.tick-label{
+  max-width:var(--maxw); margin:0 auto 14px; padding:0 24px;
+  font-family:var(--f-mono); font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:#8A8496;
+}
+.tick-view{overflow:hidden;}
+.tick-track{
+  display:flex; align-items:center; gap:56px; width:max-content;
+  animation:tick 38s linear infinite;
+}
+@keyframes tick{ to { transform:translateX(-50%); } }
+.tick-view:hover .tick-track{animation-play-state:paused;}
+
+.tick-item{
+  display:flex; align-items:center; justify-content:center;
+  min-width:150px; height:44px; text-decoration:none;
+  opacity:.55; transition:opacity .2s;
+}
+.tick-item:hover{opacity:1;}
+.tick-item img{max-height:40px; width:auto; object-fit:contain;}
+.tick-item span{
+  font-size:16px; font-weight:500; color:#2A2533; white-space:nowrap;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tick-track{animation:none;}
+  .tick-view{overflow-x:auto;}
+}

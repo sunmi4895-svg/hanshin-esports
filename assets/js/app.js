@@ -41,6 +41,7 @@ if (typeof SITE === "undefined") {
     const el = $("#siteHeader");
     if (!el) return;
     const here = currentFile();
+
     el.innerHTML =
       '<div class="topbar-in">' +
         '<a class="brand" href="index.html">' +
@@ -52,19 +53,27 @@ if (typeof SITE === "undefined") {
         '</a>' +
         '<button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="nav">메뉴</button>' +
         '<nav class="nav" id="nav" aria-label="주요 메뉴">' +
-                 NAV.map(n => {
-            const on = n.href.split("#")[0] === here;
-            const link = '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
-                         esc(n.label) + (n.children ? '<span class="nav-caret">&#9662;</span>' : '') + '</a>';
-            if (!n.children) return link;
-            return '<span class="nav-item">' + link +
-              '<span class="nav-sub">' +
-                n.children.map(c => '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>').join("") +
-              '</span></span>';
-                    }).join("") +
+          NAV.map(n => {
+            /* 하위 항목의 페이지에 있어도 상위 메뉴가 켜집니다 */
+            const on = n.href.split("#")[0] === here ||
+                       (n.children || []).some(c => c.href.split("#")[0] === here);
+            return '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
+                   esc(n.label) + '</a>' +
+                   (n.children
+                     ? '<span class="nav-sub">' +
+                         n.children.map(c => '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>').join("") +
+                       '</span>'
+                     : '');
+          }).join("") +
         '</nav>' +
-      '</div>';
-
+      '</div>' +
+      '<div class="mega" id="mega" hidden><div class="mega-in" id="megaIn">' +
+        NAV.map(n =>
+          '<div class="mega-col">' +
+            (n.children || []).map(c =>
+              '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>').join("") +
+          '</div>').join("") +
+      '</div></div>';
 
     /* 로고 파일이 없으면 글자 마크로 조용히 바꿔 줍니다 */
     const logo = $(".brand-logo");
@@ -80,15 +89,96 @@ if (typeof SITE === "undefined") {
       const open = nav.classList.toggle("open");
       btn.setAttribute("aria-expanded", open);
     });
-       nav.addEventListener("click", e => {
+    nav.addEventListener("click", e => {
       if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
     });
+
+    initMega();
+  }
+
+  /* 전체 폭 메뉴판 — 각 열을 해당 메뉴의 폭과 위치에 정확히 맞춥니다 */
+  function initMega() {
+    const bar = $("#siteHeader"), mega = $("#mega"), inner = $("#megaIn");
+    if (!bar || !mega || !inner) return;
+    if (window.innerWidth <= 900) return;   /* 휴대폰은 기존 햄버거 메뉴를 씁니다 */
+
+    const links = $$("#nav > a");
+    const cols  = $$(".mega-col", inner);
+
+    function place() {
+      const base = inner.getBoundingClientRect().left;
+      links.forEach((a, i) => {
+        if (!cols[i]) return;
+        const r = a.getBoundingClientRect();
+        cols[i].style.left  = Math.round(r.left - base) + "px";
+        cols[i].style.width = Math.round(r.width) + "px";
+      });
+    }
+
+    /* 마우스를 올린 메뉴의 열을 밝게 */
+    function hot(i) {
+      cols.forEach((c, k) => c.classList.toggle("is-hot", k === i));
+      links.forEach((a, k) => a.classList.toggle("is-hot", k === i));
+    }
+    links.forEach((a, i) => {
+      a.addEventListener("mouseenter", () => hot(i));
+      a.addEventListener("focus", () => hot(i));
+    });
+    cols.forEach((c, i) => c.addEventListener("mouseenter", () => hot(i)));
+
+    let timer;
+    function open() {
+      clearTimeout(timer);
+      mega.hidden = false;
+      place();
+      bar.classList.add("is-open");
+    }
+    function close() {
+      timer = setTimeout(() => {
+        mega.hidden = true;
+        bar.classList.remove("is-open");
+        hot(-1);
+      }, 120);
+    }
+
+    bar.addEventListener("mouseenter", open);
+    bar.addEventListener("mouseleave", close);
+    bar.addEventListener("focusin", open);
+    bar.addEventListener("focusout", e => { if (!bar.contains(e.relatedTarget)) close(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") { mega.hidden = true; bar.classList.remove("is-open"); hot(-1); }
+    });
+    window.addEventListener("resize", () => { if (!mega.hidden) place(); });
+  }
+
+  /* 협력 기관 띠 — 목록이 짧아도 빈틈이 생기지 않게 여러 번 이어 붙입니다 */
+  function partnerStrip() {
+    if (typeof PARTNERS === "undefined" || !PARTNERS.length) return "";
+
+    let list = PARTNERS.slice();
+    while (list.length < 10) list = list.concat(PARTNERS);
+
+    const item = p => {
+      const inside = p.logo
+        ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '" loading="lazy">'
+        : '<span>' + esc(p.name) + '</span>';
+      return p.url
+        ? '<a class="tick-item" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + inside + '</a>'
+        : '<span class="tick-item">' + inside + '</span>';
+    };
+
+    const row = list.map(item).join("");
+    return '<div class="ticker">' +
+      (typeof PARTNERS_LABEL !== "undefined" && PARTNERS_LABEL
+        ? '<p class="tick-label">' + esc(PARTNERS_LABEL) + '</p>' : '') +
+      '<div class="tick-view"><div class="tick-track">' + row + row + '</div></div>' +
+    '</div>';
   }
 
   function renderFooter() {
     const el = $("#siteFooter");
     if (!el) return;
-    el.innerHTML =
+    el.innerHTML = (page === "home" ? partnerStrip() : "") +
       '<div class="wrap cols">' +
         '<div><h3>' + esc(SITE.name) + '</h3><p>' + esc(SITE.nameEn) + ', ' + esc(SITE.univ) + '</p></div>' +
         '<div><p><strong>바로 가기</strong></p>' +
@@ -124,7 +214,7 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      홈 — 감성 문구 + 소개글 + 공지사항
      ====================================================================== */
-    function renderHome() {
+  function renderHome() {
     document.title = SITE.name + " · " + SITE.univ;
 
     /* 큰 문구를 줄 단위로 나눠 순서대로 등장시킵니다 */
@@ -134,11 +224,19 @@ if (typeof SITE === "undefined") {
       .join("");
     const subDelay = (0.18 + lines.length * 0.13 + 0.1).toFixed(2);
 
+    const opened = HISTORY.length ? HISTORY[HISTORY.length - 1].year : "—";
+
     $("#homeHero").innerHTML =
       '<div class="wrap">' +
-        '<p class="eyebrow">' + esc(SITE.univ) + '</p>' +
+        '<p class="eyebrow">' + esc(SITE.univ) + ' / ' + esc(SITE.nameEn) + '</p>' +
         '<h1 class="home-headline">' + headline + '</h1>' +
         '<p class="home-sub" style="animation-delay:' + subDelay + 's">' + esc(INTRO.sub) + '</p>' +
+        '<div class="home-stats">' +
+          '<div><b>' + opened + '</b><span>연구실 개설</span></div>' +
+          '<div><b>' + PUBLICATIONS.length + '</b><span>학술 기록</span></div>' +
+          '<div><b>' + (NEWS.length + CAMPUS.length + EXTERNAL.length) + '</b><span>대외 활동</span></div>' +
+          '<div><b>' + (FACULTY.length + STUDENTS.length) + '</b><span>구성원</span></div>' +
+        '</div>' +
       '</div>';
 
     /* 대표 사진이 있으면 큰 문구 뒤에 깔아 줍니다 */
@@ -152,6 +250,28 @@ if (typeof SITE === "undefined") {
           '<span class="hero-credit">' + esc(SITE.heroCaption) + '</span>');
       }
     }
+
+    $("#homeIntro").innerHTML =
+      '<div class="wrap intro-grid">' +
+        '<p class="intro-label">연구실 소개</p>' +
+        '<div class="intro-body">' +
+          INTRO.paragraphs.map(p => '<p class="reveal">' + esc(p) + '</p>').join("") +
+          '<a class="btn btn--ghost" href="members.html">구성원 보기 &rarr;</a>' +
+        '</div>' +
+      '</div>';
+
+    if (typeof AREAS !== "undefined" && AREAS.length) {
+      $("#homeAreas").innerHTML = AREAS.map((a, i) =>
+        '<article class="area reveal">' +
+          '<span class="area-no">' + String(i + 1).padStart(2, "0") + '</span>' +
+          '<h2 class="area-ko">' + esc(a.ko) + '</h2>' +
+          '<p class="area-en">' + esc(a.en) + '</p>' +
+          '<p class="area-d">' + esc(a.desc) + '</p>' +
+        '</article>').join("");
+    }
+
+    renderNotices();
+    renderSeminars();
   }
 
   function renderNotices() {
@@ -198,64 +318,34 @@ if (typeof SITE === "undefined") {
   }
 
   /* 세미나 — 예정은 가까운 날짜 순으로 위에, 완료는 최신순으로 아래에 */
-    /* E.C.Seminar — 학기별 목록 */
   function renderSeminars() {
-    const box = $("#termList");
+    const box = $("#seminarList");
     if (!box || typeof SEMINARS === "undefined") return;
 
-    box.innerHTML = SEMINARS.map(t => {
-      const soon = t.items.filter(x => x.status !== "완료").sort((a, b) => a.date.localeCompare(b.date));
-      const done = t.items.filter(x => x.status === "완료").sort((a, b) => b.date.localeCompare(a.date));
-      const rows = [...soon, ...done];
+    const soon = SEMINARS.filter(x => x.status !== "완료").sort((a, b) => a.date.localeCompare(b.date));
+    const done = SEMINARS.filter(x => x.status === "완료").sort((a, b) => b.date.localeCompare(a.date));
+    const rows = [...soon, ...done];
 
-      return '<section class="term reveal">' +
-        '<div class="term-head">' +
-          '<h2 class="term-title">' + esc(t.term) + '</h2>' +
-          '<span class="count">' + rows.length + '회</span>' +
-        '</div>' +
-        (t.note ? '<p class="sem-note" style="margin:0 0 14px">' + esc(t.note) + '</p>' : '') +
-        '<div class="sem-list">' +
-          (rows.length ? rows.map(x => {
-            const isDone = x.status === "완료";
-            return '<div class="sem' + (isDone ? ' sem--done' : '') + '">' +
-              '<span class="sem-round">' + esc(x.round) + '회</span>' +
-              '<span class="sem-date">' + esc(dot(x.date)) + '</span>' +
-              '<span class="sem-topic">' + esc(x.topic) + '</span>' +
-              '<span class="sem-speaker">' + esc(x.speaker) + '</span>' +
-              '<span class="sem-status' + (isDone ? '' : ' sem-status--soon') + '">' + esc(x.status) + '</span>' +
-            '</div>';
-          }).join("") : '<p class="empty">기록이 없습니다.</p>') +
-        '</div>' +
-      '</section>';
-    }).join("");
+    box.innerHTML = rows.length ? rows.map(x => {
+      const isDone = x.status === "완료";
+      return '<div class="sem reveal' + (isDone ? ' sem--done' : '') + '">' +
+        '<span class="sem-round">' + esc(x.round) + '회</span>' +
+        '<span class="sem-date">' + esc(dot(x.date)) + '</span>' +
+        '<span class="sem-topic">' + esc(x.topic) + '</span>' +
+        '<span class="sem-speaker">' + esc(x.speaker) + '</span>' +
+        '<span class="sem-status' + (isDone ? '' : ' sem-status--soon') + '">' + esc(x.status) + '</span>' +
+      '</div>';
+    }).join("") : '<p class="empty">예정된 세미나가 없습니다.</p>';
+
+    const note = $("#seminarNote");
+    if (note && typeof SEMINAR_NOTE !== "undefined") note.textContent = SEMINAR_NOTE;
     observe();
   }
 
   /* ======================================================================
      역사·연혁
      ====================================================================== */
-    function renderHistory() {
-        /* 소개글 */
-    if ($("#homeIntro")) {
-      $("#homeIntro").innerHTML =
-        '<div class="wrap intro-grid">' +
-          '<p class="intro-label">대학원 소개</p>' +
-          '<div class="intro-body">' +
-            INTRO.paragraphs.map(p => '<p class="reveal">' + esc(p) + '</p>').join("") +
-          '</div>' +
-        '</div>';
-    }
-
-    /* 연구 갈래 */
-    if ($("#homeAreas") && typeof AREAS !== "undefined" && AREAS.length) {
-      $("#homeAreas").innerHTML = AREAS.map((a, i) =>
-        '<article class="area reveal">' +
-          '<span class="area-no">' + String(i + 1).padStart(2, "0") + '</span>' +
-          '<h2 class="area-ko">' + esc(a.ko) + '</h2>' +
-          '<p class="area-en">' + esc(a.en) + '</p>' +
-          '<p class="area-d">' + esc(a.desc) + '</p>' +
-        '</article>').join("");
-    }  
+  function renderHistory() {
     $("#historyRail").innerHTML = HISTORY.map((h, i) =>
       '<div class="rail-item reveal' + (i === 0 ? ' is-first' : '') + '">' +
         '<div class="rail-y">' + esc(h.year) + '</div>' +
@@ -292,7 +382,8 @@ if (typeof SITE === "undefined") {
       '<span class="bar-track"><span class="bar-fill" data-w="' + Math.round(years[y] / max * 100) + '"></span></span>' +
       '<span class="bar-n">' + years[y] + '</span></div>').join("");
 
-    let pType = "all";
+    const TYPE_BY_HASH = { conference:"학회 발표", journal:"학술지 등재", award:"수상" };
+    let pType = TYPE_BY_HASH[location.hash.replace("#", "")] || "all";
     const pubYears = [...new Set(PUBLICATIONS.map(p => p.year))].sort((a, b) => b.localeCompare(a));
     $("#pubYear").innerHTML = '<option value="all">모든 연도</option>' + pubYears.map(y => '<option>' + y + '</option>').join("");
 
@@ -317,10 +408,14 @@ if (typeof SITE === "undefined") {
       observe();
     }
 
-    $$('[data-ptype]').forEach(b => b.addEventListener("click", () => {
-      $$('[data-ptype]').forEach(x => x.classList.remove("on"));
-      b.classList.add("on"); pType = b.dataset.ptype; draw();
-    }));
+    $$('[data-ptype]').forEach(b => {
+      b.classList.toggle("on", b.dataset.ptype === pType);
+      b.addEventListener("click", () => {
+        $$('[data-ptype]').forEach(x => x.classList.remove("on"));
+        b.classList.add("on"); pType = b.dataset.ptype;
+        history.replaceState(null, "", location.pathname); draw();
+      });
+    });
     $("#pubYear").addEventListener("change", draw);
     $("#pubSearch").addEventListener("input", draw);
     draw();
@@ -330,38 +425,21 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      대외 활동
      ====================================================================== */
-    function renderOutreach() {
-    const SNS = (SITE.sns || []).filter(s => s.url);
-
+  function renderOutreach() {
     const GROUPS = {
-      media:    { data: MEDIA,    subs: ["전체", "영상", "사진", "방송", "기타"] },
-      news:     { data: NEWS,     subs: ["전체", "학교", "플레이브릿지", "기타"] },
+      news:     { data: NEWS,     subs: ["전체", "학교", "플레이브릿지"] },
       campus:   { data: CAMPUS,   subs: ["전체", "ECS", "베리어프리", "총장배", "기타"] },
-      external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 이스포츠", "현장 답사", "MT", "기타"] },
-      sns:      { data: [],       subs: [] }
+      external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 이스포츠", "현장 답사", "MT", "기타"] }
     };
-    let gKey = "media", sKey = "전체";
+    let gKey = "news", sKey = "전체";
 
     function drawSubs() {
-      const subs = GROUPS[gKey].subs;
-      $("#subTabs").innerHTML = subs.map(s =>
+      $("#subTabs").innerHTML = GROUPS[gKey].subs.map(s =>
         '<button class="chip' + (s === sKey ? ' on' : '') + '" data-sub="' + esc(s) + '">' + esc(s) + '</button>').join("");
       $$('[data-sub]').forEach(b => b.addEventListener("click", () => { sKey = b.dataset.sub; drawSubs(); drawActs(); }));
     }
 
     function drawActs() {
-      if (gKey === "sns") {
-        $("#actCount").textContent = "총 " + SNS.length + "곳";
-        $("#actList").innerHTML = SNS.length ? SNS.map(s =>
-          '<article class="card reveal">' +
-            '<div class="card-top"><span class="card-tag">SNS</span></div>' +
-            '<h3>' + esc(s.label) + '</h3>' +
-            '<a class="more" href="' + esc(s.url) + '" target="_blank" rel="noopener">바로 가기 &rarr;</a>' +
-          '</article>').join("") : '<p class="empty">아직 등록된 채널이 없습니다.</p>';
-        observe();
-        return;
-      }
-
       const rows = GROUPS[gKey].data
         .filter(a => sKey === "전체" || a.sub === sKey)
         .sort((a, b) => b.date.localeCompare(a.date));
@@ -377,30 +455,18 @@ if (typeof SITE === "undefined") {
       observe();
     }
 
-    function show(key) {
-      if (!GROUPS[key]) key = "media";
-      $$('[data-group]').forEach(b => b.setAttribute("aria-selected", b.dataset.group === key));
-      gKey = key; sKey = "전체";
-      drawSubs(); drawActs();
-    }
-
-    const keyFromHash = () => {
-      const h = location.hash.replace("#", "");
-      return GROUPS[h] ? h : "media";
-    };
-
     $$('[data-group]').forEach(b => b.addEventListener("click", () => {
-      history.replaceState(null, "", "#" + b.dataset.group);
-      show(b.dataset.group);
+      $$('[data-group]').forEach(x => x.setAttribute("aria-selected", "false"));
+      b.setAttribute("aria-selected", "true");
+      gKey = b.dataset.group; sKey = "전체"; drawSubs(); drawActs();
     }));
-    window.addEventListener("hashchange", () => show(keyFromHash()));
-    show(keyFromHash());
+    drawSubs(); drawActs();
   }
 
   /* ======================================================================
      구성원
      ====================================================================== */
-     function renderMembers() {
+  function renderMembers() {
     /* 졸업생 항목을 아직 안 만드셨어도 오류가 나지 않도록 */
     const ALUM = (typeof ALUMNI !== "undefined") ? ALUMNI : [];
 
@@ -419,9 +485,9 @@ if (typeof SITE === "undefined") {
       '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="' + key + '" data-midx="' + i + '">' +
         pic(p.photo, p.name) +
         '<h4 class="st-name">' + esc(p.name) + '</h4>' +
-        '<p class="st-en">' + esc(p.nameEn) + '</p>' +
+        (p.nameEn ? '<p class="st-en">' + esc(p.nameEn) + '</p>' : '') +
         '<p class="st-course">' + esc(p.course) + '</p>' +
-        '<p class="st-int">' + esc(p.interest || p.now || "") + '</p>' +
+        (p.interest || p.now ? '<p class="st-int">' + esc(p.interest || p.now) + '</p>' : '') +
       '</article>';
 
     $("#studentList").innerHTML = STUDENTS.length
@@ -463,10 +529,11 @@ if (typeof SITE === "undefined") {
 
     initMemberModal();
   }
-    /* ---------------------------------------------------------------------
+
+  /* ---------------------------------------------------------------------
      구성원 상세 창
      --------------------------------------------------------------------- */
-   function initMemberModal() {
+  function initMemberModal() {
     const modal = $("#memberModal");
     if (!modal) return;
     const body = $("#modalBody");
@@ -484,6 +551,19 @@ if (typeof SITE === "undefined") {
         : '<li><span class="bio-y"></span><span>' + esc(line) + '</span></li>';
     }
 
+    /* 상세 이력은 구성원 프로필 안에서만 표시합니다. */
+    function profileSections(sections) {
+      return (sections || []).filter(s => s.items && s.items.length).map(s =>
+        '<section class="profile-section">' +
+          '<h3>' + esc(s.title) + '</h3>' +
+          '<ul class="profile-history">' + s.items.map(item =>
+            '<li><span class="profile-date">' + esc(item.date) + '</span>' +
+              '<span class="profile-detail">' + esc(item.text) + '</span></li>'
+          ).join('') + '</ul>' +
+        '</section>'
+      ).join('');
+    }
+
     function open(key, idx) {
       const p = data[key] && data[key][idx];
       if (!p) return;
@@ -495,8 +575,8 @@ if (typeof SITE === "undefined") {
           '<div>' +
             '<span class="prof-role">' + esc(p.role || p.course || "") + '</span>' +
             '<h2 class="modal-name" id="modalName">' + esc(p.name) + '</h2>' +
-            '<p class="modal-en">' + esc(p.nameEn) + '</p>' +
-                        (p.field || p.interest || p.now
+            (p.nameEn ? '<p class="modal-en">' + esc(p.nameEn) + '</p>' : '') +
+            (p.field || p.interest || p.now
               ? '<p class="modal-field"><strong>' +
                 (p.field ? '연구 분야' : p.interest ? '관심 분야' : '현재') + '</strong> &middot; ' +
                 esc(p.field || p.interest || p.now) + '</p>' : '') +
@@ -505,10 +585,12 @@ if (typeof SITE === "undefined") {
         '</div>' +
         (p.intro ? '<p class="modal-intro">' + esc(p.intro) + '</p>' : '') +
         (p.bio && p.bio.length
-          ? '<h3 class="modal-sub">주요 경력</h3><ul class="bio">' + p.bio.map(bioRow).join("") + '</ul>'
-          : '');
+          ? '<h3 class="modal-sub">약력</h3><ul class="bio">' + p.bio.map(bioRow).join("") + '</ul>'
+          : '') +
+        profileSections(p.profileSections);
 
       modal.hidden = false;
+      $('#modalPanel').scrollTop = 0;
       document.body.style.overflow = "hidden";
       $("#modalClose").focus();
     }
@@ -519,6 +601,7 @@ if (typeof SITE === "undefined") {
       if (lastFocus) lastFocus.focus();
     }
 
+    /* 카드 클릭 · 키보드 */
     document.addEventListener("click", e => {
       const card = e.target.closest("[data-mkey]");
       if (card) open(card.dataset.mkey, Number(card.dataset.midx));
@@ -529,9 +612,11 @@ if (typeof SITE === "undefined") {
       if (e.key === "Escape" && !modal.hidden) close();
     });
 
+    /* 닫기 : X 버튼 · 바깥 여백 클릭 */
     $("#modalClose").addEventListener("click", close);
     modal.addEventListener("click", e => { if (e.target === modal) close(); });
   }
+
   /* ======================================================================
      Q&A
      ====================================================================== */
@@ -576,7 +661,6 @@ if (typeof SITE === "undefined") {
   ({
     home:     renderHome,
     history:  renderHistory,
-    seminar:  renderSeminars,
     research: renderResearch,
     outreach: renderOutreach,
     members:  renderMembers,
