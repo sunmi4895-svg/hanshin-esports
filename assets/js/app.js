@@ -511,7 +511,7 @@ if (typeof SITE === "undefined") {
     const GROUPS = {
       news:     { data: NEWS,     subs: ["전체", "학교", "플레이브릿지"] },
       campus:   { data: CAMPUS,   subs: ["전체", "ECS", "베리어프리", "총장배", "기타"] },
-      external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 이스포츠", "현장 답사", "MT", "기타"] }
+      external: { data: EXTERNAL, subs: ["전체", "학회", "장애인 e스포츠", "현장 답사", "MT", "기타"] }
     };
     let gKey = "news", sKey = "전체";
 
@@ -557,7 +557,7 @@ if (typeof SITE === "undefined") {
       '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '"><div>' + pic(f.photo, f.name) + '</div><div>' +
         '<span class="prof-role">' + esc(f.role) + '</span>' +
         '<h3 class="prof-name">' + esc(f.name) + '</h3>' +
-        '<p class="prof-en">' + esc(f.nameEn) + '</p>' +
+        '<p class="prof-en">' + esc(f.nameEn.toUpperCase()) + '</p>' +
         '<p><strong>연구 분야</strong> &middot; ' + esc(f.field) + '</p>' +
         (f.email ? '<p><a href="mailto:' + esc(f.email) + '">' + esc(f.email) + '</a></p>' : '') +
       '</div></article>').join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
@@ -567,7 +567,7 @@ if (typeof SITE === "undefined") {
       '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="' + key + '" data-midx="' + i + '">' +
         pic(p.photo, p.name) +
         '<h4 class="st-name">' + esc(p.name) + '</h4>' +
-        (p.nameEn ? '<p class="st-en">' + esc(p.nameEn) + '</p>' : '') +
+        (p.nameEn ? '<p class="st-en">' + esc(p.nameEn.toUpperCase()) + '</p>' : '') +
         '<p class="st-course">' + esc(p.course) + '</p>' +
         (p.interest || p.now ? '<p class="st-int">' + esc(p.interest || p.now) + '</p>' : '') +
       '</article>';
@@ -654,7 +654,7 @@ if (typeof SITE === "undefined") {
         '<section class="profile-section">' +
           '<h3>' + esc(s.title) + '</h3>' +
           '<ul class="profile-history">' + s.items.map(item =>
-            '<li><span class="profile-date">' + esc(item.date) + '</span>' +
+            '<li><span class="profile-date">' + (s.title === '경력' ? (/[-–—]\s*$/.test(item.date) ? '(現) ' : '(前) ') : '') + esc(item.date) + '</span>' +
               '<span class="profile-detail">' + esc(item.text) + '</span></li>'
           ).join('') + '</ul>' +
         '</section>'
@@ -672,7 +672,8 @@ if (typeof SITE === "undefined") {
           '<div>' +
             '<span class="prof-role">' + esc(p.role || p.course || "") + '</span>' +
             '<h2 class="modal-name" id="modalName">' + esc(p.name) + '</h2>' +
-            (p.nameEn ? '<p class="modal-en">' + esc(p.nameEn) + '</p>' : '') +
+            (p.nameEn ? '<p class="modal-en">' + esc(p.nameEn.toUpperCase()) + '</p>' : '') +
+            '<p class="modal-field"><strong>소속</strong> &middot; 한신대학교 일반대학원 e스포츠융합(협)</p>' +
             (p.field || p.interest || p.now
               ? '<p class="modal-field"><strong>' +
                 (p.field ? '연구 분야' : p.interest ? '관심 분야' : '현재') + '</strong> &middot; ' +
