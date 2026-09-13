@@ -942,3 +942,18 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
 @media(max-width:1180px){
   body:not([data-page="home"]) .nav{background:#FFFFFF; border-bottom-color:#DDDDDD;}
 }
+
+/* 상단 대학원생 과정 펼침 메뉴 */
+.course-menu summary{cursor:pointer; list-style:none; font-size:18px; font-weight:600; line-height:1.5; padding:13px 4px; color:#202633; text-align:center;}
+.course-menu summary::-webkit-details-marker{display:none;}
+.course-menu summary::after{content:" ▾"; font-size:12px;}
+.course-menu[open] summary::after{content:" ▴";}
+.course-menu summary:focus-visible{outline:2px solid currentColor; outline-offset:-2px;}
+.mega-col .course-menu-links a{font-size:14px; padding:8px 2px; white-space:nowrap; color:#333333;}
+.course-menu-links{border-left:2px solid #DDDDDD; margin:0 4px 6px;}
+.mega-in:has(.course-menu[open]){height:380px;}
+@media(max-width:1180px){
+  .nav-sub .course-menu summary{text-align:left; color:inherit; font-size:17px; padding:9px 8px;}
+  .nav-sub .course-menu-links{margin-left:16px;}
+  .nav-sub .course-menu-links a{font-size:15px; text-align:left;}
+}

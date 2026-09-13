@@ -37,6 +37,13 @@ if (typeof SITE === "undefined") {
     return (!f || f === "") ? "index.html" : f;
   }
 
+  function navChild(c) {
+    if (c.href !== "members.html#students") return '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>';
+    return '<details class="course-menu"><summary>대학원생</summary><div class="course-menu-links">' +
+      [['doctoral','박사과정'],['integrated','석·박사 통합과정'],['masters','석사과정']].map(([key,label]) =>
+        '<a href="members.html#students-' + key + '">' + label + '</a>').join('') + '</div></details>';
+  }
+
   function renderHeader() {
     const el = $("#siteHeader");
     if (!el) return;
@@ -59,9 +66,9 @@ if (typeof SITE === "undefined") {
             return '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
                    esc(n.label) + '</a>' +
                    (n.children
-                     ? '<span class="nav-sub">' +
-                         n.children.map(c => '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>').join("") +
-                       '</span>'
+                     ? '<div class="nav-sub">' +
+                         n.children.map(navChild).join("") +
+                       '</div>'
                      : '');
           }).join("") +
         '</nav>' +
@@ -69,8 +76,7 @@ if (typeof SITE === "undefined") {
       '<div class="mega" id="mega" hidden><div class="mega-in" id="megaIn">' +
         NAV.map(n =>
           '<div class="mega-col">' +
-            (n.children || []).map(c =>
-              '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>').join("") +
+            (n.children || []).map(navChild).join("") +
           '</div>').join("") +
       '</div></div>';
 
@@ -92,6 +98,12 @@ if (typeof SITE === "undefined") {
       if (e.target.closest("a")) { nav.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
     });
 
+    el.addEventListener("click", e => {
+      if (e.target.closest('.course-menu-links a')) {
+        $("#mega").hidden = true;
+        el.classList.remove("is-open");
+      }
+    });
     initMega();
   }
 
@@ -183,7 +195,7 @@ if (typeof SITE === "undefined") {
     const label = typeof PARTNERS_LABEL !== "undefined" && PARTNERS_LABEL ? PARTNERS_LABEL : "후원기관";
     return '<section class="ticker" id="homePartners" aria-labelledby="partnerHeading">' +
       '<div class="wrap tick-heading"><h2 class="tick-label" id="partnerHeading">' + esc(label) + '</h2>' +
-        '<button class="tick-toggle" id="partnerToggle" type="button" aria-label="후원기관 자동 이동 일시정지">일시정지</button></div>' +
+        '</div>' +
       '<div class="tick-view"><div class="tick-track">' +
         '<div class="tick-group">' + row(false) + '</div>' +
         '<div class="tick-group tick-duplicate" aria-hidden="true">' + row(true) + '</div>' +
@@ -195,27 +207,16 @@ if (typeof SITE === "undefined") {
     const el = $("#siteFooter");
     if (!el) return;
     el.innerHTML =
-      '<div class="wrap cols">' +
-        '<div><h3>' + esc(SITE.name) + '</h3><p>' + esc(SITE.nameEn) + ', ' + esc(SITE.univ) + '</p></div>' +
-        '<div><p><strong>바로 가기</strong></p>' +
-          NAV.filter(n => n.href !== "index.html")
-             .map(n => '<p><a href="' + esc(n.href) + '">' + esc(n.label) + '</a></p>').join("") +
-        '</div>' +
-        '<div><p><strong>찾아오시는 길</strong></p><p>' + esc(SITE.address) + '</p>' +
-          '<p><a href="mailto:' + esc(SITE.email) + '">' + esc(SITE.email) + '</a></p></div>' +
-      '</div>' +
-      '<div class="wrap"><p class="fine">&copy; ' + new Date().getFullYear() + ' ' + esc(SITE.name) +
-      ' &middot; 최종 업데이트 ' + esc(SITE.updated) + '</p></div>';
+      '<div class="wrap footer-identity">' +
+        '<img class="footer-logo' + (SITE.logoInvert ? ' brand-logo--invert' : '') +
+          '" src="' + esc(SITE.logo) + '" alt="' + esc(SITE.univ) + ' 로고">' +
+        '<p class="footer-address">주소(18101): ' + esc(SITE.address) + '</p>' +
+      '</div>';
 
     if (page === "home" && !$("#homePartners")) {
       el.insertAdjacentHTML("beforebegin", partnerStrip());
-      const strip = $("#homePartners"), toggle = $("#partnerToggle");
-      if (strip && toggle) {
-        toggle.addEventListener("click", () => {
-          const paused = strip.classList.toggle("is-paused");
-          toggle.textContent = paused ? "재생" : "일시정지";
-          toggle.setAttribute("aria-label", paused ? "후원기관 자동 이동 재생" : "후원기관 자동 이동 일시정지");
-        });
+      const strip = $("#homePartners");
+      if (strip) {
         $$(".tick-item img", strip).forEach(img => img.addEventListener("error", () => {
           const text = document.createElement("span");
           text.textContent = img.alt;
@@ -232,9 +233,9 @@ if (typeof SITE === "undefined") {
     if (!el || !info) return;
     el.innerHTML =
       '<div class="wrap">' +
-        '<p class="eyebrow">' + esc(info.eyebrow) + '</p>' +
+        (page === "members" ? "" : '<p class="eyebrow">' + esc(info.eyebrow) + '</p>') +
         '<h1 class="page-title">' + esc(info.title) + '</h1>' +
-        '<p class="page-desc">' + esc(info.desc) + '</p>' +
+        (page === "members" ? "" : '<p class="page-desc">' + esc(info.desc) + '</p>') +
       '</div>';
     document.title = info.title + " · " + SITE.name;
   }
@@ -264,10 +265,59 @@ if (typeof SITE === "undefined") {
       '</div>';
 
     /* 대표 사진이 있으면 큰 문구 뒤에 깔아 줍니다 */
-    if (SITE.heroImage) {
+    if (SITE.heroImage || SITE.heroImages?.length) {
       const hero = $("#homeHero");
       hero.classList.add("home-hero--photo");
-      hero.style.backgroundImage = "url('" + SITE.heroImage + "')";
+      const sources = SITE.heroImages?.length ? SITE.heroImages : [SITE.heroImage];
+      const slides = document.createElement("div");
+      slides.className = "hero-slides";
+      slides.setAttribute("aria-hidden", "true");
+      const images = sources.map((src, i) => {
+        const img = document.createElement("img");
+        img.className = "hero-slide";
+        img.alt = "";
+        img.decoding = "async";
+        if (i === 0) img.fetchPriority = "high";
+        img.src = src;
+        slides.append(img);
+        return img;
+      });
+      hero.prepend(slides);
+      const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let current = -1;
+      let timer;
+      const interval = SITE.heroInterval || 5000;
+      function show(index) {
+        if (current >= 0) images[current].classList.remove("is-active");
+        current = index;
+        const img = images[index];
+        img.classList.add("is-active");
+        img.getAnimations().filter(a => a.effect?.getKeyframes().some(k => k.transform)).forEach(a => a.cancel());
+        if (!motion.matches) img.animate(
+          [{ transform: "scale(1.06)" }, { transform: "scale(1)" }],
+          { duration: interval + 900, easing: "ease-out", fill: "forwards" }
+        );
+      }
+      function schedule() {
+        clearInterval(timer);
+        if (motion.matches || document.hidden || images.length < 2) return;
+        timer = setInterval(() => {
+          for (let step = 1; step < images.length; step++) {
+            const next = (current + step) % images.length;
+            if (images[next].complete && images[next].naturalWidth) { show(next); break; }
+          }
+        }, interval);
+      }
+      show(0);
+      images.forEach((img, i) => img.addEventListener("load", () => {
+        if (!images[current].naturalWidth) show(i);
+      }));
+      schedule();
+      document.addEventListener("visibilitychange", schedule);
+      motion.addEventListener("change", () => {
+        if (motion.matches) images.forEach(img => img.getAnimations().forEach(a => a.cancel()));
+        schedule();
+      });
       hero.style.setProperty("--dim", SITE.heroDim != null ? SITE.heroDim : 0.9);
       if (SITE.heroCaption) {
         hero.insertAdjacentHTML("beforeend",
@@ -372,6 +422,12 @@ if (typeof SITE === "undefined") {
      역사·연혁
      ====================================================================== */
   function renderHistory() {
+    const intro = $("#homeIntro");
+    if (intro) intro.innerHTML = '<div class="wrap intro-grid"><h2 class="intro-label">대학원소개</h2><div class="intro-body">' +
+      INTRO.paragraphs.map(p => '<p>' + esc(p) + '</p>').join("") + '</div></div>';
+    const address = $("#directionsAddress");
+    if (address) address.textContent = "주소(18101): " + SITE.address;
+
     $("#historyRail").innerHTML = HISTORY.map((h, i) =>
       '<div class="rail-item reveal' + (i === 0 ? ' is-first' : '') + '">' +
         '<div class="rail-y">' + esc(h.year) + '</div>' +
@@ -516,9 +572,21 @@ if (typeof SITE === "undefined") {
         (p.interest || p.now ? '<p class="st-int">' + esc(p.interest || p.now) + '</p>' : '') +
       '</article>';
 
-    $("#studentList").innerHTML = STUDENTS.length
-      ? STUDENTS.map((s, i) => card(s, "students", i)).join("")
-      : '<p class="empty">등록된 대학원생이 없습니다.</p>';
+    function drawStudents(course) {
+      const rows = STUDENTS.map((student, index) => ({student, index})).filter(({student}) => {
+        const value = (student.course || "").replace(/\s/g, "");
+        const group = value.includes("통합") ? "integrated" : value.includes("박사") ? "doctoral" : value.includes("석사") ? "masters" : "other";
+        return group === course;
+      });
+      $("#studentList").innerHTML = rows.length
+        ? rows.map(({student, index}) => card(student, "students", index)).join("")
+        : '<p class="empty">등록된 대학원생이 없습니다.</p>';
+      $$('[data-course]').forEach(b => b.setAttribute("aria-pressed", String(b.dataset.course === course)));
+      $$('[data-course]').forEach(b => b.classList.toggle("on", b.dataset.course === course));
+      observe();
+    }
+    $$('[data-course]').forEach(b => b.addEventListener("click", () => { history.replaceState(null, "", "#students-" + b.dataset.course); drawStudents(b.dataset.course); }));
+    drawStudents("doctoral");
 
     $("#alumniList").innerHTML = ALUM.length
       ? ALUM.map((s, i) => card(s, "alumni", i)).join("")
@@ -530,19 +598,22 @@ if (typeof SITE === "undefined") {
       students: $("#panelStudents"),
       alumni:   $("#panelAlumni")
     };
-    const counts = { faculty: FACULTY.length, students: STUDENTS.length, alumni: ALUM.length };
 
     function show(key) {
       if (!panels[key]) key = "faculty";
       $$('[data-mtab]').forEach(b => b.setAttribute("aria-selected", b.dataset.mtab === key));
       Object.keys(panels).forEach(k => { if (panels[k]) panels[k].hidden = (k !== key); });
-      $("#memCount").textContent = "총 " + counts[key] + "명";
       observe();
     }
 
     /* 주소 끝의 #students / #alumni / #faculty 로 처음 열릴 탭이 정해집니다 */
     const keyFromHash = () => {
       const h = location.hash.replace("#", "");
+      if (h.startsWith("students-")) {
+        const course = h.slice(9);
+        drawStudents(["doctoral", "integrated", "masters"].includes(course) ? course : "doctoral");
+        return "students";
+      }
       return panels[h] ? h : "faculty";
     };
 
