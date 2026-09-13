@@ -917,3 +917,28 @@ body[data-page="home"]{background:#FFFFFF;}
   #nav > a[href="history.html"]{min-width:132px;}
   .mega-col a[href="history.html#directions"]{white-space:nowrap; overflow-wrap:normal;}
 }
+
+/* 홈을 제외한 페이지: 흰 바탕과 검정 글씨 */
+body:not([data-page="home"]){
+  --paper:#FFFFFF; --surface:#FFFFFF; --ink:#111111; --ink-soft:#303030;
+  --muted:#555555; --line:#DDDDDD; --accent:#222222; --hot:#333333;
+  background:#FFFFFF; color:#111111; color-scheme:light;
+}
+body:not([data-page="home"]) .topbar{background:rgba(255,255,255,.97); border-bottom:1px solid #DDDDDD;}
+body:not([data-page="home"]) .topbar .brand-logo{filter:brightness(0);}
+body:not([data-page="home"]) .topbar :is(.brand,.brand-mark,.nav a,.navtoggle){color:#111111; border-color:#CCCCCC;}
+body:not([data-page="home"]) .nav a:is(:hover,.on){background:#F0F0F0;}
+body:not([data-page="home"]) .mega-col.is-hot{background:#F3F3F3;}
+body:not([data-page="home"]) .mega-col a:hover{color:#000000;}
+body:not([data-page="home"]) .sec--alt{background:#F7F7F7;}
+body:not([data-page="home"]) :is(.hero-photo,.bar-track,.card-img,.photo,.photo-ph){background:#EEEEEE; color:#111111;}
+body:not([data-page="home"]) :is(.btn,.chip.on,.chip[aria-selected="true"],.prof-role,.nt-new,.skip){background:#222222; border-color:#222222; color:#FFFFFF;}
+body:not([data-page="home"]) .btn--ghost{background:transparent; color:#111111; border-color:#CCCCCC;}
+body:not([data-page="home"]) #studentList .st-name{color:#111111;}
+body:not([data-page="home"]) #studentList :is(.st-en,.st-int){color:#555555;}
+body:not([data-page="home"]) #studentList .st-course{background:#EEEEEE; color:#111111;}
+body:not([data-page="home"]) :is(.card,a.nt):hover{box-shadow:0 8px 24px rgba(0,0,0,.08);}
+body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
+@media(max-width:1180px){
+  body:not([data-page="home"]) .nav{background:#FFFFFF; border-bottom-color:#DDDDDD;}
+}
