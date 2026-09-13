@@ -155,7 +155,7 @@ const SEMINARS = [
 /* --- 각 페이지 머리말 --------------------------------------------------- */
 const PAGES = {
     seminar:  { eyebrow:"E.C.SEMINAR", title:"E.C.Seminar",
-              desc:"학기마다 진행한 세미나 기록입니다. 논문 리뷰와 연구 발표를 함께합니다." },
+              desc:"e스포츠 정기학술세미나" },
     history:  { eyebrow:"INTRODUCTION",  title:"소개",
               desc:"석사과정 개설부터 현재까지, 대학원이 지나온 길입니다." },
   research: { eyebrow:"02 / RESEARCH", title:"학술 활동",

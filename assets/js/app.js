@@ -231,6 +231,13 @@ if (typeof SITE === "undefined") {
     const el = $("#pageHead");
     const info = PAGES[page];
     if (!el || !info) return;
+    if (page === "seminar") {
+      el.innerHTML = '<div class="wrap"><h1 class="page-title">E.C.Seminar</h1>' +
+        '<p class="seminar-ko">e스포츠 정기학술세미나</p>' +
+        '<p class="seminar-en"><strong>E</strong>sports <strong>C</strong>onvergence <strong>S</strong>eminar</p></div>';
+      document.title = "E.C.Seminar · " + SITE.univ;
+      return;
+    }
     el.innerHTML =
       '<div class="wrap">' +
         (page === "members" ? "" : '<p class="eyebrow">' + esc(info.eyebrow) + '</p>') +
@@ -395,6 +402,19 @@ if (typeof SITE === "undefined") {
 
   /* 세미나 — 예정은 가까운 날짜 순으로 위에, 완료는 최신순으로 아래에 */
   function renderSeminars() {
+    const terms = $("#termList");
+    if (terms) {
+      terms.innerHTML = '<h2 class="seminar-board-title">학술세미나 일정</h2><div class="semester-board">' + SEMINARS.map(term =>
+        '<details class="semester-entry"><summary><span class="semester-label">' + esc(term.term.replace(/^20/, "").replace("학기", "")) +
+          '</span><span class="semester-title">학술세미나 일정</span><span class="semester-open" aria-hidden="true">+</span></summary>' +
+          '<div class="semester-content">' + (term.note ? '<p>' + esc(term.note) + '</p>' : '') +
+          (term.items.length ? '<ul class="semester-schedule">' + term.items.map(item =>
+            '<li><time datetime="' + esc(item.date) + '">' + esc(item.date) + '</time><div><strong>' + esc(item.topic) +
+            '</strong><p>발표자: ' + esc(item.speaker) + ' · ' + esc(item.status) + '</p></div></li>').join('') + '</ul>'
+            : '<p class="semester-empty">등록된 일정이 없습니다.</p>') + '</div></details>').join('') + '</div>';
+      return;
+    }
+
     const box = $("#seminarList");
     if (!box || typeof SEMINARS === "undefined") return;
 
@@ -775,6 +795,7 @@ if (typeof SITE === "undefined") {
   ({
     home:     renderHome,
     history:  renderHistory,
+    seminar:  renderSeminars,
     research: renderResearch,
     outreach: renderOutreach,
     members:  renderMembers,

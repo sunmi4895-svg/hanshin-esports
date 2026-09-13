@@ -985,3 +985,24 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
 .welcome-sign-row strong{margin-left:6px;}
 .graduate-welcome-photo .welcome-sign-image{width:130px; height:56px; aspect-ratio:auto; object-fit:contain; border-radius:0;}
 .welcome-sign-placeholder{display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:8px 12px; border:1px dashed #CCCCCC; font-size:13px; color:#666666;}
+
+.seminar-ko{font-size:24px; font-weight:600; margin:24px 0 6px;}
+.seminar-en{font-size:20px; font-weight:400; margin:0; color:#333333;}
+.seminar-en strong{font-weight:800; color:#111111;}
+.seminar-board-title{font-size:24px; margin:0 0 24px;}
+.semester-board{border-top:2px solid #222222;}
+.semester-entry{border-bottom:1px solid #DDDDDD;}
+.semester-entry summary{display:flex; align-items:center; gap:32px; list-style:none; padding:26px 24px; cursor:pointer;}
+.semester-entry summary::-webkit-details-marker{display:none;}
+.semester-entry summary:hover{background:#F7F7F7;}
+.semester-label{font-size:22px; font-weight:700; min-width:70px;}
+.semester-title{font-size:18px;}
+.semester-open{margin-left:auto; font-size:26px;}
+.semester-entry[open] .semester-open{transform:rotate(45deg);}
+.semester-content{background:#FAFAFA; border-top:1px solid #EEEEEE; padding:24px;}
+.semester-content > p{margin:0 0 12px;}
+.semester-schedule{list-style:none; padding:0; margin:0;}
+.semester-schedule li{display:grid; grid-template-columns:120px 1fr; gap:20px; padding:18px 0; border-bottom:1px solid #DDDDDD;}
+.semester-schedule li:last-child{border:0;}
+.semester-schedule p{margin:5px 0 0; color:#555555; font-size:15px;}
+@media(max-width:600px){.semester-entry summary{padding:22px 12px; gap:16px;}.semester-title{font-size:16px;}.semester-schedule li{grid-template-columns:1fr; gap:8px;}}
