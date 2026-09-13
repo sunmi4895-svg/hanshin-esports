@@ -38,10 +38,7 @@ if (typeof SITE === "undefined") {
   }
 
   function navChild(c) {
-    if (c.href !== "members.html#students") return '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>';
-    return '<details class="course-menu"><summary>대학원생</summary><div class="course-menu-links">' +
-      [['doctoral','박사과정'],['integrated','석·박사 통합과정'],['masters','석사과정']].map(([key,label]) =>
-        '<a href="members.html#students-' + key + '">' + label + '</a>').join('') + '</div></details>';
+    return '<a href="' + esc(c.href) + '">' + esc(c.label) + '</a>';
   }
 
   function renderHeader() {
@@ -99,7 +96,7 @@ if (typeof SITE === "undefined") {
     });
 
     el.addEventListener("click", e => {
-      if (e.target.closest('.course-menu-links a')) {
+      if (e.target.closest('#mega a')) {
         $("#mega").hidden = true;
         el.classList.remove("is-open");
       }
@@ -612,7 +609,7 @@ if (typeof SITE === "undefined") {
       const rows = STUDENTS.map((student, index) => ({student, index})).filter(({student}) => {
         const value = (student.course || "").replace(/\s/g, "");
         const group = value.includes("통합") ? "integrated" : value.includes("박사") ? "doctoral" : value.includes("석사") ? "masters" : "other";
-        return group === course;
+        return course === "all" ? group !== "other" : group === course;
       });
       $("#studentList").innerHTML = rows.length
         ? rows.map(({student, index}) => card(student, "students", index)).join("")
@@ -622,7 +619,7 @@ if (typeof SITE === "undefined") {
       observe();
     }
     $$('[data-course]').forEach(b => b.addEventListener("click", () => { history.replaceState(null, "", "#students-" + b.dataset.course); drawStudents(b.dataset.course); }));
-    drawStudents("doctoral");
+    drawStudents("all");
 
     $("#alumniList").innerHTML = ALUM.length
       ? ALUM.map((s, i) => card(s, "alumni", i)).join("")
@@ -647,14 +644,16 @@ if (typeof SITE === "undefined") {
       const h = location.hash.replace("#", "");
       if (h.startsWith("students-")) {
         const course = h.slice(9);
-        drawStudents(["doctoral", "integrated", "masters"].includes(course) ? course : "doctoral");
+        drawStudents(["all", "doctoral", "integrated", "masters"].includes(course) ? course : "all");
         return "students";
       }
-      return panels[h] ? h : "faculty";
+      if (h === "students" || !panels[h]) drawStudents("all");
+      return panels[h] ? h : "students";
     };
 
     $$('[data-mtab]').forEach(b => b.addEventListener("click", () => {
       history.replaceState(null, "", "#" + b.dataset.mtab);
+      if (b.dataset.mtab === "students") drawStudents("all");
       show(b.dataset.mtab);
     }));
     window.addEventListener("hashchange", () => show(keyFromHash()));
@@ -690,7 +689,7 @@ if (typeof SITE === "undefined") {
         '<section class="profile-section">' +
           '<h3>' + esc(s.title) + '</h3>' +
           '<ul class="profile-history">' + s.items.map(item =>
-            '<li><span class="profile-date">' + (s.title === '경력' ? (/[-–—]\s*$/.test(item.date) ? '(現) ' : '(前) ') : '') + esc(item.date) + '</span>' +
+            '<li><span class="profile-date">' + (s.title.startsWith('경력') ? (item.status === 'current' || (item.status !== 'former' && /[-–—~]\s*$/.test(item.date)) ? '(現) ' : '(前) ') : '') + esc(item.date) + '</span>' +
               '<span class="profile-detail">' + esc(item.text) + '</span></li>'
           ).join('') + '</ul>' +
         '</section>'

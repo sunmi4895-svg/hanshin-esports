@@ -24,8 +24,8 @@
 
       <!-- 탭 : 교수진 / 재학생 -->
       <div class="tools" role="tablist" aria-label="구성원 분류">
-               <button class="chip" role="tab" aria-selected="true"  data-mtab="faculty">교수진</button>
-        <button class="chip" role="tab" aria-selected="false" data-mtab="students">대학원생</button>
+               <button class="chip" role="tab" aria-selected="false"  data-mtab="faculty">교수진</button>
+        <button class="chip" role="tab" aria-selected="true" data-mtab="students">대학원생</button>
         <button class="chip" role="tab" aria-selected="false" data-mtab="alumni">졸업생</button>
       </div>
 
@@ -37,7 +37,8 @@
            <!-- 대학원생 : data.js 의 STUDENTS -->
       <div id="panelStudents" hidden>
         <div class="tools" role="group" aria-label="대학원생 과정 선택">
-          <button class="chip on" type="button" data-course="doctoral" aria-pressed="true" aria-controls="studentList">박사과정</button>
+          <button class="chip on" type="button" data-course="all" aria-pressed="true" aria-controls="studentList">전체</button>
+          <button class="chip" type="button" data-course="doctoral" aria-pressed="false" aria-controls="studentList">박사과정</button>
           <button class="chip" type="button" data-course="integrated" aria-pressed="false" aria-controls="studentList">석·박사 통합과정</button>
           <button class="chip" type="button" data-course="masters" aria-pressed="false" aria-controls="studentList">석사과정</button>
         </div>
@@ -64,7 +65,7 @@
 <!-- 푸터도 자동으로 채워집니다 -->
 <footer id="siteFooter"></footer>
 
-<script src="assets/js/data.js?v=20260913-profile-full"></script>
-<script src="assets/js/app.js?v=20260913-profile-full"></script>
+<script src="assets/js/data.js?v=20260914-new-members"></script>
+<script src="assets/js/app.js?v=20260914-new-members"></script>
 </body>
 </html>
