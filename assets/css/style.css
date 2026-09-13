@@ -23,7 +23,7 @@
    아래 원하는 팔레트의 5줄을 복사해 위 :root 안의 같은 줄과
    바꿔치기하면 사이트 전체 톤이 한 번에 바뀝니다.
    ---------------------------------------------------------
-   ① 나이트 아레나 — 경기장 조명, 이스포츠 느낌
+   ① 나이트 아레나 — 경기장 조명, e스포츠 느낌
       --ink:#0B0F1A;  --paper:#12182A;  --surface:#1A2236;
       --line:#2C3550;  --muted:#8794B0;  --accent:#4DE1C1;  --hot:#FFB020;
 
@@ -957,3 +957,31 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
   .nav-sub .course-menu-links{margin-left:16px;}
   .nav-sub .course-menu-links a{font-size:15px; text-align:left;}
 }
+
+/* 구성원 상세 이력을 화면 전체에서 읽기 */
+#memberModal{padding:0; background:#FFFFFF;}
+#memberModal .modal-panel{width:100%; height:100vh; height:100dvh; max-height:none; border:0; border-radius:0; padding:72px clamp(20px,6vw,96px) 48px; background:#FFFFFF; box-shadow:none;}
+#memberModal .modal-close{position:fixed; top:18px; right:24px; z-index:2; background:#FFFFFF; width:42px; height:42px;}
+#memberModal .modal-en{font-size:17px;}
+
+/* 교수님 대학원 소개: 글 왼쪽, 큰 사진 오른쪽 */
+.graduate-welcome{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:clamp(32px,6vw,88px); align-items:center;}
+.welcome-label{font-size:16px; font-weight:600; margin:0 0 20px;}
+.graduate-welcome-copy h2{font-size:clamp(26px,3vw,40px); line-height:1.4; margin:0 0 32px; word-break:keep-all;}
+.welcome-copy-placeholder{border:1px dashed #CCCCCC; background:#FAFAFA; padding:28px; min-height:200px; display:flex; flex-direction:column; justify-content:center;}
+.welcome-copy-placeholder p{margin:0 0 8px; color:#555555; font-size:16px;}
+.welcome-prose{font-size:18px; line-height:1.9; word-break:keep-all;}
+.welcome-signature{margin:28px 0 0; font-size:17px;}
+.welcome-signature strong{font-size:22px; margin-left:10px;}
+.graduate-welcome-photo{margin:0;}
+.graduate-welcome-photo img,.welcome-photo-placeholder{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:4px;}
+.welcome-photo-placeholder{background:#F3F3F3; border:1px solid #DDDDDD; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:#666666;}
+.welcome-photo-placeholder span:first-child{font-size:24px; font-weight:600; color:#333333;}
+@media(max-width:760px){.graduate-welcome{grid-template-columns:1fr;} .graduate-welcome-photo{width:100%; max-width:460px; justify-self:center;}}
+
+.welcome-caption{padding-top:20px; color:#111111;}
+.welcome-caption > p{margin:0 0 8px; font-size:18px;}
+.welcome-sign-row{display:flex; flex-wrap:wrap; align-items:center; gap:12px; font-size:19px;}
+.welcome-sign-row strong{margin-left:6px;}
+.graduate-welcome-photo .welcome-sign-image{width:130px; height:56px; aspect-ratio:auto; object-fit:contain; border-radius:0;}
+.welcome-sign-placeholder{display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:8px 12px; border:1px dashed #CCCCCC; font-size:13px; color:#666666;}

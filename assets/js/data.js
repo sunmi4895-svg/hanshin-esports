@@ -38,6 +38,14 @@ const SITE = {
   heroImage: "assets/images/hero.png",                                           // 예: "assets/images/hero.jpg"
   heroCaption: "",        // 사진 아래 설명
   heroDim: 0.9,
+  heroInterval: 5000, // 사진 전환 간격 (밀리초)
+  heroImages: [
+    "assets/images/hero-slide-5.jpeg",
+    "assets/images/hero-slide-4.jpeg",
+    "assets/images/hero-slide-3.jpeg",
+    "assets/images/hero-slide-2.jpeg",
+    "assets/images/hero-slide-1.jpeg",
+  ],
   sns: [
     { label:"인스타그램", url:"" },
     { label:"유튜브",     url:"" },
@@ -51,9 +59,10 @@ const SITE = {
 const NAV = [
   { label:"홈",           href:"index.html"  },
 
-  { label:"연혁",          href:"history.html", children:[
-      { label:"대학원 소개", href:"history.html#intro"   },
-      { label:"연혁",       href:"history.html#timeline" }
+  { label:"소개",          href:"history.html", children:[
+      { label:"대학원소개", href:"history.html#intro"   },
+      { label:"연혁",       href:"history.html#timeline" },
+      { label:"찾아오시는길", href:"history.html#directions" }
   ]},
 
   { label:"E.C.Seminar",  href:"seminar.html", children:[
@@ -89,7 +98,7 @@ const INTRO = {
   /* 소개글. 문단을 늘리려면 "..." 를 쉼표로 이어 붙이세요. */
   paragraphs: [
     "누군가에게 게임은 여가이고, 누군가에게는 직업이며, 또 누군가에게는 끝내 닿지 못한 문입니다. 저희는 그 세 가지 자리에서 벌어지는 일을 함께 들여다봅니다.",
-    "이스포츠 산업의 작동 방식, 게임을 읽고 다루는 능력, 장애가 있는 사람에게 열려 있는 경기 환경. 세 갈래의 질문을 학술의 언어로 옮기고, 현장에서 검증한 뒤 기록으로 남깁니다.",
+    "e스포츠 산업의 작동 방식, 게임을 읽고 다루는 능력, 장애가 있는 사람에게 열려 있는 경기 환경. 세 갈래의 질문을 학술의 언어로 옮기고, 현장에서 검증한 뒤 기록으로 남깁니다.",
     "연구실 문은 실력이 아니라 호기심으로 열립니다. 잘하는 사람보다 오래 보는 사람을 찾습니다."
   ]
 };
@@ -97,11 +106,11 @@ const INTRO = {
 /* --- 연구 갈래 (첫 화면 가운데 3칸) -------------------------------------- */
 /* 연구실이 다루는 주제를 세 갈래로 보여줍니다. 개수를 2개나 4개로 바꿔도 됩니다. */
 const AREAS = [
-  { ko:"이스포츠 산업", en:"Esports Industry",
+  { ko:"e스포츠 산업", en:"Esports Industry",
     desc:"리그와 팀, 관중과 후원이 맞물려 돌아가는 방식을 조사합니다. 대회 운영 현장에 직접 들어가 자료를 모읍니다." },
   { ko:"게임 리터러시", en:"Game Literacy",
     desc:"게임을 읽고 해석하고 만들어 보는 능력을 어떻게 기를 수 있는지 다룹니다. 교육 프로그램을 설계하고 검증합니다." },
-  { ko:"배리어프리 이스포츠", en:"Barrier-free Esports",
+  { ko:"배리어프리 e스포츠", en:"Barrier-free Esports",
     desc:"장애가 있는 사람에게 경기가 얼마나 열려 있는지 살핍니다. 접근성 장치와 대회 규정을 함께 검토합니다." }
 ];
 
@@ -112,7 +121,7 @@ const NOTICES = [
   { date:"2026-08-20", tag:"모집", pinned:true,
     title:"2학기 학부 연구생 모집", url:"" },
   { date:"2026-08-05", tag:"행사", pinned:false,
-    title:"장애인 이스포츠 체험 부스 운영", url:"" },
+    title:"장애인 e스포츠 체험 부스 운영", url:"" },
   { date:"2026-07-11", tag:"수상", pinned:false,
     title:"한국게임학회 우수논문상 수상", url:"" },
   { date:"2026-06-02", tag:"공지", pinned:false,
@@ -131,7 +140,7 @@ const NOTICES = [
 const SEMINARS = [
   { term:"2026-2학기", note:"매주 수요일 오후 3시, 연구실",
     items:[
-      { round:"14", date:"2026-09-10", topic:"이스포츠 중계 데이터 수집 실습", speaker:"홍길동", status:"예정" },
+      { round:"14", date:"2026-09-10", topic:"e스포츠 중계 데이터 수집 실습", speaker:"홍길동", status:"예정" },
       { round:"13", date:"2026-09-03", topic:"접근성 컨트롤러 사례 분석",   speaker:"이○○", status:"예정" }
     ] },
   { term:"2026-1학기", note:"",
@@ -147,7 +156,7 @@ const SEMINARS = [
 const PAGES = {
     seminar:  { eyebrow:"E.C.SEMINAR", title:"E.C.Seminar",
               desc:"학기마다 진행한 세미나 기록입니다. 논문 리뷰와 연구 발표를 함께합니다." },
-    history:  { eyebrow:"HISTORY",  title:"연혁",
+    history:  { eyebrow:"INTRODUCTION",  title:"소개",
               desc:"석사과정 개설부터 현재까지, 대학원이 지나온 길입니다." },
   research: { eyebrow:"02 / RESEARCH", title:"학술 활동",
               desc:"학회 발표, 학술지 등재, 학술대회 수상 기록입니다. 발표자와 지도교수, 학술대회명, 게재 면을 함께 표기합니다." },
@@ -175,7 +184,7 @@ const PROGRAMS = [
   { image:"assets/images/program-1.jpg",
     tag:"국내 최초",
     title:"e스포츠 융합 전공",
-    desc:"이스포츠를 독립된 학문 영역으로 다루는 전공을 국내에서 처음으로 열었습니다. 산업 현장과 학술 연구를 잇는 자리를 만드는 것이 목표입니다." },
+    desc:"e스포츠를 독립된 학문 영역으로 다루는 전공을 국내에서 처음으로 열었습니다. 산업 현장과 학술 연구를 잇는 자리를 만드는 것이 목표입니다." },
 
   { image:"assets/images/program-2.jpg",
     tag:"융합",
@@ -193,16 +202,16 @@ const PROGRAMS = [
    authors: 발표자 + 교수님, venue: 학술대회·학술지명, pages: 페이지, award: 수상명(없으면 "") */
 const PUBLICATIONS = [
   { year:"2026", type:"학회 발표", authors:"홍길동, 김○○ 교수",
-    title:"장애인 이스포츠 참여 환경의 접근성 요인 분석",
+    title:"장애인 e스포츠 참여 환경의 접근성 요인 분석",
     venue:"한국게임학회 춘계학술대회", pages:"pp.101–110", award:"" },
   { year:"2025", type:"학술지 등재", authors:"이○○, 김○○ 교수",
-    title:"이스포츠 관람 동기가 팀 충성도에 미치는 영향",
+    title:"e스포츠 관람 동기가 팀 충성도에 미치는 영향",
     venue:"한국스포츠학회지 제23권 4호", pages:"pp.55–72", award:"" },
   { year:"2025", type:"수상", authors:"박○○, 김○○ 교수",
     title:"게임 리터러시 교육 프로그램 설계 연구",
     venue:"한국게임학회 추계학술대회", pages:"pp.12–20", award:"우수논문상" },
   { year:"2024", type:"학회 발표", authors:"최○○, 김○○ 교수",
-    title:"대학 이스포츠 리그 운영 사례 연구",
+    title:"대학 e스포츠 리그 운영 사례 연구",
     venue:"쓰쿠바대학 국제 공동 세미나", pages:"pp.31–38", award:"" }
 ];
 
@@ -211,34 +220,34 @@ const PUBLICATIONS = [
 /* --- 미디어 (영상·사진·방송) ------------------------------------------- */
 /* sub: "영상" | "사진" | "방송" | "기타" */
 const MEDIA = [
-  { date:"2026-06-18", sub:"영상", title:"장애인 이스포츠 대회 현장 스케치",
+  { date:"2026-06-18", sub:"영상", title:"장애인 e스포츠 대회 현장 스케치",
     desc:"대회 운영 과정을 담은 영상입니다.", url:"", image:"" },
   { date:"2026-04-11", sub:"사진", title:"베리어프리 부스 운영 기록",
     desc:"접근성 컨트롤러 체험 부스 사진입니다.", url:"", image:"" }
 ];
 const NEWS = [   // 4-1) 뉴스 기사 — sub: "학교" 또는 "플레이브릿지"
-  { date:"2026-06-18", sub:"플레이브릿지", title:"장애인 이스포츠 대회 공동 운영 소식",
+  { date:"2026-06-18", sub:"플레이브릿지", title:"장애인 e스포츠 대회 공동 운영 소식",
     desc:"플레이브릿지와 함께 진행한 대회가 언론에 소개되었습니다.", url:"#",
     image:"" },   // ← 사진 경로를 적으면 카드 위에 썸네일이 붙습니다
-  { date:"2026-03-04", sub:"학교", title:"교내 이스포츠 연구실 소개 기사",
+  { date:"2026-03-04", sub:"학교", title:"교내 e스포츠 연구실 소개 기사",
     desc:"학교 신문에 연구실의 연구 방향이 실렸습니다.", url:"#" }
 ];
 
 const CAMPUS = [  // 4-2) 교내 — sub: "ECS" | "베리어프리" | "총장배" | "기타"
   { date:"2026-05-20", sub:"ECS", title:"ECS 프로그램 운영 지원",
-    desc:"교내 이스포츠 프로그램 기획과 현장 운영을 맡았습니다.", url:"" },
+    desc:"교내 e스포츠 프로그램 기획과 현장 운영을 맡았습니다.", url:"" },
   { date:"2026-04-11", sub:"베리어프리", title:"한신대 베리어프리 행사 참여",
     desc:"장애 학생의 게임 접근성을 주제로 부스를 운영했습니다.", url:"" },
-  { date:"2025-11-08", sub:"총장배", title:"총장배 이스포츠 대회 운영",
+  { date:"2025-11-08", sub:"총장배", title:"총장배 e스포츠 대회 운영",
     desc:"대회 규정 설계와 경기 운영을 담당했습니다.", url:"" }
 ];
 
-const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 이스포츠" | "현장 답사" | "MT" | "기타"
+const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 e스포츠" | "현장 답사" | "MT" | "기타"
   { date:"2026-07-02", sub:"학회", title:"쓰쿠바대학 학술 교류",
-    desc:"일본 쓰쿠바대학과 이스포츠 연구 교류를 진행했습니다.", url:"" },
-  { date:"2026-05-30", sub:"장애인 이스포츠", title:"장애인 이스포츠 대회 자원 운영",
+    desc:"일본 쓰쿠바대학과 e스포츠 연구 교류를 진행했습니다.", url:"" },
+  { date:"2026-05-30", sub:"장애인 e스포츠", title:"장애인 e스포츠 대회 자원 운영",
     desc:"경기 보조와 접근성 점검을 담당했습니다.", url:"" },
-  { date:"2026-02-14", sub:"현장 답사", title:"이스포츠 경기장 현장 답사",
+  { date:"2026-02-14", sub:"현장 답사", title:"e스포츠 경기장 현장 답사",
     desc:"국내 주요 경기장을 방문해 운영 구조를 조사했습니다.", url:"" },
   { date:"2025-08-22", sub:"MT", title:"연구실 하계 MT",
     desc:"연구 계획을 공유하고 팀워크를 다졌습니다.", url:"" }
@@ -248,9 +257,9 @@ const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 이스포츠" |
 /* photo: 사진 파일 경로(예: "images/kim.jpg"). 비워 두면 이름 첫 글자가 표시됩니다. */
 const FACULTY = [
   { name:"최은경", nameEn:"CHOI EUN-KYUNG", role:"지도교수", photo:"",
-    field:"이스포츠 산업, 게임 리터러시, 장애인 스포츠 정책",
+    field:"e스포츠 산업, 게임 리터러시, 장애인 스포츠 정책",
     email:"prof@example.ac.kr",
-    intro:"이스포츠를 학문의 대상으로 다루는 일에 관심을 두고 있습니다.",
+    intro:"e스포츠를 학문의 대상으로 다루는 일에 관심을 두고 있습니다.",
     bio:[
       "2024 한신대학교 e스포츠융합대학원 교수",
       "2020 ○○대학교 스포츠산업학과 박사",
@@ -262,21 +271,21 @@ const STUDENTS = [
   // 상세 이력은 이 구성원의 카드 안에서만 표시됩니다.
   {
     "name": "김동현",
-    "nameEn": "",
+    "nameEn": "KIM DONG-HYUN",
     "course": "박사과정",
     "photo": "assets/images/kim-donghyun.png",
-    "intro": "한신대학교 대학원 이스포츠융합전공",
+    "intro": "",
     "profileSections": [
       {
         "title": "학력",
         "items": [
           {
             "date": "2025. 02. –",
-            "text": "한신대학교 대학원 이스포츠융합전공 박사과정"
+            "text": "한신대학교 대학원 e스포츠융합전공 박사과정"
           },
           {
             "date": "2022. 08. – 2025. 02.",
-            "text": "한신대학교 대학원 이스포츠융합전공 공학석사"
+            "text": "한신대학교 대학원 e스포츠융합전공 공학석사"
           },
           {
             "date": "2016. 02. – 2020. 08.",
@@ -318,7 +327,7 @@ const STUDENTS = [
         "items": [
           {
             "date": "2026. 09. –",
-            "text": "「2026년 장애인이스포츠 대회 개선 연구」, 연구보조원, 대한장애인체육회"
+            "text": "「2026년 장애인e스포츠 대회 개선 연구」, 연구보조원, 대한장애인체육회"
           },
           {
             "date": "2026. 05. 30.",
@@ -448,21 +457,21 @@ const STUDENTS = [
     ]
   },
   { name:"홍길동", nameEn:"HONG GIL-DONG", course:"석사 과정", photo:"",
-    interest:"장애인 이스포츠 접근성, 대회 운영 설계" },
+    interest:"장애인 e스포츠 접근성, 대회 운영 설계" },
   { name:"이○○", nameEn:"LEE ○○", course:"석사 과정", photo:"",
-    interest:"이스포츠 관람 행동, 팬덤 데이터 분석" },
+    interest:"e스포츠 관람 행동, 팬덤 데이터 분석" },
   { name:"박○○", nameEn:"PARK ○○", course:"학부 연구생", photo:"",
     interest:"게임 리터러시 교육 프로그램" },
   { name:"최○○", nameEn:"CHOI ○○", course:"학부 연구생", photo:"",
-    interest:"대학 이스포츠 리그 운영" }
+    interest:"대학 e스포츠 리그 운영" }
 ];
 /* --- 졸업생 ------------------------------------------------------------ */
 /* course 에는 "2026 석사 졸업" 처럼 연도와 학위를,
    now 에는 현재 소속이나 하는 일을 적으시면 됩니다. */
 const ALUMNI = [
   { name:"정○○", nameEn:"JEONG ○○", course:"2026 석사 졸업", photo:"",
-    now:"○○이스포츠협회 연구원",
-    intro:"대학 이스포츠 리그의 운영 구조를 주제로 학위논문을 썼습니다.",
+    now:"○○e스포츠협회 연구원",
+    intro:"대학 e스포츠 리그의 운영 구조를 주제로 학위논문을 썼습니다.",
     bio:[
       "2026 한신대학교 e스포츠융합대학원 석사 졸업",
       "2025 한국게임학회 추계학술대회 발표",
@@ -476,7 +485,7 @@ const ALUMNI = [
 /* --- 6. Q&A ------------------------------------------------------------ */
 /* --- 협력 기관 (페이지 맨 아래 흐르는 띠) -------------------------------- */
 /* logo 를 비워 두면 이름이 글자로 나옵니다. url 이 있으면 눌러서 이동합니다. */
-const PARTNERS_LABEL = "함께하는 후원기관";
+const PARTNERS_LABEL = "패밀리 사이트";
 // 후원기관이 추가되면 아래 목록에 { name:"기관명", logo:"사진 경로", url:"홈페이지 주소" }를 추가하세요.
 // logo와 url은 준비되었을 때 입력하면 됩니다. 빈 값이면 기관명만 표시합니다.
 const PARTNERS = [
@@ -487,7 +496,7 @@ const FAQ = [
     a:"연구 주제에 대한 구체적인 관심과 꾸준히 기록을 남겨 온 경험을 봅니다. 관심 주제를 두세 문장으로 정리해 메일로 보내 주시면 상담 일정을 잡아 드립니다." },
   { q:"학부생도 연구실 활동에 참여할 수 있나요?",
     a:"가능합니다. 학기 중에는 학부 연구생을 모집하며, 행사 운영과 데이터 수집부터 함께 시작합니다." },
-  { q:"이스포츠 경험이 없어도 괜찮을까요?",
+  { q:"e스포츠 경험이 없어도 괜찮을까요?",
     a:"괜찮습니다. 게임을 잘하는 것보다 현상을 관찰하고 질문을 만드는 태도가 더 중요합니다." },
   { q:"공동 연구나 행사 협력을 제안하고 싶습니다.",
     a:"기관명, 목적, 일정, 예상 규모를 적어 메일로 보내 주시면 검토 후 회신드립니다." }
@@ -524,3 +533,10 @@ const FAQ = [
  *     photo:"assets/images/파일명.jpg", interest:"관심 연구 분야" },
  *   ※ photo 를 "" 로 두면 이름 첫 글자 타일이 대신 표시됩니다
  * ========================================================================== */
+
+/* 대학원소개: 사진 경로와 교수님 소개 글을 준비되면 입력합니다. */
+const GRADUATE_WELCOME = {
+  photo: "",
+  signature: "", // 교수님 사인 이미지 경로
+  paragraphs: [] // 문단마다 "소개 글"을 한 항목씩 추가
+};

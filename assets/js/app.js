@@ -423,8 +423,24 @@ if (typeof SITE === "undefined") {
      ====================================================================== */
   function renderHistory() {
     const intro = $("#homeIntro");
-    if (intro) intro.innerHTML = '<div class="wrap intro-grid"><h2 class="intro-label">대학원소개</h2><div class="intro-body">' +
-      INTRO.paragraphs.map(p => '<p>' + esc(p) + '</p>').join("") + '</div></div>';
+    if (intro) {
+      const welcome = GRADUATE_WELCOME;
+      intro.innerHTML = '<div class="wrap graduate-welcome">' +
+        '<div class="graduate-welcome-copy"><p class="welcome-label">대학원소개</p>' +
+          '<h2>한신대학교 일반대학원<br>e스포츠융합(협)</h2>' +
+          (welcome.paragraphs.length
+            ? '<div class="welcome-prose">' + welcome.paragraphs.map(p => '<p>' + esc(p) + '</p>').join('') + '</div>'
+            : '<div class="welcome-copy-placeholder"><p>대학원 소개 글 준비 중입니다.</p><p>최은경 교수님의 소개 글이 이곳에 들어갈 예정입니다.</p></div>') +
+        '</div><figure class="graduate-welcome-photo">' +
+          (welcome.photo ? '<img src="' + esc(welcome.photo) + '" alt="최은경 교수님">'
+            : '<div class="welcome-photo-placeholder"><span>최은경 교수님</span><span>사진 준비 중</span></div>') +
+          '<figcaption class="welcome-caption"><p>e스포츠 융합(협)</p>' +
+            '<div class="welcome-sign-row"><span>지도교수 <strong>최은경</strong></span>' +
+              (welcome.signature ? '<img class="welcome-sign-image" src="' + esc(welcome.signature) + '" alt="최은경 교수님 서명">'
+                : '<span class="welcome-sign-placeholder">사인 이미지 준비 중</span>') +
+            '</div></figcaption>' +
+        '</figure></div>';
+    }
     const address = $("#directionsAddress");
     if (address) address.textContent = "주소(18101): " + SITE.address;
 
