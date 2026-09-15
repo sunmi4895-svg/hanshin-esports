@@ -266,6 +266,10 @@ if (typeof SITE === "undefined") {
       '<div class="wrap">' +
         '<h1 class="home-headline">' + headline + '</h1>' +
         '<p class="home-sub" style="animation-delay:' + subDelay + 's">' + esc(INTRO.sub) + '</p>' +
+        '<div class="hero-controls" aria-label="메인 사진 넘기기">' +
+          '<button class="hero-control" type="button" data-hero-direction="prev" aria-label="이전 사진">‹</button>' +
+          '<button class="hero-control" type="button" data-hero-direction="next" aria-label="다음 사진">›</button>' +
+        '</div>' +
       '</div>';
 
     /* 대표 사진이 있으면 큰 문구 뒤에 깔아 줍니다 */
@@ -292,6 +296,7 @@ if (typeof SITE === "undefined") {
       let timer;
       const interval = SITE.heroInterval || 5000;
       function show(index) {
+        index = (index + images.length) % images.length;
         if (current >= 0) images[current].classList.remove("is-active");
         current = index;
         const img = images[index];
@@ -302,6 +307,14 @@ if (typeof SITE === "undefined") {
           { duration: interval + 900, easing: "ease-out", fill: "forwards" }
         );
       }
+      hero.querySelectorAll("[data-hero-direction]").forEach(button => {
+        button.addEventListener("click", () => {
+          if (images.length < 2) return;
+          const direction = button.dataset.heroDirection === "next" ? 1 : -1;
+          show(current + direction);
+          schedule();
+        });
+      });
       function schedule() {
         clearInterval(timer);
         if (motion.matches || document.hidden || images.length < 2) return;
