@@ -61,7 +61,8 @@ if (typeof SITE === "undefined") {
             const on = n.href.split("#")[0] === here ||
                        (n.children || []).some(c => c.href.split("#")[0] === here);
             return '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
-                   esc(n.label) + '</a>' +
+                   '<span class="nav-label">' + esc(n.label) + '</span>' +
+                   (n.english ? '<span class="nav-english">(' + esc(n.english) + ')</span>' : '') + '</a>' +
                    (n.children
                      ? '<div class="nav-sub">' +
                          n.children.map(navChild).join("") +

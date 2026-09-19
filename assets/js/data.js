@@ -57,32 +57,32 @@ const SITE = {
 /* --- 상단 메뉴 --------------------------------------------------------- */
 /* 순서를 바꾸거나 항목을 지우면 모든 페이지의 메뉴가 함께 바뀝니다. */
 const NAV = [
-  { label:"홈",           href:"index.html"  },
+  { label:"홈", english:"HOME",           href:"index.html"  },
 
-  { label:"소개",          href:"history.html", children:[
+  { label:"소개", english:"ABOUT",          href:"history.html", children:[
       { label:"대학원소개", href:"history.html#intro"   },
       { label:"연혁",       href:"history.html#timeline" },
       { label:"찾아오시는길", href:"history.html#directions" }
   ]},
 
-  { label:"E.C.Seminar",  href:"seminar.html", children:[
+  { label:"E.C.Seminar", english:"SEMINAR",  href:"seminar.html", children:[
       { label:"세미나 일정", href:"seminar.html" }
   ]},
 
-  { label:"학술활동",       href:"research.html", children:[
+  { label:"학술활동", english:"RESEARCH",       href:"research.html", children:[
       { label:"전체",       href:"research.html"          },
       { label:"학회 발표",   href:"research.html#conference" },
       { label:"학술지 등재", href:"research.html#journal"    },
       { label:"수상",       href:"research.html#award"      }
   ]},
 
-  { label:"EC Lab 연구진", href:"members.html", children:[
+  { label:"EC Lab 연구진", english:"MEMBERS", href:"members.html", children:[
       { label:"교수진",    href:"members.html#faculty"  },
       { label:"대학원생",  href:"members.html#students" },
       { label:"졸업생",    href:"members.html#alumni"   }
   ]},
 
-  { label:"소식",          href:"outreach.html", children:[
+  { label:"소식", english:"NEWS",          href:"outreach.html", children:[
       { label:"미디어", href:"outreach.html#media" },
       { label:"뉴스",   href:"outreach.html#news"  },
       { label:"Q&A",    href:"qna.html"            },
@@ -1333,11 +1333,11 @@ const ALUMNI = [
 /* --- 6. Q&A ------------------------------------------------------------ */
 /* --- 협력 기관 (페이지 맨 아래 흐르는 띠) -------------------------------- */
 /* logo 를 비워 두면 이름이 글자로 나옵니다. url 이 있으면 눌러서 이동합니다. */
-const PARTNERS_LABEL = "패밀리 사이트";
+const PARTNERS_LABEL = "FAMILY SITE";
 // 후원기관이 추가되면 아래 목록에 { name:"기관명", logo:"사진 경로", url:"홈페이지 주소" }를 추가하세요.
 // logo와 url은 준비되었을 때 입력하면 됩니다. 빈 값이면 기관명만 표시합니다.
 const PARTNERS = [
-  { name:"플레이브릿지", logo:"", url:"" }
+  { name:"PLAYBRIDGE", logo:"", url:"" }
 ];
 const FAQ = [
   { q:"대학원 진학을 준비 중입니다. 무엇을 보시나요?",
