@@ -673,6 +673,7 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   font-size:16px; line-height:1.8;
 }
 .profile-date{color:#667085; font-size:14px;}
+.profile-date-end{display:block;}
 .profile-detail{white-space:pre-line; overflow-wrap:anywhere;}
 
 @media (max-width:640px){

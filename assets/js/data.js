@@ -281,11 +281,11 @@ const STUDENTS = [
         "items": [
           {
             "date": "2025. 02. –",
-            "text": "한신대학교 대학원 e스포츠융합전공 박사과정"
+            "text": "한신대학교 일반대학원 e스포츠융합(협) 박사과정"
           },
           {
             "date": "2022. 08. – 2025. 02.",
-            "text": "한신대학교 대학원 e스포츠융합전공 공학석사"
+            "text": "한신대학교 일반대학원 e스포츠융합(협) 석사과정 졸업 (공학석사)"
           },
           {
             "date": "2016. 02. – 2020. 08.",
@@ -467,7 +467,7 @@ const STUDENTS = [
       "items": [
         {
           "date": "2025",
-          "text": "석·박사 통합과정"
+          "text": "한신대학교 일반대학원 e스포츠융합(협) 석·박사 통합과정"
         },
         {
           "date": "",
@@ -680,7 +680,7 @@ const STUDENTS = [
       "items": [
         {
           "date": "2025",
-          "text": "석·박사 통합과정"
+          "text": "한신대학교 일반대학원 e스포츠융합(협) 석·박사 통합과정"
         },
         {
           "date": "",
@@ -860,15 +860,15 @@ const STUDENTS = [
   {
   "name": "오병민",
   "nameEn": "OH BYEONG-MIN",
-  "course": "박사과정",
-  "photo": "assets/images/oh-byeong-min-suit.png",
+  "course": "석·박사 통합과정",
+  "photo": "assets/images/oh-byeong-min-suit-framed.png",
   "profileSections": [
     {
       "title": "학력",
       "items": [
         {
           "date": "2025 –",
-          "text": "한신대학교 대학원 e스포츠융합(협) 석·박사 통합과정 수료 중"
+          "text": "한신대학교 일반대학원 e스포츠융합(협) 석·박사 통합과정"
         },
         {
           "date": "2018. 02.",
@@ -1004,7 +1004,7 @@ const STUDENTS = [
         },
         {
           "date": "2025. 03. –",
-          "text": "한신대학교 일반대학원 e스포츠 융합 전공 (박사 재학)"
+          "text": "한신대학교 일반대학원 e스포츠융합(협) 박사과정"
         }
       ]
     },
@@ -1084,7 +1084,7 @@ const STUDENTS = [
       "items": [
         {
           "date": "2026",
-          "text": "석사과정"
+          "text": "한신대학교 일반대학원 e스포츠융합(협) 석사과정"
         },
         {
           "date": "",

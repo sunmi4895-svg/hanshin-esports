@@ -697,13 +697,22 @@ if (typeof SITE === "undefined") {
         : '<li><span class="bio-y"></span><span>' + esc(line) + '</span></li>';
     }
 
+    function profileDate(value) {
+      const date = String(value || '').trim();
+      // 2026-1 등의 학기 표기는 기간 구분자로 취급하지 않습니다.
+      const range = /^(.*?)\s*(?:[–—~～]|\s-\s|-(?=\s*\d{4})|-\s*$)\s*(.*?)$/.exec(date);
+      if (!range) return esc(date);
+      return esc(range[1].trim()) + ' ~' +
+        (range[2] ? '<span class="profile-date-end">' + esc(range[2].trim()) + '</span>' : '');
+    }
+
     /* 상세 이력은 구성원 프로필 안에서만 표시합니다. */
     function profileSections(sections) {
       return (sections || []).filter(s => s.items && s.items.length).map(s =>
         '<section class="profile-section">' +
           '<h3>' + esc(s.title) + '</h3>' +
           '<ul class="profile-history">' + s.items.map(item =>
-            '<li><span class="profile-date">' + (s.title.startsWith('경력') ? (item.status === 'current' || (item.status !== 'former' && /[-–—~]\s*$/.test(item.date)) ? '(現) ' : '(前) ') : '') + esc(item.date) + '</span>' +
+            '<li><span class="profile-date">' + (s.title.startsWith('경력') ? (item.status === 'current' || (item.status !== 'former' && /[-–—~～]\s*$/.test(item.date)) ? '(現) ' : '(前) ') : '') + profileDate(item.date) + '</span>' +
               '<span class="profile-detail">' + esc(item.text) + '</span></li>'
           ).join('') + '</ul>' +
         '</section>'
