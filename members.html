@@ -23,14 +23,22 @@
     <div class="wrap">
 
       <!-- 탭 : 교수진 / 재학생 -->
+      <div class="member-toolbar">
       <div class="tools" role="tablist" aria-label="구성원 분류">
                <button class="chip" role="tab" aria-selected="false"  data-mtab="faculty">교수진</button>
         <button class="chip" role="tab" aria-selected="true" data-mtab="students">대학원생</button>
         <button class="chip" role="tab" aria-selected="false" data-mtab="alumni">졸업생</button>
       </div>
+      <span class="member-sort-note">가나다순</span>
+      </div>
 
       <!-- 교수진 : data.js 의 FACULTY -->
       <div id="panelFaculty">
+        <div class="tools" role="group" aria-label="교수진 구분">
+          <button class="chip on" type="button" data-faculty="all" aria-pressed="true" aria-controls="facultyList">전체</button>
+          <button class="chip" type="button" data-faculty="internal" aria-pressed="false" aria-controls="facultyList">교내</button>
+          <button class="chip" type="button" data-faculty="external" aria-pressed="false" aria-controls="facultyList">외래</button>
+        </div>
         <div id="facultyList"></div>
       </div>
 

@@ -7,7 +7,7 @@
 <meta name="description" content="한신대학교 e스포츠 연구실입니다." />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" crossorigin />
-<link rel="stylesheet" href="assets/css/style.css?v=20260913-profile-full" />
+<link rel="stylesheet" href="assets/css/style.css?v=20260923-home-notices" />
 </head>
 <body data-page="home">
 
@@ -21,14 +21,21 @@
   <!-- 감성 문구 : 내용은 data.js 의 INTRO.headline / INTRO.sub -->
   <section class="home-hero" id="homeHero"></section>
 
-  <!-- 대표 사진 : data.js 의 SITE.heroImage 를 채우면 나타납니다 -->
-  <div id="heroPhoto"></div>
+  <section class="home-notices" aria-labelledby="homeNoticeTitle">
+    <div class="wrap">
+      <div class="home-notice-heading">
+        <div><p class="home-notice-en">EC LAB NOTICE</p><h2 id="homeNoticeTitle">공지사항</h2></div>
+        <button class="home-notice-more" id="noticeMore" type="button" aria-controls="noticeList" aria-expanded="false" hidden>더보기 +</button>
+      </div>
+      <div class="notice-grid" id="noticeList"></div>
+    </div>
+  </section>
 
 </main>
 
 <footer id="siteFooter"></footer>
 
 <script src="assets/js/data.js?v=20260913-profile-full"></script>
-<script src="assets/js/app.js?v=20260913-profile-full"></script>
+<script src="assets/js/app.js?v=20260923-home-notices"></script>
 </body>
 </html>

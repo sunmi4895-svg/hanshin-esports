@@ -375,7 +375,7 @@ if (typeof SITE === "undefined") {
     const rows = [...NOTICES].sort((a, b) =>
       (b.pinned === true) - (a.pinned === true) || b.date.localeCompare(a.date));
 
-    const SHOW = 6;
+    const SHOW = 4;
     let expanded = false;
 
     function draw() {
@@ -389,7 +389,8 @@ if (typeof SITE === "undefined") {
                 (isNew(n.date) ? '<span class="nt-new">NEW</span>' : '') +
               '</span>' +
               '<span class="nt-title">' + esc(n.title) + '</span>' +
-              '<span class="nt-date">' + esc(dot(n.date)) + '</span>';
+              '<time class="nt-date" datetime="' + esc(n.date) + '">' + esc(dot(n.date)) + '</time>' +
+              (n.desc ? '<span class="nt-desc">' + esc(n.desc) + '</span>' : '');
             return n.url
               ? '<a class="nt reveal" href="' + esc(n.url) + '" target="_blank" rel="noopener">' + inner + '</a>'
               : '<div class="nt reveal">' + inner + '</div>';
@@ -405,6 +406,7 @@ if (typeof SITE === "undefined") {
       more.textContent = "지난 공지 더 보기 (" + (rows.length - SHOW) + ")";
       more.addEventListener("click", () => {
         expanded = !expanded;
+        more.setAttribute("aria-expanded", String(expanded));
         more.textContent = expanded ? "접기" : "지난 공지 더 보기 (" + (rows.length - SHOW) + ")";
         draw();
       });
@@ -466,7 +468,7 @@ if (typeof SITE === "undefined") {
           (welcome.photo ? '<img src="' + esc(welcome.photo) + '" alt="최은경 교수님">'
             : '<div class="welcome-photo-placeholder"><span>최은경 교수님</span><span>사진 준비 중</span></div>') +
           '<figcaption class="welcome-caption"><p>e스포츠 융합(협)</p>' +
-            '<div class="welcome-sign-row"><span>지도교수 <strong>최은경</strong></span>' +
+            '<div class="welcome-sign-row"><span>주임교수 <strong>최은경</strong></span>' +
               (welcome.signature ? '<img class="welcome-sign-image" src="' + esc(welcome.signature) + '" alt="최은경 교수님 서명">'
                 : '<span class="welcome-sign-placeholder">사인 이미지 준비 중</span>') +
             '</div></figcaption>' +
@@ -595,24 +597,42 @@ if (typeof SITE === "undefined") {
   /* ======================================================================
      구성원
      ====================================================================== */
+  function facultySubjects(person) {
+    return '<div class="faculty-subjects"><strong>담당과목</strong>' +
+      (person.subjects?.length ? '<ul>' + person.subjects.map(subject => '<li>' + esc(subject) + '</li>').join('') + '</ul>'
+        : '<div class="faculty-subjects-blank" aria-label="담당과목 미등록"></div>') + '</div>';
+  }
+
   function renderMembers() {
     /* 졸업생 항목을 아직 안 만드셨어도 오류가 나지 않도록 */
     const ALUM = (typeof ALUMNI !== "undefined") ? ALUMNI : [];
+    const byName = list => list.map((person, index) => ({person, index}))
+      .sort((a, b) => a.person.name.localeCompare(b.person.name, 'ko'));
 
-    /* 교수진 */
-    $("#facultyList").innerHTML = FACULTY.length ? FACULTY.map((f, i) =>
-      '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '"><div>' + pic(f.photo, f.name) + '</div><div>' +
+    /* 교수진 — 원래 인덱스를 유지해 상세 프로필과 연결합니다. */
+    function drawFaculty(group) {
+    const rows = byName(FACULTY).filter(({person}) => group === 'all' || person.facultyGroup === group);
+    $("#facultyList").innerHTML = rows.length ? rows.map(({person: f, index: i}) =>
+      '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '"><div>' + (f.photo ? pic(f.photo, f.name) : '<div class="photo-ph" aria-label="사진 미등록"></div>') + '</div><div>' +
         '<span class="prof-role">' + esc(f.role) + '</span>' +
         '<h3 class="prof-name">' + esc(f.name) + '</h3>' +
         '<p class="prof-en">' + esc(f.nameEn.toUpperCase()) + '</p>' +
-        '<p><strong>연구 분야</strong> &middot; ' + esc(f.field) + '</p>' +
-        (f.email ? '<p><a href="mailto:' + esc(f.email) + '">' + esc(f.email) + '</a></p>' : '') +
+        facultySubjects(f) +
       '</div></article>').join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
+    $$('[data-faculty]').forEach(button => {
+      const active = button.dataset.faculty === group;
+      button.classList.toggle('on', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    observe();
+    }
+    $$('[data-faculty]').forEach(button => button.addEventListener('click', () => drawFaculty(button.dataset.faculty)));
+    drawFaculty('all');
 
     /* 대학원생 · 졸업생 — 카드 모양이 같아 한 함수로 만듭니다 */
     const card = (p, key, i) =>
       '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="' + key + '" data-midx="' + i + '">' +
-        pic(p.photo, p.name) +
+        (p.profilePending && !p.photo ? '<div class="photo-ph" aria-label="사진 미등록"></div>' : pic(p.photo, p.name)) +
         '<h4 class="st-name">' + esc(p.name) + '</h4>' +
         (p.nameEn ? '<p class="st-en">' + esc(p.nameEn.toUpperCase()) + '</p>' : '') +
         '<p class="st-course">' + esc(p.course) + '</p>' +
@@ -620,7 +640,7 @@ if (typeof SITE === "undefined") {
       '</article>';
 
     function drawStudents(course) {
-      const rows = STUDENTS.map((student, index) => ({student, index})).filter(({student}) => {
+      const rows = byName(STUDENTS).map(({person: student, index}) => ({student, index})).filter(({student}) => {
         const value = (student.course || "").replace(/\s/g, "");
         const group = value.includes("통합") ? "integrated" : value.includes("박사") ? "doctoral" : value.includes("석사") ? "masters" : "other";
         return course === "all" ? group !== "other" : group === course;
@@ -636,7 +656,7 @@ if (typeof SITE === "undefined") {
     drawStudents("all");
 
     $("#alumniList").innerHTML = ALUM.length
-      ? ALUM.map((s, i) => card(s, "alumni", i)).join("")
+      ? byName(ALUM).map(({person: s, index: i}) => card(s, "alumni", i)).join("")
       : '<p class="empty">등록된 졸업생이 없습니다.</p>';
 
     /* 탭 전환 */
@@ -697,24 +717,48 @@ if (typeof SITE === "undefined") {
         : '<li><span class="bio-y"></span><span>' + esc(line) + '</span></li>';
     }
 
-    function profileDate(value) {
+    function profileDate(value, status) {
       const date = String(value || '').trim();
       // 2026-1 등의 학기 표기는 기간 구분자로 취급하지 않습니다.
       const range = /^(.*?)\s*(?:[–—~～]|\s-\s|-(?=\s*\d{4})|-\s*$)\s*(.*?)$/.exec(date);
+      if (status === 'current') return date ? esc(range ? range[1].trim() : date) + ' ~ 현재' : '현재';
       if (!range) return esc(date);
+      if (!range[2] && status !== 'former') return esc(range[1].trim()) + ' ~ 현재';
       return esc(range[1].trim()) + ' ~' +
         (range[2] ? '<span class="profile-date-end">' + esc(range[2].trim()) + '</span>' : '');
     }
 
     /* 상세 이력은 구성원 프로필 안에서만 표시합니다. */
+    function unifiedProfileSections(person) {
+      const titles = ['학력', '교내 학술활동', '대외 학술활동 및 연구', '논문', '저서', '경력', '수상', '자격증'];
+      const groups = new Map(titles.map(title => [title, []]));
+      for (const section of person.profileSections || []) {
+        const title = section.title || '';
+        const category = title.includes('학력') ? '학력'
+          : title.includes('경력') ? '경력'
+          : /학술|연구/.test(title) ? (title.includes('교내') ? '교내 학술활동' : '대외 학술활동 및 연구')
+          : titles.includes(title) ? title : '경력';
+        groups.get(category).push(...(section.items || []));
+      }
+      for (const line of person.bio || []) {
+        const match = /^(\d{4}(?:[.\-]\d{1,2})?)\s+(.+)$/.exec(String(line).trim());
+        const item = { date: match ? match[1] : '', text: match ? match[2] : String(line) };
+        const category = /(?:학사|석사|박사|입학|졸업)/.test(item.text) ? '학력'
+          : /발표|연구|학술대회/.test(item.text) ? (item.text.includes('교내') ? '교내 학술활동' : '대외 학술활동 및 연구') : '경력';
+        groups.get(category).push(item);
+      }
+      return titles.map(title => ({ title, items: groups.get(title) }));
+    }
+
     function profileSections(sections) {
-      return (sections || []).filter(s => s.items && s.items.length).map(s =>
+      return sections.map(s =>
         '<section class="profile-section">' +
           '<h3>' + esc(s.title) + '</h3>' +
           '<ul class="profile-history">' + s.items.map(item =>
-            '<li><span class="profile-date">' + (s.title.startsWith('경력') ? (item.status === 'current' || (item.status !== 'former' && /[-–—~～]\s*$/.test(item.date)) ? '(現) ' : '(前) ') : '') + profileDate(item.date) + '</span>' +
+            '<li><span class="profile-date">' + profileDate(item.date, item.status) + '</span>' +
               '<span class="profile-detail">' + esc(item.text) + '</span></li>'
           ).join('') + '</ul>' +
+          (!s.items.length ? '<div class="profile-blank" aria-label="' + esc(s.title) + ' 미등록"></div>' : '') +
         '</section>'
       ).join('');
     }
@@ -726,24 +770,24 @@ if (typeof SITE === "undefined") {
 
       body.innerHTML =
         '<div class="modal-head">' +
-          '<div class="modal-photo">' + pic(p.photo, p.name) + '</div>' +
+          '<div class="modal-photo">' + (p.profilePending && !p.photo ? '<div class="photo-ph" aria-label="사진 미등록"></div>' : pic(p.photo, p.name)) + '</div>' +
           '<div>' +
             '<span class="prof-role">' + esc(p.role || p.course || "") + '</span>' +
             '<h2 class="modal-name" id="modalName">' + esc(p.name) + '</h2>' +
             (p.nameEn ? '<p class="modal-en">' + esc(p.nameEn.toUpperCase()) + '</p>' : '') +
+            (key === 'faculty' ? facultySubjects(p) : '') +
             '<p class="modal-field"><strong>소속</strong> &middot; 한신대학교 일반대학원 e스포츠융합(협)</p>' +
-            (p.field || p.interest || p.now
+            (key !== 'faculty' && (p.field || p.interest || p.now)
               ? '<p class="modal-field"><strong>' +
                 (p.field ? '연구 분야' : p.interest ? '관심 분야' : '현재') + '</strong> &middot; ' +
                 esc(p.field || p.interest || p.now) + '</p>' : '') +
-            (p.email ? '<p class="modal-field"><a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a></p>' : '') +
+            (key !== 'faculty' && p.email ? '<p class="modal-field"><a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a></p>' : '') +
           '</div>' +
         '</div>' +
         (p.intro ? '<p class="modal-intro">' + esc(p.intro) + '</p>' : '') +
-        (p.bio && p.bio.length
-          ? '<h3 class="modal-sub">약력</h3><ul class="bio">' + p.bio.map(bioRow).join("") + '</ul>'
-          : '') +
-        profileSections(p.profileSections);
+        profileSections(key === 'faculty'
+          ? ['논문', '경력', '저서'].map(title => unifiedProfileSections(p).find(section => section.title === title))
+          : unifiedProfileSections(p));
 
       modal.hidden = false;
       $('#modalPanel').scrollTop = 0;

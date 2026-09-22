@@ -674,6 +674,18 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
 }
 .profile-date{color:#667085; font-size:14px;}
 .profile-date-end{display:block;}
+.faculty-subjects{margin-top:18px;color:#222;font-size:16px;}
+.faculty-subjects ul{margin:10px 0 0;padding-left:20px;line-height:1.7;}
+.faculty-subjects-blank{min-height:56px;margin-top:10px;border:1px solid #E5E5E5;border-radius:8px;background:#FAFAFA;}
+.member-toolbar{display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start; gap:12px 18px; margin-bottom:24px;}
+.member-toolbar .tools{margin-bottom:0;}
+.member-sort-note{flex-shrink:0; color:#444; font-size:16px; font-weight:500; line-height:1.5; white-space:nowrap;}
+@media(min-width:1024px){
+  .member-toolbar{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); column-gap:20px;}
+  .member-toolbar .tools{grid-column:1 / 4;}
+  .member-sort-note{grid-column:4; justify-self:start;}
+}
+.profile-blank{min-height:80px; border:1px solid #E5E5E5; border-radius:8px; background:#FAFAFA;}
 .profile-detail{white-space:pre-line; overflow-wrap:anywhere;}
 
 @media (max-width:640px){
@@ -792,7 +804,7 @@ a.nt:hover{border-color:var(--accent); box-shadow:0 10px 24px rgba(0,0,0,.38);}
   align-items:center; gap:16px; height:84px;
 }
 .brand{grid-column:1; grid-row:1; justify-self:start; min-width:0; gap:0;}
-.brand-logo{width:210px; height:auto; max-width:none;}
+.brand-logo{width:260px; height:auto; max-width:none;}
 .nav{
   grid-column:2; grid-row:1; justify-self:center; margin:0;
   display:grid; grid-auto-flow:column; grid-auto-columns:minmax(108px,max-content);
@@ -814,16 +826,41 @@ body[data-page="home"] .brand-logo{filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))
 body[data-page="home"] .brand-logo--invert{filter:brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.25));}
 body[data-page="home"] .nav > a{text-shadow:0 2px 10px rgba(0,0,0,.4);}
 body[data-page="home"] .home-hero--photo{
-  min-height:100vh; min-height:100svh; align-items:flex-start;
-  padding-top:clamp(140px,18vh,190px); padding-bottom:clamp(56px,8vh,90px);
+  min-height:clamp(550px,87.5svh,900px); align-items:flex-start;
+  padding-top:clamp(132px,16vh,170px); padding-bottom:48px;
 }
-@media (min-width:1181px) and (max-width:1280px){
-  .brand-logo{width:180px;}
+/* 메인 사진 아래 공지 카드 */
+.home-notices{padding:48px 0 60px; background:#F5F5F5; color:#171717;}
+.home-notice-heading{display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:24px;}
+.home-notice-en{margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.12em; color:#666;}
+.home-notice-heading h2{margin:0; font-size:clamp(28px,3vw,38px); line-height:1.2; letter-spacing:-.03em;}
+.home-notice-more{padding:10px 14px; border:1px solid #D5D5D5; border-radius:24px; background:#FFF; color:#222; font:inherit; font-size:14px; cursor:pointer;}
+.home-notice-more:focus-visible{outline:2px solid #111; outline-offset:4px;}
+.home-notices .notice-grid{grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px;}
+.home-notices .nt{min-height:220px; padding:26px 22px; border:1px solid #E6E6E6; border-radius:20px; background:#FFF; color:#171717; box-shadow:0 6px 18px rgba(0,0,0,.035);}
+.home-notices .nt-title{font-size:20px; font-weight:700; line-height:1.5; overflow-wrap:anywhere;}
+.home-notices .nt-tag,.home-notices .nt-pin{color:#555; border-color:#DDD;}
+.home-notices .nt-new{background:#222; color:#FFF;}
+.home-notices .nt-date{color:#777; font-size:14px;}
+.home-notices .nt-desc{padding-top:14px; border-top:1px dashed #DDD; color:#666; font-size:15px; line-height:1.6;}
+.home-notices a.nt:hover{border-color:#555; box-shadow:0 10px 24px rgba(0,0,0,.08);}
+.home-notices a.nt:hover .nt-title{color:#000;}
+@media(max-width:1000px){.home-notices .notice-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:600px){
+  body[data-page="home"] .home-hero--photo{min-height:clamp(525px,80svh,700px);padding-top:128px;padding-bottom:36px;}
+  .home-notices{padding:32px 0 40px;}
+  .home-notice-heading{align-items:flex-end;gap:12px;}
+  .home-notice-more{font-size:12px;max-width:48%;}
+  .home-notices .notice-grid{grid-template-columns:1fr;gap:14px;}
+  .home-notices .nt{min-height:180px;padding:22px;}
+}
+@media (min-width:1181px) and (max-width:1400px){
+  .brand-logo{width:205px;}
 }
 @media (max-width:1180px){
   .topbar-in{display:flex; justify-content:space-between; padding:0 20px; gap:16px;}
   .brand{flex:0 0 auto;}
-  .brand-logo{width:160px; height:auto;}
+  .brand-logo{width:200px; height:auto;}
   .navtoggle{display:block; flex-shrink:0; font-size:16px; font-weight:600;}
   .mega{display:none !important;}
   .nav{
@@ -880,8 +917,9 @@ body[data-page="home"] .home-hero--photo{
 
 /* 홈 제목 — 사진을 넓게 보여 주는 왼쪽 상단 배치 */
 #homeHero > .wrap{max-width:none; margin:0; padding-inline:clamp(20px,2.5vw,48px);}
-#homeHero .home-headline{max-width:none; font-size:clamp(25.2px,4.14vw,57.6px); line-height:1.25; margin-bottom:20px; word-break:keep-all;}
-#homeHero .home-sub{max-width:58ch; font-size:clamp(12px,1.12vw,15.2px); line-height:1.6; text-wrap:balance;}
+#homeHero .home-headline{max-width:none; font-size:clamp(17px,2.7vw,37px); line-height:1.3; margin-bottom:14px; white-space:nowrap; letter-spacing:-.025em;}
+#homeHero .home-sub{max-width:none; font-size:clamp(11px,1vw,14px); line-height:1.6;}
+@media(max-width:600px){#homeHero .home-headline{font-size:clamp(16px,4.3vw,24px);}}
 .hero-controls{display:flex; gap:10px; margin-top:28px;}
 .hero-control{
   display:grid; place-items:center; width:46px; height:46px; padding:0;

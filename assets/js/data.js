@@ -92,9 +92,9 @@ const NAV = [
 /* --- 1. 첫 화면 문구 --------------------------------------------------- */
 const INTRO = {
   /* 큰 글씨. \n 을 넣으면 그 자리에서 줄이 바뀝니다. */
-  headline:"한신대학교 일반대학원\ne스포츠 융합(협)",
+  headline:"e스포츠 융합 일반 대학원",
   /* 큰 글씨 바로 아래 한 줄 */
-  sub: "Hanshin University Graduate School · Interdisciplinary Program in Esports Convergence",
+  sub: "(Graduate School of Esports Convergence)",
   /* 소개글. 문단을 늘리려면 "..." 를 쉼표로 이어 붙이세요. */
   paragraphs: [
     "누군가에게 게임은 여가이고, 누군가에게는 직업이며, 또 누군가에게는 끝내 닿지 못한 문입니다. 저희는 그 세 가지 자리에서 벌어지는 일을 함께 들여다봅니다.",
@@ -256,7 +256,16 @@ const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 e스포츠" | "
 /* --- 5. 랩 구성원 ------------------------------------------------------ */
 /* photo: 사진 파일 경로(예: "images/kim.jpg"). 비워 두면 이름 첫 글자가 표시됩니다. */
 const FACULTY = [
-  { name:"최은경", nameEn:"CHOI EUN-KYUNG", role:"지도교수", photo:"",
+{"name":"김애영","nameEn":"KIM AE-YOUNG","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"남세현","nameEn":"NAM SE-HYEON","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"노승철","nameEn":"NO SEUNG-CHEOL","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"안현","nameEn":"AHN HYEON","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"이용걸","nameEn":"LEE YONG-GEOL","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"김민정","nameEn":"KIM MIN-JEONG","facultyGroup":"external","role":"외래 교수진","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"김화룡","nameEn":"KIM HWA-RYONG","facultyGroup":"external","role":"겸임교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"한근식","nameEn":"HAN GEUN-SIK","facultyGroup":"external","role":"외래 교수진","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+  { name:"최은경", nameEn:"CHOI EUN-KYUNG", role:"주임교수", photo:"",
+    facultyGroup:"internal", subjects:[],
     field:"e스포츠 산업, 게임 리터러시, 장애인 스포츠 정책",
     email:"prof@example.ac.kr",
     intro:"e스포츠를 학문의 대상으로 다루는 일에 관심을 두고 있습니다.",
@@ -289,7 +298,7 @@ const STUDENTS = [
           },
           {
             "date": "2016. 02. – 2020. 08.",
-            "text": "금오공과대학교 컴퓨터공학과 공학사"
+            "text": "컴퓨터공학부 학사 졸업"
           }
         ]
       },
@@ -471,7 +480,7 @@ const STUDENTS = [
         },
         {
           "date": "",
-          "text": "광고홍보전공 졸업 (커뮤니케이션 학사)"
+          "text": "광고홍보학과 학사 졸업"
         }
       ]
     },
@@ -684,7 +693,7 @@ const STUDENTS = [
         },
         {
           "date": "",
-          "text": "사회학, 미디어영상 학사 졸업"
+          "text": "사회학과, 미디어영상학과 학사 졸업"
         }
       ]
     },
@@ -872,7 +881,7 @@ const STUDENTS = [
         },
         {
           "date": "2018. 02.",
-          "text": "서울시립대학교 경영학부 졸업"
+          "text": "경영학부 학사 졸업"
         }
       ]
     },
@@ -996,7 +1005,7 @@ const STUDENTS = [
       "items": [
         {
           "date": "2018. 09. – 2022. 06.",
-          "text": "베이징 제2외국어 대학교 한국어 학과 졸업(문학 학사)"
+          "text": "한국어학과 학사 졸업"
         },
         {
           "date": "2022. 09. – 2024. 06.",
@@ -1088,7 +1097,7 @@ const STUDENTS = [
         },
         {
           "date": "",
-          "text": "컴퓨터공학 학사 졸업"
+          "text": "컴퓨터공학부 학사 졸업"
         }
       ]
     },
@@ -1323,7 +1332,7 @@ const STUDENTS = [
         },
         {
           "date": "",
-          "text": "한신대학교 경제학과 졸업"
+          "text": "경제학과 학사 졸업"
         }
       ]
     },
@@ -1638,7 +1647,7 @@ const STUDENTS = [
         },
         {
           "date": "2022. 03. ~ 2026. 02.",
-          "text": "한신대학교 컴퓨터공학부 졸업"
+          "text": "컴퓨터공학부 학사 졸업"
         }
       ]
     },
@@ -1859,6 +1868,114 @@ const STUDENTS = [
           "text": "태권도 3단"
         }
       ]
+    }
+  ]
+},
+{
+  "name": "이세하",
+  "nameEn": "LEE SE-HA",
+  "course": "박사과정",
+  "admission": "",
+  "photo": "",
+  "profilePending": true,
+  "profileSections": [
+    {
+      "title": "학력",
+      "items": []
+    },
+    {
+      "title": "경력",
+      "items": []
+    }
+  ]
+},
+{
+  "name": "허윤정",
+  "nameEn": "HEO YUN-JEONG",
+  "course": "박사과정",
+  "admission": "2024년 1학기",
+  "photo": "",
+  "profilePending": true,
+  "profileSections": [
+    {
+      "title": "학력",
+      "items": []
+    },
+    {
+      "title": "경력",
+      "items": []
+    }
+  ]
+},
+{
+  "name": "이평호",
+  "nameEn": "LEE PYEONG-HO",
+  "course": "박사과정",
+  "admission": "2026년 1학기",
+  "photo": "",
+  "profilePending": true,
+  "profileSections": [
+    {
+      "title": "학력",
+      "items": []
+    },
+    {
+      "title": "경력",
+      "items": []
+    }
+  ]
+},
+{
+  "name": "김기현",
+  "nameEn": "KIM GI-HYEON",
+  "course": "박사과정",
+  "admission": "2025년 1학기",
+  "photo": "",
+  "profilePending": true,
+  "profileSections": [
+    {
+      "title": "학력",
+      "items": []
+    },
+    {
+      "title": "경력",
+      "items": []
+    }
+  ]
+},
+{
+  "name": "이승연",
+  "nameEn": "LEE SEUNG-YEON",
+  "course": "석·박사 통합과정",
+  "admission": "2024년 1학기",
+  "photo": "",
+  "profilePending": true,
+  "profileSections": [
+    {
+      "title": "학력",
+      "items": []
+    },
+    {
+      "title": "경력",
+      "items": []
+    }
+  ]
+},
+{
+  "name": "유동구",
+  "nameEn": "YU DONG-GU",
+  "course": "석사과정",
+  "admission": "2026년 1학기",
+  "photo": "",
+  "profilePending": true,
+  "profileSections": [
+    {
+      "title": "학력",
+      "items": []
+    },
+    {
+      "title": "경력",
+      "items": []
     }
   ]
 },
