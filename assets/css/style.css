@@ -901,6 +901,11 @@ body[data-page="home"] .home-hero--photo{
 }
 .tick-item:hover{opacity:1;}
 .tick-item img{max-height:44px; max-width:180px; width:auto; object-fit:contain;}
+/* 정사각형 원본의 투명 여백을 제외한 로고 부분을 띠 높이에 맞춥니다. */
+.tick-item img[src$="playbridge-logo.png"]{
+  width:190px; height:190px; max-width:none; max-height:none; flex-shrink:0;
+  clip-path:inset(38% 5.06% 38.86% 4.46%);
+}
 .tick-item span{font-size:26px; font-weight:700; letter-spacing:-.035em; white-space:nowrap;}
 @media (max-width:640px){
   .ticker{padding:20px 0 26px;}

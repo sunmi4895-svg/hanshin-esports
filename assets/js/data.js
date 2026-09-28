@@ -2008,7 +2008,7 @@ const PARTNERS_LABEL = "FAMILY SITE";
 // 후원기관이 추가되면 아래 목록에 { name:"기관명", logo:"사진 경로", url:"홈페이지 주소" }를 추가하세요.
 // logo와 url은 준비되었을 때 입력하면 됩니다. 빈 값이면 기관명만 표시합니다.
 const PARTNERS = [
-  { name:"PLAYBRIDGE", logo:"", url:"" }
+  { name:"PLAYBRIDGE", logo:"assets/images/playbridge-logo.png", url:"" }
 ];
 const FAQ = [
   { q:"대학원 진학을 준비 중입니다. 무엇을 보시나요?",
