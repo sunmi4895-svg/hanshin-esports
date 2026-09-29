@@ -138,18 +138,19 @@ const NOTICES = [
 /* 학기 단위로 묶습니다. 최근 학기를 맨 위에 두세요.
    status: "예정" 또는 "완료" */
 const SEMINARS = [
-  { term:"2026-2학기", note:"매주 수요일 오후 3시, 연구실",
+  { term:"2026 하반기 (9월~12월)", note:"매주 수요일 오후 3시, 연구실",
     items:[
       { round:"14", date:"2026-09-10", topic:"e스포츠 중계 데이터 수집 실습", speaker:"홍길동", status:"예정" },
       { round:"13", date:"2026-09-03", topic:"접근성 컨트롤러 사례 분석",   speaker:"이○○", status:"예정" }
     ] },
-  { term:"2026-1학기", note:"",
+  { term:"2026 상반기 (3월~6월)", note:"",
     items:[
       { round:"12", date:"2026-05-27", topic:"관람 동기 척도 논문 리뷰",     speaker:"박○○", status:"완료" },
       { round:"11", date:"2026-05-20", topic:"게임 리터러시 교육 설계 발표", speaker:"최○○", status:"완료" }
     ] },
-  { term:"2025-2학기", note:"", items:[] },
-  { term:"2025-1학기", note:"", items:[] }
+  { term:"2025 하반기 (9월~12월)", note:"", poster:"assets/images/seminars/2025-second-half.png", items:[] },
+  { term:"2025 상반기 (3월~6월)", note:"", poster:"assets/images/seminars/2025-first-half.png", items:[] },
+  { term:"2024 하반기 (9월~12월)", note:"", poster:"assets/images/seminars/2024-second-half.png", items:[] }
 ];
 
 /* --- 각 페이지 머리말 --------------------------------------------------- */
@@ -306,27 +307,27 @@ const STUDENTS = [
         "title": "교내 학술활동",
         "items": [
           {
-            "date": "2026. 04. 06.",
+            "date": "2026. 03.",
             "text": "‘경쟁형 게임의 ‘대리 게임’ 현상에 관한 탐색적 연구, Esports Convergence seminar"
           },
           {
-            "date": "2025. 09. 22.",
+            "date": "2025. 09.",
             "text": "‘한국의 e스포츠 대회 및 종목 현황 사례 분석’, 한신대학교, Esports Convergence seminar"
           },
           {
-            "date": "2025. 04. 02.",
+            "date": "2025. 03.",
             "text": "'저는 여자가 아닙니다.' 온라인 게임 내 여성 차별과 성별 위장 현상 연구 : 경쟁형 게임을 중심으로,  한신대학교, Esports Convergence seminar"
           },
           {
-            "date": "2024. 10. 30.",
+            "date": "2024. 09.",
             "text": "‘e스포츠 선수의 기술과 신체석 그리고 심리’, 한신대학교, Esports Convergence seminar"
           },
           {
-            "date": "2024. 04. 17.",
+            "date": "2024. 03.",
             "text": "‘장애인 e스포츠 참여의 의미와 한계 연구’, 한신대학교, Esports Convergence seminar"
           },
           {
-            "date": "2023. 11. 27.",
+            "date": "2023. 09.",
             "text": "‘한국 e스포츠 성장과 쇠퇴, 그리고 전망, 한신대학교’, Esports Convergence seminar"
           }
         ]
@@ -488,15 +489,15 @@ const STUDENTS = [
       "title": "교내 학술활동",
       "items": [
         {
-          "date": "2026-2",
+          "date": "2026. 09.",
           "text": "게임 IP 소유권이 e스포츠 거버넌스에 미치는 영향에 관한 연구"
         },
         {
-          "date": "2026-1",
+          "date": "2026. 03.",
           "text": "국내 e스포츠 팬의 소비 방식 및 문화"
         },
         {
-          "date": "2025-2",
+          "date": "2025. 09.",
           "text": "지역 기반 e스포츠 인프라 경쟁: 한국 e스포츠 산업 발전의 기회인가? 위험인가?"
         }
       ]
@@ -701,15 +702,15 @@ const STUDENTS = [
       "title": "교내 학술활동",
       "items": [
         {
-          "date": "2026-2",
+          "date": "2026. 09.",
           "text": "E.C.Seminar (발표 제목 미기재)"
         },
         {
-          "date": "2026-1",
+          "date": "2026. 03.",
           "text": "e스포츠 상설 경기장 문헌 탐색"
         },
         {
-          "date": "2025-2",
+          "date": "2025. 09.",
           "text": "고령층 e스포츠의 잠재력과 한계"
         }
       ]
@@ -889,19 +890,19 @@ const STUDENTS = [
       "title": "교내 학술활동",
       "items": [
         {
-          "date": "2026-1",
+          "date": "2026. 03.",
           "text": "한국 e스포츠 선수의 은퇴와 경력 전환에 대한 비판적 고찰"
         },
         {
-          "date": "2025-2",
+          "date": "2025. 09.",
           "text": "일본 e스포츠 대회 및 종목 사례 현황 분석"
         },
         {
-          "date": "2025-2",
+          "date": "2025. 09.",
           "text": "동남아 e스포츠 대회 및 종목 사례 현황 분석"
         },
         {
-          "date": "2025-1",
+          "date": "2025. 03.",
           "text": "e스포츠와 트랜스미디어_리그 오브 레전드 IP를 중심으로"
         }
       ]
@@ -1105,11 +1106,11 @@ const STUDENTS = [
       "title": "교내 학술활동",
       "items": [
         {
-          "date": "2026-1",
+          "date": "2026. 03.",
           "text": "e스포츠에서의 인지 반응 속도와 스킬 메커니즘 간의 상관관계 분석."
         },
         {
-          "date": "2026-2",
+          "date": "2026. 09.",
           "text": "Esports Gambilng 랜덤 박스가 마땅히 위법이라 할 수 있는 부분은 어디까지 인가."
         }
       ]
@@ -1340,15 +1341,15 @@ const STUDENTS = [
       "title": "교내 학술활동",
       "items": [
         {
-          "date": "2026-2",
+          "date": "2026. 09.",
           "text": "e스포츠는 왜 IOC가 요구하는 조직 형태를 끝내 갖추지 못하는가"
         },
         {
-          "date": "2026-1",
+          "date": "2026. 03.",
           "text": "e스포츠 전문 교육의 실태와 한계 분석"
         },
         {
-          "date": "2024-2",
+          "date": "2024. 09.",
           "text": "e스포츠의 e는 엘리트인가요?"
         }
       ]
@@ -1655,15 +1656,15 @@ const STUDENTS = [
       "title": "교내 학술활동",
       "items": [
         {
-          "date": "2026-2",
+          "date": "2026. 09.",
           "text": "게임 내 유해행동과 제재의 사각지대"
         },
         {
-          "date": "2026-1",
+          "date": "2026. 03.",
           "text": "Post-MOBA로서 포켓몬 유나이트의 한계: 기존 MOBA 장르의 성공조건 비교를 중심으로"
         },
         {
-          "date": "2024-2",
+          "date": "2024. 09.",
           "text": "e스포츠의 e는 엘리트인가요?"
         }
       ]

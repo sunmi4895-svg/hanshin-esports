@@ -433,13 +433,18 @@ if (typeof SITE === "undefined") {
     const terms = $("#termList");
     if (terms) {
       terms.innerHTML = '<h2 class="seminar-board-title">학술세미나 일정</h2><div class="semester-board">' + SEMINARS.map(term =>
-        '<details class="semester-entry"><summary><span class="semester-label">' + esc(term.term.replace(/^20/, "").replace("학기", "")) +
+        '<details class="semester-entry"><summary><span class="semester-label">' + esc(term.term) +
           '</span><span class="semester-title">학술세미나 일정</span><span class="semester-open" aria-hidden="true">+</span></summary>' +
           '<div class="semester-content">' + (term.note ? '<p>' + esc(term.note) + '</p>' : '') +
+          (term.poster ? '<div class="semester-attachment"><div class="semester-file-actions">' +
+            '<a href="' + esc(term.poster) + '" target="_blank" rel="noopener">일정표 크게 보기 (새 창)</a>' +
+            '<a href="' + esc(term.poster) + '" download>일정표 다운로드</a></div>' +
+            '<a class="semester-poster" href="' + esc(term.poster) + '" target="_blank" rel="noopener" aria-label="' + esc(term.term) + ' 일정표 크게 보기 (새 창)">' +
+            '<img src="' + esc(term.poster) + '" alt="' + esc(term.term) + ' 학술세미나 일정표" loading="lazy"></a></div>' : '') +
           (term.items.length ? '<ul class="semester-schedule">' + term.items.map(item =>
             '<li><time datetime="' + esc(item.date) + '">' + esc(item.date) + '</time><div><strong>' + esc(item.topic) +
             '</strong><p>발표자: ' + esc(item.speaker) + ' · ' + esc(item.status) + '</p></div></li>').join('') + '</ul>'
-            : '<p class="semester-empty">등록된 일정이 없습니다.</p>') + '</div></details>').join('') + '</div>';
+            : (term.poster ? '' : '<p class="semester-empty">등록된 일정이 없습니다.</p>')) + '</div></details>').join('') + '</div>';
       return;
     }
 

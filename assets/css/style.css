@@ -836,6 +836,7 @@ body[data-page="home"] .home-hero--photo{
 .home-notice-heading{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:22px;}
 .home-notice-en{margin:0 0 8px; font-size:13px; font-weight:700; letter-spacing:.1em; color:#666;}
 .home-notice-heading h2{margin:0; font-size:clamp(30px,3vw,40px); line-height:1.2; letter-spacing:-.04em;}
+.notice-title-accent{color:#6B4DB2;margin-right:.3em;}
 .home-notice-more{padding:8px 15px; border:0; border-radius:20px; background:#EDE9F6; color:#4F3A80; font:inherit; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap;}
 .home-notice-more[hidden]{display:none;}
 .notice-filters{display:flex; gap:24px; flex-wrap:wrap; margin-bottom:26px;}
@@ -1074,3 +1075,21 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
 .semester-schedule li:last-child{border:0;}
 .semester-schedule p{margin:5px 0 0; color:#555555; font-size:15px;}
 @media(max-width:600px){.semester-entry summary{padding:22px 12px; gap:16px;}.semester-title{font-size:16px;}.semester-schedule li{grid-template-columns:1fr; gap:8px;}}
+
+/* 세미나의 연도·반기·기간 표기를 작은 화면에서도 읽기 쉽게 배치합니다. */
+.semester-label{word-break:keep-all;}
+@media(max-width:600px){
+  .semester-entry summary{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;}
+  .semester-label{font-size:19px;grid-column:1;}
+  .semester-title{grid-column:1;grid-row:2;}
+  .semester-open{grid-column:2;grid-row:1 / 3;}
+}
+
+/* 반기별 원본 세미나 일정표 */
+.semester-file-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+.semester-file-actions a{padding:9px 14px;border:1px solid #D8D8DE;border-radius:6px;background:#FFF;color:#222;text-decoration:none;font-size:15px;}
+.semester-file-actions a:hover{border-color:#6B4DB2;color:#6B4DB2;}
+.semester-attachment a:focus-visible{outline:2px solid #6B4DB2;outline-offset:4px;}
+.semester-poster{display:block;max-width:900px;margin-inline:auto;}
+.semester-poster img{display:block;width:100%;height:auto;background:#FFF;}
+@media(max-width:600px){.semester-content{padding:16px 12px;}.semester-file-actions a{font-size:14px;}}
