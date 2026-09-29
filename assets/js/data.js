@@ -65,7 +65,7 @@ const NAV = [
       { label:"찾아오시는길", href:"history.html#directions" }
   ]},
 
-  { label:"E.C.Seminar", english:"SEMINAR",  href:"seminar.html", children:[
+  { label:"e스포츠융합세미나(ECS)", english:"Esports Convergence Seminar",  href:"seminar.html", children:[
       { label:"세미나 일정", href:"seminar.html" }
   ]},
 
@@ -2007,8 +2007,218 @@ const ALUMNI = [
 const PARTNERS_LABEL = "FAMILY SITE";
 // 후원기관이 추가되면 아래 목록에 { name:"기관명", logo:"사진 경로", url:"홈페이지 주소" }를 추가하세요.
 // logo와 url은 준비되었을 때 입력하면 됩니다. 빈 값이면 기관명만 표시합니다.
+// logoCrop는 원본을 수정하지 않고 화면에 표시할 로고 영역(x, y, 너비, 높이)을 지정합니다.
 const PARTNERS = [
-  { name:"PLAYBRIDGE", logo:"assets/images/playbridge-logo.png", url:"" }
+  {
+    "name": "PLAYBRIDGE",
+    "logo": "assets/images/partners/playbridge.png",
+    "url": "",
+    "logoSize": [
+      1500,
+      1500
+    ],
+    "logoCrop": [
+      58,
+      561,
+      1375,
+      365
+    ]
+  },
+  {
+    "name": "한신대학교",
+    "logo": "assets/images/partners/hanshin.png",
+    "url": "",
+    "logoSize": [
+      1314,
+      282
+    ],
+    "logoCrop": [
+      4,
+      2,
+      1307,
+      276
+    ]
+  },
+  {
+    "name": "DiGRA Korea",
+    "logo": "assets/images/partners/digra-korea.png",
+    "url": "",
+    "logoSize": [
+      2048,
+      1086
+    ],
+    "logoCrop": [
+      66,
+      73,
+      1916,
+      925
+    ]
+  },
+  {
+    "name": "Esports Research Network",
+    "logo": "assets/images/partners/ern.png",
+    "url": "",
+    "logoSize": [
+      559,
+      258
+    ],
+    "logoCrop": [
+      0,
+      0,
+      559,
+      258
+    ]
+  },
+  {
+    "name": "Nottingham Trent University",
+    "logo": "assets/images/partners/nottingham-trent.jpg",
+    "url": "",
+    "logoSize": [
+      1209,
+      800
+    ],
+    "logoCrop": [
+      202,
+      278,
+      804,
+      244
+    ]
+  },
+  {
+    "name": "한국게임학회",
+    "logo": "assets/images/partners/korea-game-society.png",
+    "url": "",
+    "logoSize": [
+      2167,
+      726
+    ],
+    "logoCrop": [
+      0,
+      45,
+      2167,
+      617
+    ]
+  },
+  {
+    "name": "한국방송학회",
+    "logo": "assets/images/partners/korean-broadcasting.png",
+    "url": "",
+    "logoSize": [
+      290,
+      290
+    ],
+    "logoCrop": [
+      22,
+      16,
+      246,
+      244
+    ]
+  },
+  {
+    "name": "한국스포츠엔터테인먼트법학회",
+    "logo": "assets/images/partners/sports-entertainment-law.png",
+    "url": "",
+    "logoSize": [
+      598,
+      172
+    ],
+    "logoCrop": [
+      0,
+      0,
+      598,
+      172
+    ]
+  },
+  {
+    "name": "한국언론법학회",
+    "logo": "assets/images/partners/media-law.png",
+    "url": "",
+    "logoSize": [
+      1706,
+      922
+    ],
+    "logoCrop": [
+      38,
+      181,
+      1667,
+      588
+    ]
+  },
+  {
+    "name": "한국언론학회",
+    "logo": "assets/images/partners/journalism-communication.png",
+    "url": "",
+    "logoSize": [
+      266,
+      48
+    ],
+    "logoCrop": [
+      0,
+      0,
+      266,
+      48
+    ]
+  },
+  {
+    "name": "한국여성커뮤니케이션학회",
+    "logo": "assets/images/partners/women-communication.jpg",
+    "url": "",
+    "logoSize": [
+      3700,
+      1000
+    ],
+    "logoCrop": [
+      181,
+      127,
+      3318,
+      754
+    ]
+  },
+  {
+    "name": "한국인터넷정보학회",
+    "logo": "assets/images/partners/internet-information.png",
+    "url": "",
+    "logoSize": [
+      791,
+      177
+    ],
+    "logoCrop": [
+      30,
+      17,
+      730,
+      151
+    ]
+  },
+  {
+    "name": "한국체육학회",
+    "logo": "assets/images/partners/physical-education.png",
+    "url": "",
+    "logoSize": [
+      377,
+      115
+    ],
+    "logoCrop": [
+      0,
+      3,
+      342,
+      100
+    ]
+  },
+  {
+    "name": "한국특수체육학회",
+    "logo": "assets/images/partners/adapted-physical-activity.png",
+    "url": "",
+    "logoSize": [
+      2171,
+      724
+    ],
+    "logoCrop": [
+      0,
+      64,
+      2171,
+      592
+    ]
+  }
 ];
 const FAQ = [
   { q:"대학원 진학을 준비 중입니다. 무엇을 보시나요?",

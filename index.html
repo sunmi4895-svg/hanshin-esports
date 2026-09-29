@@ -7,7 +7,7 @@
 <meta name="description" content="한신대학교 e스포츠 연구실입니다." />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" crossorigin />
-<link rel="stylesheet" href="assets/css/style.css?v=20260923-home-notices" />
+<link rel="stylesheet" href="assets/css/style.css?v=20260929-notice-layout" />
 </head>
 <body data-page="home">
 
@@ -27,7 +27,8 @@
         <div><p class="home-notice-en">EC LAB NOTICE</p><h2 id="homeNoticeTitle">공지사항</h2></div>
         <button class="home-notice-more" id="noticeMore" type="button" aria-controls="noticeList" aria-expanded="false" hidden>더보기 +</button>
       </div>
-      <div class="notice-grid" id="noticeList"></div>
+      <div class="notice-filters" id="noticeFilters" role="group" aria-label="공지 분류"></div>
+      <div class="notice-grid" id="noticeList" aria-live="polite"></div>
     </div>
   </section>
 
@@ -36,6 +37,6 @@
 <footer id="siteFooter"></footer>
 
 <script src="assets/js/data.js?v=20260913-profile-full"></script>
-<script src="assets/js/app.js?v=20260923-home-notices"></script>
+<script src="assets/js/app.js?v=20260929-notice-layout"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@ if (typeof SITE === "undefined") {
                        (n.children || []).some(c => c.href.split("#")[0] === here);
             return '<a href="' + esc(n.href) + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' +
                    '<span class="nav-label">' + esc(n.label) + '</span>' +
-                   (n.english ? '<span class="nav-english">(' + esc(n.english) + ')</span>' : '') + '</a>' +
+                   (n.english ? '<span class="nav-english">(' + (n.english === 'Esports Convergence Seminar' ? '<strong>E</strong>sports <strong>C</strong>onvergence <strong>S</strong>eminar' : esc(n.english)) + ')</span>' : '') + '</a>' +
                    (n.children
                      ? '<div class="nav-sub">' +
                          n.children.map(navChild).join("") +
@@ -180,9 +180,18 @@ if (typeof SITE === "undefined") {
       return list.map((p, i) => {
         const repeated = copy || i >= PARTNERS.length;
         const attrs = repeated ? ' data-tick-copy aria-hidden="true"' : '';
-        const inside = p.logo
-          ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '" loading="lazy">'
-          : '<span>' + esc(p.name) + '</span>';
+        let inside = '<span>' + esc(p.name) + '</span>';
+        if (p.logo) {
+          if (p.logoCrop && p.logoSize) {
+            const [x, y, width, height] = p.logoCrop;
+            const scale = Math.min(180 / width, 64 / height);
+            inside = '<span class="tick-logo" style="width:' + (width * scale) + 'px;height:' + (height * scale) + 'px">' +
+              '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '" decoding="async" style="width:' + (p.logoSize[0] * scale) +
+              'px;height:' + (p.logoSize[1] * scale) + 'px;left:' + (-x * scale) + 'px;top:' + (-y * scale) + 'px"></span>';
+          } else {
+            inside = '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '" decoding="async">';
+          }
+        }
         return p.url
           ? '<a class="tick-item"' + attrs + (repeated ? ' tabindex="-1"' : '') +
             ' href="' + esc(p.url) + '" target="_blank" rel="noopener">' + inside + '</a>'
@@ -194,7 +203,7 @@ if (typeof SITE === "undefined") {
     return '<section class="ticker" id="homePartners" aria-labelledby="partnerHeading">' +
       '<div class="wrap tick-heading"><h2 class="tick-label" id="partnerHeading">' + esc(label) + '</h2>' +
         '</div>' +
-      '<div class="tick-view"><div class="tick-track">' +
+      '<div class="tick-view"><div class="tick-track" style="animation-duration:' + Math.max(48, list.length * 7) + 's">' +
         '<div class="tick-group">' + row(false) + '</div>' +
         '<div class="tick-group tick-duplicate" aria-hidden="true">' + row(true) + '</div>' +
       '</div></div>' +
@@ -371,46 +380,52 @@ if (typeof SITE === "undefined") {
   function renderNotices() {
     const box = $("#noticeList");
     if (!box) return;
-
     const rows = [...NOTICES].sort((a, b) =>
       (b.pinned === true) - (a.pinned === true) || b.date.localeCompare(a.date));
-
+    const more = $("#noticeMore");
+    const filters = $("#noticeFilters");
+    const categories = ['전체', ...new Set(['공지', '모집', '행사', '수상', ...rows.map(n => n.tag)]
+      .filter(tag => rows.some(n => n.tag === tag)))];
     const SHOW = 4;
     let expanded = false;
-
+    let category = '전체';
     function draw() {
-      const list = expanded ? rows : rows.slice(0, SHOW);
-      box.innerHTML = rows.length
-        ? list.map(n => {
-            const inner =
-              '<span class="nt-head">' +
-                '<span class="nt-tag">' + esc(n.tag) + '</span>' +
-                (n.pinned ? '<span class="nt-pin">고정</span>' : '') +
-                (isNew(n.date) ? '<span class="nt-new">NEW</span>' : '') +
-              '</span>' +
-              '<span class="nt-title">' + esc(n.title) + '</span>' +
-              '<time class="nt-date" datetime="' + esc(n.date) + '">' + esc(dot(n.date)) + '</time>' +
-              (n.desc ? '<span class="nt-desc">' + esc(n.desc) + '</span>' : '');
-            return n.url
-              ? '<a class="nt reveal" href="' + esc(n.url) + '" target="_blank" rel="noopener">' + inner + '</a>'
-              : '<div class="nt reveal">' + inner + '</div>';
-          }).join("")
-        : '<p class="empty">등록된 공지가 없습니다.</p>';
+      const matching = rows.filter(n => category === '전체' || n.tag === category);
+      const list = expanded ? matching : matching.slice(0, SHOW);
+      box.innerHTML = list.length ? list.map(n => {
+        const inner = '<span class="nt-head"><span class="nt-tag">' + esc(n.tag) + '</span>' +
+          (n.pinned ? '<span class="nt-pin">고정</span>' : '') +
+          (isNew(n.date) ? '<span class="nt-new">NEW</span>' : '') + '</span>' +
+          '<span class="nt-title">' + esc(n.title) + '</span>' +
+          (n.desc ? '<span class="nt-desc">' + esc(n.desc) + '</span>' : '') +
+          '<time class="nt-date" datetime="' + esc(n.date) + '">' + esc(dot(n.date)) + '</time>';
+        return n.url
+          ? '<a class="nt reveal" href="' + esc(n.url) + '" target="_blank" rel="noopener">' + inner + '</a>'
+          : '<div class="nt reveal">' + inner + '</div>';
+      }).join('') : '<p class="empty">등록된 공지가 없습니다.</p>';
+      if (more) {
+        more.hidden = matching.length <= SHOW;
+        more.textContent = expanded ? '접기 −' : '더보기 +';
+        more.setAttribute('aria-expanded', String(expanded));
+      }
+      if (filters) filters.querySelectorAll('button').forEach(button => {
+        button.setAttribute('aria-pressed', String(button.dataset.category === category));
+      });
       observe();
     }
-    draw();
-
-    const more = $("#noticeMore");
-    if (more && rows.length > SHOW) {
-      more.hidden = false;
-      more.textContent = "지난 공지 더 보기 (" + (rows.length - SHOW) + ")";
-      more.addEventListener("click", () => {
-        expanded = !expanded;
-        more.setAttribute("aria-expanded", String(expanded));
-        more.textContent = expanded ? "접기" : "지난 공지 더 보기 (" + (rows.length - SHOW) + ")";
+    if (filters) {
+      filters.innerHTML = categories.map(tag => '<button type="button" data-category="' + esc(tag) +
+        '" aria-controls="noticeList" aria-pressed="false">' + esc(tag) + '</button>').join('');
+      filters.addEventListener('click', event => {
+        const button = event.target.closest('button[data-category]');
+        if (!button) return;
+        category = button.dataset.category;
+        expanded = false;
         draw();
       });
     }
+    if (more) more.addEventListener('click', () => { expanded = !expanded; draw(); });
+    draw();
   }
 
   /* 세미나 — 예정은 가까운 날짜 순으로 위에, 완료는 최신순으로 아래에 */
