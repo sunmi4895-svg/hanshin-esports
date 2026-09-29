@@ -613,12 +613,15 @@ if (typeof SITE === "undefined") {
     function drawFaculty(group) {
     const rows = byName(FACULTY).filter(({person}) => group === 'all' || person.facultyGroup === group);
     $("#facultyList").innerHTML = rows.length ? rows.map(({person: f, index: i}) =>
-      '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '"><div>' + (f.photo ? pic(f.photo, f.name) : '<div class="photo-ph" aria-label="사진 미등록"></div>') + '</div><div>' +
+      (f.profileUrl
+        ? '<a class="prof reveal is-clickable" href="' + esc(f.profileUrl) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc(f.name) + ' 교수 한신대학교 소개 (새 창)">'
+        : '<article class="prof reveal is-clickable" tabindex="0" role="button" data-mkey="faculty" data-midx="' + i + '">') +
+      '<div>' + (f.photo ? pic(f.photo, f.name) : '<div class="photo-ph" aria-label="사진 미등록"></div>') + '</div><div>' +
         '<span class="prof-role">' + esc(f.role) + '</span>' +
         '<h3 class="prof-name">' + esc(f.name) + '</h3>' +
         '<p class="prof-en">' + esc(f.nameEn.toUpperCase()) + '</p>' +
         facultySubjects(f) +
-      '</div></article>').join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
+      '</div>' + (f.profileUrl ? '</a>' : '</article>')).join("") : '<p class="empty">등록된 교수진이 없습니다.</p>';
     $$('[data-faculty]').forEach(button => {
       const active = button.dataset.faculty === group;
       button.classList.toggle('on', active);

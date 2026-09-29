@@ -256,14 +256,14 @@ const EXTERNAL = [ // 4-3) 교외 — sub: "학회" | "장애인 e스포츠" | "
 /* --- 5. 랩 구성원 ------------------------------------------------------ */
 /* photo: 사진 파일 경로(예: "images/kim.jpg"). 비워 두면 이름 첫 글자가 표시됩니다. */
 const FACULTY = [
-{"name":"김애영","nameEn":"KIM AE-YOUNG","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
-{"name":"남세현","nameEn":"NAM SE-HYEON","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
-{"name":"노승철","nameEn":"NO SEUNG-CHEOL","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
-{"name":"안현","nameEn":"AHN HYEON","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
-{"name":"이용걸","nameEn":"LEE YONG-GEOL","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"김애영","profileUrl":"https://www.hs.ac.kr/hsProf/grad_gyeonggi/384/20210071/artclView.do","nameEn":"KIM AE-YOUNG","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"남세현","profileUrl":"https://www.hs.ac.kr/hsProf/grad_gyeonggi/384/20170011/artclView.do","nameEn":"NAM SE-HYEON","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"노승철","profileUrl":"https://www.hs.ac.kr/hsProf/grad_gyeonggi/384/20210027/artclView.do","nameEn":"NO SEUNG-CHEOL","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"안현","profileUrl":"https://www.hs.ac.kr/hsProf/grad_gyeonggi/384/20210024/artclView.do","nameEn":"AHN HYEON","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"이용걸","profileUrl":"https://www.hs.ac.kr/hsProf/grad_gyeonggi/384/20210023/artclView.do","nameEn":"LEE YONG-GEOL","facultyGroup":"internal","role":"부교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
 {"name":"김민정","nameEn":"KIM MIN-JEONG","facultyGroup":"external","role":"외래 교수진","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
 {"name":"김화룡","nameEn":"KIM HWA-RYONG","facultyGroup":"external","role":"겸임교수","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
-{"name":"한근식","nameEn":"HAN GEUN-SIK","facultyGroup":"external","role":"외래 교수진","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
+{"name":"한근식","profileUrl":"https://www.hs.ac.kr/sce/11205/subview.do","nameEn":"HAN GEUN-SIK","facultyGroup":"external","role":"외래 교수진","photo":"","subjects":[],"profilePending":true,"profileSections":[]},
   { name:"최은경", nameEn:"CHOI EUN-KYUNG", role:"주임교수", photo:"",
     facultyGroup:"internal", subjects:[],
     field:"e스포츠 산업, 게임 리터러시, 장애인 스포츠 정책",
