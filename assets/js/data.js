@@ -612,6 +612,7 @@ const STUDENTS = [
     "nameEn": "KIM DONG-HYUN",
     "course": "박사과정",
     "photo": "assets/images/kim-donghyun.png",
+  "photoFrame": [1106, 1422, 125, 991, 553],
     "intro": "",
     "profileSections": [
       {
@@ -799,6 +800,7 @@ const STUDENTS = [
   "nameEn": "JO MIN-JI",
   "course": "석·박사 통합과정",
   "photo": "assets/images/jo-min-ji.png",
+  "photoFrame": [1105, 1424, 65, 904, 548],
   "profileSections": [
     {
       "title": "학력",
@@ -1012,6 +1014,7 @@ const STUDENTS = [
   "nameEn": "LEE MIN-GYU",
   "course": "석·박사 통합과정",
   "photo": "assets/images/lee-min-gyu.png",
+  "photoFrame": [1106, 1422, 88, 915, 553],
   "profileSections": [
     {
       "title": "학력",
@@ -1200,6 +1203,7 @@ const STUDENTS = [
   "nameEn": "OH BYEONG-MIN",
   "course": "석·박사 통합과정",
   "photo": "assets/images/oh-byeong-min-suit-framed.png",
+  "photoFrame": [1106, 1422, 165, 916, 547],
   "profileSections": [
     {
       "title": "학력",
@@ -1328,6 +1332,7 @@ const STUDENTS = [
   "nameEn": "SHI YAOXIN",
   "course": "박사과정",
   "photo": "assets/images/shi-yaoxin.jpg",
+  "photoFrame": [800, 1107, 145, 758, 409],
   "profileSections": [
     {
       "title": "학력",
@@ -1416,6 +1421,7 @@ const STUDENTS = [
   "nameEn": "LEE JUNG-GI",
   "course": "석사과정",
   "photo": "assets/images/lee-jung-gi.png",
+  "photoFrame": [1122, 1402, 145, 1080, 560],
   "profileSections": [
     {
       "title": "학력",
@@ -1651,6 +1657,7 @@ const STUDENTS = [
   "nameEn": "KIM DONG-HWAN",
   "course": "석·박사 통합과정",
   "photo": "assets/images/kim-dong-hwan.png",
+  "photoFrame": [1065, 1420, 105, 897, 530],
   "profileSections": [
     {
       "title": "학력",
@@ -1965,7 +1972,8 @@ const STUDENTS = [
   "name": "양해랑",
   "nameEn": "YANG HAE-RANG",
   "course": "석·박사 통합과정",
-  "photo": "assets/images/yang-hae-rang.jpg",
+  "photo": "assets/images/yang-hae-rang-suit.png",
+  "photoFrame": [1086, 1448, 100, 821, 539],
   "profileSections": [
     {
       "title": "학력",

@@ -259,6 +259,17 @@ if (typeof SITE === "undefined") {
     ? '<img class="photo" src="' + esc(p) + '" alt="' + esc(n) + '" loading="lazy">'
     : '<div class="photo-ph" aria-hidden="true">' + esc(n.slice(0, 1)) + '</div>';
 
+  // 원본 픽셀의 정수리·턱 위치를 기준으로 동일한 3:4 구도에 배치합니다.
+  const memberPic = p => {
+    if (!p.photo || !p.photoFrame) return pic(p.photo, p.name);
+    const [width, height, crown, chin, center] = p.photoFrame;
+    const scale = 0.68 / (chin - crown);
+    const style = 'width:' + (width * scale / .75 * 100) + '%;height:' + (height * scale * 100) +
+      '%;left:' + (50 - center * scale / .75 * 100) + '%;top:' + ((.09 - crown * scale) * 100) + '%';
+    return '<div class="photo portrait-frame"><img src="' + esc(p.photo) + '" alt="' + esc(p.name) +
+      '" loading="lazy" style="' + style + '"></div>';
+  };
+
   /* ======================================================================
      홈 — 감성 문구 + 소개글 + 공지사항
      ====================================================================== */
@@ -654,7 +665,7 @@ if (typeof SITE === "undefined") {
     /* 대학원생 · 졸업생 — 카드 모양이 같아 한 함수로 만듭니다 */
     const card = (p, key, i) =>
       '<article class="st reveal is-clickable" tabindex="0" role="button" data-mkey="' + key + '" data-midx="' + i + '">' +
-        (p.profilePending && !p.photo ? '<div class="photo-ph" aria-label="사진 미등록"></div>' : pic(p.photo, p.name)) +
+        (p.profilePending && !p.photo ? '<div class="photo-ph" aria-label="사진 미등록"></div>' : memberPic(p)) +
         '<h4 class="st-name">' + esc(p.name) + '</h4>' +
         (p.nameEn ? '<p class="st-en">' + esc(p.nameEn.toUpperCase()) + '</p>' : '') +
         '<p class="st-course">' + esc(p.course) + '</p>' +
@@ -792,7 +803,7 @@ if (typeof SITE === "undefined") {
 
       body.innerHTML =
         '<div class="modal-head">' +
-          '<div class="modal-photo">' + (p.profilePending && !p.photo ? '<div class="photo-ph" aria-label="사진 미등록"></div>' : pic(p.photo, p.name)) + '</div>' +
+          '<div class="modal-photo">' + (p.profilePending && !p.photo ? '<div class="photo-ph" aria-label="사진 미등록"></div>' : memberPic(p)) + '</div>' +
           '<div>' +
             '<span class="prof-role">' + esc(p.role || p.course || "") + '</span>' +
             '<h2 class="modal-name" id="modalName">' + esc(p.name) + '</h2>' +

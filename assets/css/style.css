@@ -1113,3 +1113,7 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
   .semester-table th:last-child{width:130px;}
   .semester-table caption{font-size:16px;}
 }
+
+/* 대학원생 카드와 상세 프로필에 같은 사진 구도를 사용합니다. */
+.portrait-frame{position:relative;overflow:hidden;aspect-ratio:3/4;background:#FFF;}
+.portrait-frame img{position:absolute;display:block;max-width:none;margin:0;object-fit:fill;}
