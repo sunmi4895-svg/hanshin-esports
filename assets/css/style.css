@@ -1115,5 +1115,9 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
 }
 
 /* 대학원생 카드와 상세 프로필에 같은 사진 구도를 사용합니다. */
-.portrait-frame{position:relative;overflow:hidden;aspect-ratio:3/4;background:#FFF;}
+.portrait-frame{position:relative;overflow:hidden;aspect-ratio:1106/1422;background:#FFF;}
+/* 공통 사진의 회색 배경보다 우선하여 구도 보정 여백을 흰색으로 유지합니다. */
+body[data-page="members"] .photo.portrait-frame{background:#FFF;}
 .portrait-frame img{position:absolute;display:block;max-width:none;margin:0;object-fit:fill;}
+
+#studentList .photo-ph{aspect-ratio:1106/1422;}

@@ -1420,8 +1420,8 @@ const STUDENTS = [
   "name": "이중기",
   "nameEn": "LEE JUNG-GI",
   "course": "석사과정",
-  "photo": "assets/images/lee-jung-gi.png",
-  "photoFrame": [1122, 1402, 145, 1080, 560],
+  "photo": "assets/images/lee-jung-gi-framed.png",
+  "photoFrame": [1086, 1448, 154, 901, 534],
   "profileSections": [
     {
       "title": "학력",

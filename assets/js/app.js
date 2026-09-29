@@ -259,13 +259,16 @@ if (typeof SITE === "undefined") {
     ? '<img class="photo" src="' + esc(p) + '" alt="' + esc(n) + '" loading="lazy">'
     : '<div class="photo-ph" aria-hidden="true">' + esc(n.slice(0, 1)) + '</div>';
 
-  // 원본 픽셀의 정수리·턱 위치를 기준으로 동일한 3:4 구도에 배치합니다.
+  // 김동현 원본(1106 × 1422)의 정수리·턱 위치와 여백을 공통 기준으로 사용합니다.
   const memberPic = p => {
     if (!p.photo || !p.photoFrame) return pic(p.photo, p.name);
     const [width, height, crown, chin, center] = p.photoFrame;
-    const scale = 0.68 / (chin - crown);
-    const style = 'width:' + (width * scale / .75 * 100) + '%;height:' + (height * scale * 100) +
-      '%;left:' + (50 - center * scale / .75 * 100) + '%;top:' + ((.09 - crown * scale) * 100) + '%';
+    const referenceRatio = 1106 / 1422;
+    const referenceCrown = 125 / 1422;
+    const referenceHead = (991 - 125) / 1422;
+    const scale = referenceHead / (chin - crown);
+    const style = 'width:' + (width * scale / referenceRatio * 100) + '%;height:' + (height * scale * 100) +
+      '%;left:' + (50 - center * scale / referenceRatio * 100) + '%;top:' + ((referenceCrown - crown * scale) * 100) + '%';
     return '<div class="photo portrait-frame"><img src="' + esc(p.photo) + '" alt="' + esc(p.name) +
       '" loading="lazy" style="' + style + '"></div>';
   };
