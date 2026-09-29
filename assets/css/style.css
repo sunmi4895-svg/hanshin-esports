@@ -1093,3 +1093,23 @@ body:not([data-page="home"]) ::selection{background:#222222; color:#FFFFFF;}
 .semester-poster{display:block;max-width:900px;margin-inline:auto;}
 .semester-poster img{display:block;width:100%;height:auto;background:#FFF;}
 @media(max-width:600px){.semester-content{padding:16px 12px;}.semester-file-actions a{font-size:14px;}}
+
+/* 원본 포스터와 별도로 읽을 수 있는 세미나 일정 표 */
+.semester-table-wrap{overflow-x:auto;background:#FFF;}
+.semester-table{width:100%;border-collapse:collapse;table-layout:fixed;color:#222;}
+.semester-table caption{text-align:left;font-size:18px;font-weight:700;padding:16px;}
+.semester-table th,.semester-table td{border:1px solid #DADAE2;padding:18px 16px;line-height:1.7;word-break:keep-all;overflow-wrap:break-word;}
+.semester-table th{background:#EEEAF6;font-weight:700;text-align:center;}
+.semester-table th:first-child{width:150px;}
+.semester-table th:last-child{width:185px;}
+.semester-table td:first-child,.semester-table td:last-child{text-align:center;}
+.semester-table tbody tr:nth-child(even){background:#FAFAFC;}
+.semester-round{display:block;color:#666;font-size:14px;}
+.semester-table-wrap:focus-visible{outline:2px solid #6B4DB2;outline-offset:3px;}
+@media(max-width:600px){
+  .semester-table{min-width:560px;font-size:15px;}
+  .semester-table th,.semester-table td{padding:12px 10px;}
+  .semester-table th:first-child{width:108px;}
+  .semester-table th:last-child{width:130px;}
+  .semester-table caption{font-size:16px;}
+}
